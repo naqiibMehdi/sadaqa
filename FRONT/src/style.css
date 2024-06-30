@@ -1,3 +1,12 @@
+/* link: https://www.realtimecolors.com/?colors=080d12-f2f7fb-317AC1-88bbed-479cf2&fonts=Koh%20Santepheap-Koh%20Santepheap */
+:root{
+  --text: hsl(210, 38%, 5%);
+  --background: hsl(207, 53%, 97%);
+  --primary: hsl(210, 60%, 47%);
+  --secondary: hsl(210, 74%, 73%);
+  --accent: hsl(210, 87%, 61%);
+}
+
 *, ::before, ::after{
   margin: 0;
   padding: 0;
@@ -6,6 +15,7 @@
 
 body{
   min-height: 100svh;
+  background-color: var(--background);
 }
 
 #app{
