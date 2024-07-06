@@ -11,13 +11,35 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Koh Santepheap", Verdana, sans-serif;
+  color: var(--text);
+  text-decoration: none;
 }
 
 body{
   min-height: 100svh;
   background-color: var(--background);
+  font-size: 1rem;
 }
 
 #app{
   min-height: inherit;
+}
+
+
+.primary-button{
+padding: 0.5em 2em;
+background-color: var(--primary);
+color: var(--background);
+border-radius: .5rem;
+display: inline-block;
+font-size: 1rem;
+z-index: 2;
+white-space: nowrap;
+}
+
+@media (min-width: 1300px){
+  .container{
+    width: 1250px;
+  }
 }
