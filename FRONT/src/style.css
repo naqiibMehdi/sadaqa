@@ -1,45 +1,46 @@
 /* link: https://www.realtimecolors.com/?colors=080d12-f2f7fb-317AC1-88bbed-479cf2&fonts=Koh%20Santepheap-Koh%20Santepheap */
-:root{
-  --text: hsl(210, 38%, 5%);
-  --background: hsl(207, 53%, 97%);
-  --primary: hsl(210, 60%, 47%);
-  --secondary: hsl(210, 74%, 73%);
-  --accent: hsl(210, 87%, 61%);
+:root {
+    --text: hsl(210, 38%, 5%);
+    --background: hsl(207, 53%, 97%);
+    --background-90: hsl(207, 53%, 90%);
+    --primary: hsl(210, 60%, 47%);
+    --secondary: hsl(210, 74%, 73%);
+    --accent: hsl(210, 87%, 61%);
 }
 
-*, ::before, ::after{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Koh Santepheap", Verdana, sans-serif;
-  color: var(--text);
-  text-decoration: none;
+*, ::before, ::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Koh Santepheap", Verdana, sans-serif;
+    color: var(--text);
+    text-decoration: none;
 }
 
-body{
-  min-height: 100svh;
-  background-color: var(--background);
-  font-size: 1rem;
+body {
+    min-height: 100svh;
+    background-color: var(--background);
+    font-size: 1rem;
 }
 
-#app{
-  min-height: inherit;
+#app {
+    min-height: inherit;
 }
 
 
-.primary-button{
-padding: 0.5em 2em;
-background-color: var(--primary);
-color: var(--background);
-border-radius: .5rem;
-display: inline-block;
-font-size: 1rem;
-z-index: 2;
-white-space: nowrap;
+.primary-button {
+    padding: 0.5em 2em;
+    background-color: var(--primary);
+    color: var(--background);
+    border-radius: .5rem;
+    display: inline-block;
+    font-size: 1rem;
+    z-index: 2;
+    white-space: nowrap;
 }
 
-@media (min-width: 1300px){
-  .container{
-    width: 1250px;
-  }
+@media (min-width: 1300px) {
+    .container {
+        width: 1250px;
+    }
 }
