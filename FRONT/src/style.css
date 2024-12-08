@@ -6,6 +6,35 @@
     --primary: hsl(210, 60%, 47%);
     --secondary: hsl(210, 74%, 73%);
     --accent: hsl(210, 87%, 61%);
+
+
+    /* mise en forme personnel pour PrimeVue */
+
+    .buttonFilled {
+        background-color: var(--primary);
+        border: var(--accent);
+    }
+
+    .buttonFilled .p-button-label {
+        color: var(--background);
+    }
+
+
+    .buttonFilled:not(:disabled):hover {
+        background-color: var(--accent);
+        border: none;
+    }
+
+    .buttonOutlined {
+        color: var(--background);
+        border-color: var(--primary);
+    }
+
+    .buttonOutlined:not(:disabled):hover {
+        border-color: var(--primary);
+        background-color: var(--background-90);
+    }
+
 }
 
 *, ::before, ::after {
@@ -41,6 +70,6 @@ body {
 
 @media (min-width: 1300px) {
     .container {
-        width: 1250px;
+        width: 1300px;
     }
 }
