@@ -1,9 +1,9 @@
 <script setup lang="ts">
- import Campaign from "@/pages/CampaignVue.vue"
+import FormConnexionView from "@/pages/FormConnexionView.vue";
 </script>
 
 <template>
-  <Campaign />
+  <FormConnexionView/>
 </template>
 
 <style scoped>
