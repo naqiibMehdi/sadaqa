@@ -1,11 +1,11 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import '@/style.css'
 import App from '@/App.vue'
+import "primeicons/primeicons.css"
 import PrimeVue from "primevue/config"
 import Aura from "@primevue/themes/aura"
-import "primeicons/primeicons.css"
 
-const app =  createApp(App)
+const app = createApp(App)
 
 app
     .use(PrimeVue, {
