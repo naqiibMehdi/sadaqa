@@ -4,6 +4,7 @@ import Header from "@/components/Header.vue";
 import Main from "@/components/Main.vue";
 import InputField from "@/components/InputField.vue";
 import Button from "@/components/Button.vue"
+import Footer from "@/components/Footer.vue";
 </script>
 
 <template>
@@ -19,6 +20,7 @@ import Button from "@/components/Button.vue"
       </div>
     </div>
   </Main>
+  <Footer/>
 </template>
 
 <style scoped>
