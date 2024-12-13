@@ -32,6 +32,14 @@
         background-color: var(--background-90);
     }
 
+    .dv {
+        height: 86px;
+    }
+
+    .dv::before {
+        border-inline-start: 2px solid var(--text);
+    }
+
 }
 
 *, ::before, ::after {
@@ -53,6 +61,14 @@ body {
     min-height: inherit;
 }
 
+.main {
+    min-height: calc(100svh - (59px + 220px));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .primary-button {
     padding: 0.5em 2em;
@@ -64,8 +80,8 @@ body {
     white-space: nowrap;
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1300px) {
     .container {
-        width: 1300px;
+        width: 1400px;
     }
 }

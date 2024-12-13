@@ -17,4 +17,8 @@ withDefaults(defineProps<{ title: string }>(), {title: "Ressource"})
   list-style: none;
 }
 
+.nav-title {
+  margin-bottom: 1.25rem;
+}
+
 </style>

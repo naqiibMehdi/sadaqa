@@ -1,7 +1,10 @@
 <script setup lang="ts">
 
 import Nav from "@/components/Nav.vue";
-import Icon from "@/components/Icon.vue";
+import {Divider} from "primevue";
+import EntypoSocialTwitter from '~icons/entypo-social/twitter'
+import EntypoSocialFacebook from '~icons/entypo-social/facebook'
+import EntypoSocialInstagram from '~icons/entypo-social/instagram'
 </script>
 
 <template>
@@ -15,7 +18,12 @@ import Icon from "@/components/Icon.vue";
       <div class="footer-nav">
         <Nav title="Ressource"/>
         <Nav title="A Propos"/>
-        <Icon icon="twitter" color="blue"/>
+        <Divider type="solid" layout="vertical" class="dv"/>
+        <div class="footer-icons">
+          <EntypoSocialFacebook class="footer-icons-fb"/>
+          <EntypoSocialTwitter class="footer-icons-tw"/>
+          <EntypoSocialInstagram class="footer-icons-inst"/>
+        </div>
       </div>
     </div>
   </footer>
@@ -26,16 +34,40 @@ footer {
   background-color: var(--text5);
   display: flex;
   justify-content: center;
-  padding: 1.5rem 0;
+  padding: 1.8rem 0;
 }
 
 .footer-text {
-  margin-bottom: 0.85rem
+  margin-bottom: 2rem
 }
 
 .footer-nav {
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
+}
+
+
+.footer-icons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.footer-icons svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.footer-icons-fb * {
+  fill: #1877F2;
+
+}
+
+.footer-icons-tw * {
+  fill: #1DA1F2;
+}
+
+.footer-icons-inst * {
+  fill: #bc8a6a;
 }
 </style>
