@@ -1,14 +1,14 @@
-import FormConnexionView from "@/pages/FormConnexionView.vue";
+import FormLoginView from "@/pages/FormLoginView.vue";
 import {createRouter, createWebHistory} from "vue-router"
 
 
 const routes = [
-  {path: "/register", component: FormConnexionView}
+    {path: "/login", component: FormLoginView}
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+    history: createWebHistory(),
+    routes
 })
 
 export default router
