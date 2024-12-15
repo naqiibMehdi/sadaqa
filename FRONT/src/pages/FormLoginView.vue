@@ -3,7 +3,7 @@
 import Header from "@/components/Header.vue";
 import Main from "@/components/Main.vue";
 import InputField from "@/components/InputField.vue";
-import Button from "@/components/Button.vue"
+import CustomButton from "@/components/CustomButton.vue"
 import Footer from "@/components/Footer.vue";
 </script>
 
@@ -15,8 +15,8 @@ import Footer from "@/components/Footer.vue";
       <InputField placeholder="Mot de passe"/>
       <a class="formConnexion-text" href="">Mot de passe oublié ?</a>
       <div class="formConnexion-buttons-list">
-        <Button label="Connexion"/>
-        <Button label="S'inscrire" :outline="true"/>
+        <CustomButton label="Connexion"/>
+        <CustomButton label="S'inscrire" :outline="true"/>
       </div>
     </div>
   </Main>
@@ -28,8 +28,9 @@ import Footer from "@/components/Footer.vue";
 .formConnexion-container {
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
-  width: calc(1300px / 2);
+  row-gap: 1.3rem;
+  width: calc(100% / 2);
+  max-width: 700px;
 }
 
 .formConnexion-buttons-list {
@@ -48,7 +49,7 @@ import Footer from "@/components/Footer.vue";
   color: var(--accent);
 }
 
-.formConnexion-buttons-list button {
+.formConnexion-buttons-list custom-button {
   width: 100%;
 }
 </style>
