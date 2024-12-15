@@ -1,6 +1,9 @@
 import {createApp} from 'vue'
 import '@/style.css'
 import App from '@/App.vue'
+import router from "@/router/index.ts"
+
+// import Primevue
 import "primeicons/primeicons.css"
 import PrimeVue from "primevue/config"
 import Aura from "@primevue/themes/aura"
@@ -16,4 +19,5 @@ app
             }
         }
     })
+    .use(router)
     .mount('#app')

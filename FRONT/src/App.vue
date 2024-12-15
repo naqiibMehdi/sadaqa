@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import FormConnexionView from "@/pages/FormConnexionView.vue";
 </script>
 
 <template>
-  <FormConnexionView/>
+  <RouterView/>
 </template>
 
 <style scoped>
