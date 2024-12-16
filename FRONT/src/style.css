@@ -61,6 +61,31 @@ body {
     min-height: inherit;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.3rem;
+    width: calc(100% / 2);
+    max-width: 700px;
+}
+
+.form-inline {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+}
+
+.form-inputLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.form-inputLabel_inline {
+    width: 50%;
+}
+
 .main {
     min-height: calc(100svh - (59px + 220px));
     display: flex;

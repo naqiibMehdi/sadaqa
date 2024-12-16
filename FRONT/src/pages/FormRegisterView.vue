@@ -26,22 +26,22 @@ onMounted(() => days.value = genereteDay())
 <template>
   <Header/>
   <Main>
-    <form class="formConnexion-container">
-      <div class="formRegister-inline">
-        <div class="formRegister-inputLabel formRegister-inputLabel_inline">
+    <form class="form-container">
+      <div class="form-inline">
+        <div class="form-inputLabel form-inputLabel_inline">
           <InputField placeholder="Nom" id="nom" title="nom"/>
         </div>
-        <div class="formRegister-inputLabel formRegister-inputLabel_inline">
+        <div class="form-inputLabel form-inputLabel_inline">
           <InputField placeholder="Prénom" id="prenom" title="prénom"/>
         </div>
       </div>
-      <div class="formRegister-inputLabel">
+      <div class="form-inputLabel">
         <InputField placeholder="Ex: Toto" id="publicname" title="nom Public"/>
       </div>
-      <div class="formRegister-inputLabel">
+      <div class="form-inputLabel">
         <InputField placeholder="Email" id="email" title="email"/>
       </div>
-      <div class="formRegister-inputLabel">
+      <div class="form-inputLabel">
         <InputField placeholder="Mot de passe" id="password" title="mot de passe"/>
       </div>
       <div class="formRegister-date">
@@ -59,31 +59,6 @@ onMounted(() => days.value = genereteDay())
 </template>
 
 <style scoped>
-
-.formConnexion-container {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1.3rem;
-  width: calc(100% / 2);
-  max-width: 700px;
-}
-
-.formRegister-inline {
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  width: 100%;
-}
-
-.formRegister-inputLabel_inline {
-  width: 50%;
-}
-
-.formRegister-inputLabel {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
 
 .formRegister-title {
   margin-bottom: 0.9rem;
@@ -103,5 +78,6 @@ onMounted(() => days.value = genereteDay())
 .buttonFilled {
   width: 100%;
   margin-top: 1.3rem;
+  font-size: 1.125rem;
 }
 </style>

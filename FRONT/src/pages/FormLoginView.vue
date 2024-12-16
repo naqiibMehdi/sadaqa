@@ -10,7 +10,7 @@ import Footer from "@/components/Footer.vue";
 <template>
   <Header/>
   <Main>
-    <div class="formConnexion-container">
+    <div class="form-container">
       <InputField placeholder="Email"/>
       <InputField placeholder="Mot de passe"/>
       <a class="formConnexion-text" href="">Mot de passe oublié ?</a>
@@ -24,14 +24,6 @@ import Footer from "@/components/Footer.vue";
 </template>
 
 <style scoped>
-
-.formConnexion-container {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1.3rem;
-  width: calc(100% / 2);
-  max-width: 700px;
-}
 
 .formConnexion-buttons-list {
   display: flex;
@@ -49,7 +41,8 @@ import Footer from "@/components/Footer.vue";
   color: var(--accent);
 }
 
-.formConnexion-buttons-list custom-button {
+.formConnexion-buttons-list button {
   width: 100%;
+  font-size: 1.125rem;
 }
 </style>
