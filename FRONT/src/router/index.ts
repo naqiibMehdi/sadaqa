@@ -3,6 +3,7 @@ import FormRegisterView from "@/pages/FormRegisterView.vue";
 import FormContact from "@/pages/FormContactView.vue";
 import {createRouter, createWebHistory} from "vue-router"
 import FormCreateCampaignView from "@/pages/FormCreateCampaignView.vue";
+import ProfilView from "@/pages/ProfilView.vue";
 
 
 const routes = [
@@ -10,6 +11,7 @@ const routes = [
     {path: "/register", name: "register", component: FormRegisterView},
     {path: "/contact", name: "contact", component: FormContact},
     {path: "/create-campaign", name: "createcampaign", component: FormCreateCampaignView},
+    {path: "/profil", name: "profil", component: ProfilView},
 ]
 
 const router = createRouter({
