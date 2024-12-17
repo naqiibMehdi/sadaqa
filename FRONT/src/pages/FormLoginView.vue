@@ -10,6 +10,7 @@ import Footer from "@/components/Footer.vue";
 <template>
   <Header/>
   <Main>
+    <h1>Connectez-vous</h1>
     <div class="form-container">
       <InputField placeholder="Email"/>
       <InputField placeholder="Mot de passe"/>

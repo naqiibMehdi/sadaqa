@@ -12,25 +12,17 @@ import Textarea from "primevue/textarea";
 <template>
   <Header/>
   <Main>
-    <h1 class="formContact-title">Nous contacter</h1>
+    <h1>Nous contacter</h1>
     <p class="formContact-text">Vous avez une question ? Remplissez le formulaire ci-dessous et nous vous répondrons au
       plus vite.</p>
     <form class="form-container">
       <div class="form-inline">
-        <div class="form-inputLabel form-inputLabel_inline">
-          <InputField placeholder="Nom" id="nom" title="nom"/>
-        </div>
-        <div class="form-inputLabel form-inputLabel_inline">
-          <InputField placeholder="Prénom" id="prenom" title="prénom"/>
-        </div>
+        <InputField placeholder="Nom" id="nom" title="nom"/>
+        <InputField placeholder="Prénom" id="prenom" title="prénom"/>
       </div>
       <div class="form-inline">
-        <div class="form-inputLabel form-inputLabel_inline">
-          <InputField placeholder="Email" id="email" title="email"/>
-        </div>
-        <div class="form-inputLabel form-inputLabel_inline">
-          <InputField placeholder="Confirmez votre email" id="emailconfirmed" title="Confirmez votre email"/>
-        </div>
+        <InputField placeholder="Email" id="email" title="email"/>
+        <InputField placeholder="Confirmez votre email" id="emailconfirmed" title="Confirmez votre email"/>
       </div>
       <Textarea rows="5" cols="30" class="formContact-message" size="large" placeholder="Votre message"/>
       <CustomButton label="Envoyer"/>
@@ -40,9 +32,6 @@ import Textarea from "primevue/textarea";
 </template>
 
 <style scoped>
-.formContact-title {
-  margin-bottom: 4rem;
-}
 
 .formContact-text {
   margin-bottom: 2rem;

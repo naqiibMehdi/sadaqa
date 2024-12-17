@@ -26,24 +26,15 @@ onMounted(() => days.value = genereteDay())
 <template>
   <Header/>
   <Main>
+    <h1>Formulaire d'inscription</h1>
     <form class="form-container">
       <div class="form-inline">
-        <div class="form-inputLabel form-inputLabel_inline">
-          <InputField placeholder="Nom" id="nom" title="nom"/>
-        </div>
-        <div class="form-inputLabel form-inputLabel_inline">
-          <InputField placeholder="Prénom" id="prenom" title="prénom"/>
-        </div>
+        <InputField placeholder="Nom" id="nom" title="nom"/>
+        <InputField placeholder="Prénom" id="prenom" title="prénom"/>
       </div>
-      <div class="form-inputLabel">
-        <InputField placeholder="Ex: Toto" id="publicname" title="nom Public"/>
-      </div>
-      <div class="form-inputLabel">
-        <InputField placeholder="Email" id="email" title="email"/>
-      </div>
-      <div class="form-inputLabel">
-        <InputField placeholder="Mot de passe" id="password" title="mot de passe"/>
-      </div>
+      <InputField placeholder="Ex: Toto" id="publicname" title="nom Public"/>
+      <InputField placeholder="Email" id="email" title="email"/>
+      <InputField placeholder="Mot de passe" id="password" title="mot de passe"/>
       <div class="formRegister-date">
         <p class="formRegister-title">Vous devez être majeur</p>
         <div class="formRegister-select">

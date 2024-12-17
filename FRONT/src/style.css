@@ -57,9 +57,14 @@ body {
     font-size: 1rem;
 }
 
+h1 {
+    margin-bottom: 3.5rem;
+}
+
 #app {
     min-height: inherit;
 }
+
 
 .form-container {
     display: flex;
@@ -82,18 +87,22 @@ body {
     gap: 0.9rem;
 }
 
-.form-inputLabel_inline {
+.form-inline .form-inputLabel_inline {
     width: 50%;
 }
 
 .main {
-    min-height: calc(100svh - (59px + 220px));
+    min-height: calc(100svh - (59px + 220px + 64px));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 2rem 0;
 }
 
+.ql-toolbar {
+    background-color: #fff;
+}
 
 .primary-button {
     padding: 0.5em 2em;

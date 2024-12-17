@@ -6,8 +6,10 @@ defineProps<{ placeholder: string, id?: string, title?: string }>()
 </script>
 
 <template>
-  <label :for="id" v-if="id">{{ title }}</label>
-  <InputText type="text" :placeholder="placeholder" :class="$style.fieldColorBorder" :id="id"/>
+  <div class="form-inputLabel form-inputLabel_inline">
+    <label :for="id" v-if="id">{{ title }}</label>
+    <InputText type="text" :placeholder="placeholder" :class="$style.fieldColorBorder" :id="id"/>
+  </div>
 </template>
 
 <style scoped module>
