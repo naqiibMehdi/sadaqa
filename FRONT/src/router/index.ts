@@ -5,6 +5,7 @@ import {createRouter, createWebHistory} from "vue-router"
 import FormCreateCampaignView from "@/pages/FormCreateCampaignView.vue";
 import ProfilView from "@/pages/ProfilView.vue";
 import FormPaymentView from "@/pages/FormPaymentView.vue";
+import CampaignsView from "@/pages/CampaignsView.vue";
 
 
 const routes = [
@@ -14,6 +15,7 @@ const routes = [
     {path: "/create-campaign", name: "createcampaign", component: FormCreateCampaignView},
     {path: "/profil", name: "profil", component: ProfilView},
     {path: "/payment", name: "payment", component: FormPaymentView},
+    {path: "/campaigns", name: "campaigns", component: CampaignsView},
 ]
 
 const router = createRouter({

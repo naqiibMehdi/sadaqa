@@ -34,7 +34,6 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 8px;
 }
 
 .header-nav {
@@ -43,7 +42,7 @@ header {
 
 .header-list {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   list-style: none;
 }

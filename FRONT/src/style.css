@@ -93,13 +93,19 @@ h1 {
 }
 
 .main {
-    min-height: calc(100svh - (59px + 220px + 64px));
+    min-height: calc(100svh - (59px + 220px + 32px));
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    margin-bottom: 2rem;
+}
+
+.main:not(:has(.campaigns-banner)) {
+    min-height: calc(100svh - (59px + 220px + 64px));
+    justify-content: center;
     margin: 2rem 0;
 }
+
 
 .ql-toolbar {
     background-color: #fff;
@@ -115,7 +121,12 @@ h1 {
     white-space: nowrap;
 }
 
-@media (min-width: 1300px) {
+.campaigns-banner input {
+    border-radius: unset;
+    border: transparent;
+}
+
+@media (min-width: 1200px) {
     .container {
         width: 1400px;
     }

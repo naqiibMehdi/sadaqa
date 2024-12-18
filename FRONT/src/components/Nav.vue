@@ -1,13 +1,12 @@
 <script setup lang="ts">
-withDefaults(defineProps<{ title: string }>(), {title: "Ressource"})
+defineProps<{ title?: string, links?: string[], prefixClass?: string }>()
 </script>
 
 <template>
-  <nav class="nav">
-    <ul class="nav-list">
-      <li class="nav-title"><p>{{ title }}</p></li>
-      <li class="nav-link"><a href="">Ressource 1</a></li>
-      <li class="nav-link"><a href="">Ressource 2</a></li>
+  <nav :class="`nav ${prefixClass}-nav`">
+    <ul :class="`nav-list ${prefixClass}-list`">
+      <li class="nav-title" v-if="title"><p>{{ title }}</p></li>
+      <li v-for="link in links" :key="link" :class="`nav-link ${prefixClass}-link`"><a href="">{{ link }}</a></li>
     </ul>
   </nav>
 </template>
