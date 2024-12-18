@@ -5,6 +5,7 @@ import Main from "@/components/Main.vue";
 import Footer from "@/components/Footer.vue";
 import FileUploaderProfil from "@/components/FileUploaderProfil.vue";
 import InputField from "@/components/InputField.vue";
+import CustomButton from "@/components/CustomButton.vue";
 </script>
 
 <template>
@@ -33,7 +34,8 @@ import InputField from "@/components/InputField.vue";
           <InputField placeholder="Paris" id="borntown" title="Ville"/>
           <InputField placeholder="France" id="borncountry" title="Pays"/>
         </div>
-        <InputField placeholder="France" id="borncountry" title="Numéro de téléphone"/>
+        <InputField placeholder="06 00 00 00 00" id="borncountry" title="Numéro de téléphone"/>
+        <CustomButton label="Modifier mon profil"/>
       </form>
     </section>
   </Main>
@@ -42,16 +44,21 @@ import InputField from "@/components/InputField.vue";
 
 <style scoped>
 .profil {
-  width: calc(100% / 2);
   max-width: 1140px;
   display: grid;
-  grid-template-columns: 200px 1fr;
-  column-gap: 1.3rem;
+  grid-template-columns: 200px minmax(300px, 1fr);
+  column-gap: 1.4rem;
 }
 
 
 .profil-form {
   width: 100%;
+}
+
+.buttonFilled {
+  width: 100%;
+  margin-top: 1.3rem;
+  font-size: 1.125rem;
 }
 
 </style>
