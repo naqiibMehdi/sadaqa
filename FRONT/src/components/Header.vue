@@ -8,7 +8,9 @@ import {RouterLink} from "vue-router";
       <p class="header-title">Sadaqa</p>
       <nav class="header-nav">
         <ul class="header-list">
-          <li class="header-item">Rechercher une cagnotte</li>
+          <li class="header-item">
+            <RouterLink :to="{name: 'campaigns'}">Recherche une cagnotte</RouterLink>
+          </li>
           <li class="header-item">
             <RouterLink :to="{name: 'login'}">Connexion</RouterLink>
           </li>
@@ -47,7 +49,7 @@ header {
   list-style: none;
 }
 
-.header-item:hover {
+.header-item a:hover {
   color: var(--primary);
   cursor: pointer;
 }
