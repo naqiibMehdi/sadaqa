@@ -16,7 +16,6 @@ import Nav from "@/components/Nav.vue";
     </form>
     <Nav :links="['animaux', 'sports', 'médecine', 'agriculture']" prefixClass="campaigns"/>
   </section>
-
 </template>
 
 <style>
@@ -24,9 +23,10 @@ import Nav from "@/components/Nav.vue";
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 2rem;
+  row-gap: 3rem;
   background-color: var(--accent);
-  padding: 1rem 0;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 }
 
 .campaigns-banner-title {
@@ -42,6 +42,7 @@ import Nav from "@/components/Nav.vue";
   align-items: center;
   background-color: #fff;
   padding-left: .5rem;
+  border: 3px solid var(--primary);
 }
 
 .campaigns-input {
@@ -62,5 +63,9 @@ import Nav from "@/components/Nav.vue";
   list-style: none;
   text-transform: capitalize;
   font-weight: 600;
+}
+
+.campaigns-cards {
+  padding-top: 1rem;
 }
 </style>
