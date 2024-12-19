@@ -41,6 +41,11 @@
         border-inline-start: 2px solid var(--text);
     }
 
+    button.p-paginator-page-selected {
+        background: var(--accent);
+        color: var(--text);
+    }
+
 }
 
 *, ::before, ::after {
@@ -60,6 +65,11 @@ body {
 
 h1 {
     margin-bottom: 3.5rem;
+}
+
+img, svg {
+    display: block;
+    height: auto;
 }
 
 #app {
@@ -106,11 +116,6 @@ h1 {
     margin: 2rem 0;
 }
 
-
-.ql-toolbar {
-    background-color: #fff;
-}
-
 .primary-button {
     padding: 0.5em 2em;
     background-color: var(--primary);
@@ -121,10 +126,40 @@ h1 {
     white-space: nowrap;
 }
 
+/*********** Quill component **********/
+
+.ql-toolbar {
+    background-color: #fff;
+}
+
+/*********** Quill component **********/
+
+
+/*********** CampaignBanner component **********/
+
 .campaigns-banner input {
     border-radius: unset;
     border: transparent;
 }
+
+/*********** CampaignBanner component **********/
+
+
+/*********** Card component **********/
+
+.p-card-header {
+    position: relative;
+    height: 210px;
+}
+
+.p-card-header img {
+    height: inherit;
+    width: 100%;
+    object-fit: cover;
+}
+
+/*********** Card component **********/
+
 
 @media (min-width: 1200px) {
     .container {
