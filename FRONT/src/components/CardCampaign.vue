@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Card from "primevue/card"
+import CustomButton from "@/components/CustomButton.vue";
 
-defineProps<{ baseUrl: string }>()
+defineProps<{ baseUrl?: string }>()
 </script>
 
 
@@ -24,6 +25,7 @@ defineProps<{ baseUrl: string }>()
       <div class="card-campaign-content">
         <p class="card-campaign-content-price">10000 €</p>
         <p class="card-campaign-content-participant">récoltés avec <span>40</span> participants</p>
+        <CustomButton label="Participez" class="card-campaign-content-btn"/>
       </div>
     </template>
   </Card>
@@ -76,8 +78,17 @@ defineProps<{ baseUrl: string }>()
   font-weight: 900;
 }
 
-.card-campaign-content p {
-  text-align: center;
+.card-campaign-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+}
+
+.card-campaign-content-btn {
+  width: 100%;
+  font-size: 1.125rem;
+  margin-top: 1rem;
 }
 
 .card-campaign-content-price {

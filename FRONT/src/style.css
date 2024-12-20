@@ -7,6 +7,7 @@
     --background-90: hsl(207, 53%, 90%);
     --primary: hsl(210, 60%, 47%);
     --secondary: hsl(210, 74%, 73%);
+    --secondary20: hsl(210, 74%, 73%, 20%);
     --accent: hsl(210, 87%, 61%);
 
 
@@ -110,7 +111,7 @@ img, svg {
     margin-bottom: 2rem;
 }
 
-.main:not(:has(.campaigns-banner)) {
+.main:not(:has(.campaigns-banner), :has(.dashboard)) {
     min-height: calc(100svh - (59px + 220px + 64px));
     justify-content: center;
     margin: 2rem 0;
