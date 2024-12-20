@@ -6,6 +6,8 @@ import FormCreateCampaignView from "@/pages/FormCreateCampaignView.vue";
 import ProfilView from "@/pages/ProfilView.vue";
 import FormPaymentView from "@/pages/FormPaymentView.vue";
 import CampaignsView from "@/pages/CampaignsView.vue";
+import CampaignView from "@/pages/CampaignView.vue"
+import DashBoardView from "@/pages/DashBoardView.vue";
 
 
 const routes = [
@@ -16,6 +18,8 @@ const routes = [
     {path: "/profil", name: "profil", component: ProfilView},
     {path: "/payment", name: "payment", component: FormPaymentView},
     {path: "/campaigns", name: "campaigns", component: CampaignsView},
+    {path: "/campaign/titre-campaign", name: "campaign", component: CampaignView},
+    {path: "/dashboard", name: "dashboard", component: DashBoardView},
 ]
 
 const router = createRouter({
