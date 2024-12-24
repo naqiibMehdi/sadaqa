@@ -27,11 +27,12 @@ import ParticipantBanner from "@/components/ParticipantBanner.vue";
             venenatis neque hendrerit interdum mollis.
           </p>
 
-          
+
         </section>
       </div>
       <div class="campaign-footer">
         <h2>Liste des participants</h2>
+        <ParticipantBanner/>
         <ParticipantBanner/>
       </div>
     </section>

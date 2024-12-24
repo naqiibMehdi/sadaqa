@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import Card from "primevue/card"
 import CustomButton from "@/components/CustomButton.vue";
+import {useRoute} from "vue-router";
 
 defineProps<{ baseUrl?: string }>()
+
+const route = useRoute()
 </script>
 
 
@@ -25,7 +28,7 @@ defineProps<{ baseUrl?: string }>()
       <div class="card-campaign-content">
         <p class="card-campaign-content-price">10000 €</p>
         <p class="card-campaign-content-participant">récoltés avec <span>40</span> participants</p>
-        <CustomButton label="Participez" class="card-campaign-content-btn"/>
+        <CustomButton label="Participez" class="card-campaign-content-btn" v-if="route.name !== 'campaigns'"/>
       </div>
     </template>
   </Card>

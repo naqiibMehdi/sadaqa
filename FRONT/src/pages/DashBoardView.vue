@@ -6,13 +6,14 @@ import Footer from "@/components/Footer.vue";
 import CustomButton from "@/components/CustomButton.vue";
 import MdiEdit from "~icons/mdi/edit"
 import MdiLock from "~icons/mdi/lock"
+import ParticipantBanner from "@/components/ParticipantBanner.vue";
 </script>
 
 <template>
   <Header/>
   <Main>
     <section class="container dashboard">
-      <h1 class="dashboard-title">Vos cagnottes</h1>
+      <h1 class="dashboard-title">Votre Dashboard</h1>
       <div class="dashboard-list-campaigns">
         <article class="dashboard-campaign">
           <div class="dashboard-campaign-img">
@@ -30,23 +31,12 @@ import MdiLock from "~icons/mdi/lock"
             </div>
           </div>
         </article>
-        <article class="dashboard-campaign">
-          <div class="dashboard-campaign-img">
-            <img src="https://picsum.photos/800/600" alt="image principale de la cagnotte"/>
-          </div>
-          <div class="dashboard-campaign-infos">
-            <h2>titre de la cagnotte</h2>
-            <div class="dashboard-campaign-subinfos">
-              <p>10000 €</p>
-              <p>40 participants</p>
-            </div>
-            <div class="dashboard-campaign-list-btn">
-              <CustomButton label="modifier" :customComponent="MdiEdit"/>
-              <CustomButton label="clôturer" :customComponent="MdiLock"/>
-            </div>
-          </div>
-        </article>
       </div>
+    </section>
+    <section class="container participants">
+      <h2 class="dashboard-second-title">Donateurs récents:</h2>
+      <ParticipantBanner/>
+      <ParticipantBanner/>
     </section>
   </Main>
   <Footer/>
@@ -70,9 +60,13 @@ import MdiLock from "~icons/mdi/lock"
   background-color: var(--secondary20);
 }
 
-.dashboard-title {
+.dashboard-title, .dashboard-second-title {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+}
+
+.dashboard-second-title {
+  margin-bottom: 3.5rem;
 }
 
 .dashboard-campaign-img {
