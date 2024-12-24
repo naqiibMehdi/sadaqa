@@ -73,6 +73,11 @@ img, svg {
     height: auto;
 }
 
+.container {
+    width: 100%;
+    max-width: 1400px;
+}
+
 #app {
     min-height: inherit;
 }
@@ -160,10 +165,3 @@ img, svg {
 }
 
 /*********** Card component **********/
-
-
-@media (min-width: 1200px) {
-    .container {
-        width: 1400px;
-    }
-}
