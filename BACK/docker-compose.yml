@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+    mariadb:
+        image: mariadb:latest
+        restart: always
+        container_name: sadaqa_db_container
+        ports:
+            - "3306:3306"
+        environment:
+            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_DATABASE: ${DB_DATABASE}
+            MARIADB_USER: ${DB_USER}
+        volumes:
+            - dbsadaqa:/var/lib/mysql
+volumes:
+    dbsadaqa:
