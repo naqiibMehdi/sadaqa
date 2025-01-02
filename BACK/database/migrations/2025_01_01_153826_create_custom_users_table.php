@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('password');
             $table->dateTime('subscribe_date');
             $table->string('img_profile', 255);
-            $table->foreignId("id_address")->constrained("addresses");
+            $table->bigInteger("id_address")->unsigned()->nullable();
         });
     }
 
