@@ -35,11 +35,10 @@ class UserController extends Controller
         ]);
 
 
-
         return response()->json(["message" => "votre compte a été créer avec succès"], 201);
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $request->validate([
             "email" => "required|email",
@@ -48,7 +47,7 @@ class UserController extends Controller
 
         $user = User::where("email", $request->email)->first();
 
-        if(!$user || !Hash::check($request->password, $user->password)){
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(["message" => "email ou mot de passe incorrect"]);
         }
 
@@ -56,11 +55,11 @@ class UserController extends Controller
 
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
+        $request->user()->currentAccessToken()->delete();
 
-        dd($request->user());
-           
+        return response()->json(["message" => "token supprimé avec succès"]);
 
     }
 
