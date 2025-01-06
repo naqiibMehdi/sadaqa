@@ -7,7 +7,10 @@ use App\Http\Requests\StoreRegisterUserRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
@@ -26,13 +29,39 @@ class UserController extends Controller
             "public_name" => $request->input('public_name'),
             "birth_date" => (new Carbon($replaceCharacterDate))->format('Y-m-d'),
             "email" => $request->input('email'),
-            "password" => $request->input('password'),
+            "password" => Hash::make($request->input('password')),
             "subscribe_date" => Carbon::now(),
-            "img_profile" => "logo.png",
+            "img_profile" => asset("image/user.png"),
         ]);
 
 
+
         return response()->json(["message" => "votre compte a été créer avec succès"], 201);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            "email" => "required|email",
+            "password" => 'required'
+        ]);
+
+        $user = User::where("email", $request->email)->first();
+
+        if(!$user || !Hash::check($request->password, $user->password)){
+            return response()->json(["message" => "email ou mot de passe incorrect"]);
+        }
+
+        return response()->json(["token" => $user->createToken("MyToken")->plainTextToken]);
+
+    }
+
+    public function logout(Request $request)
+    {
+
+        dd($request->user());
+           
+
     }
 
 }
