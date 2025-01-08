@@ -3,26 +3,38 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCampaignRequest;
 use App\Models\Campaign;
-use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class CampaignController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
-        return response()->json(["campaigns" => Campaign::all()], 200);
+        return response()->json(["campaigns" => Campaign::paginate(9)]);
     }
 
 
-    public function show($id)
+    public function show(string $id): JsonResponse
     {
-        if (!is_numeric($id)) {
-            return response()->json([
-                'error' => 'Mauvais format de l\'ID',
-                'message' => 'L\'ID de la campagne doit être un entier.'
-            ], 400); // Retourne une erreur 400 (Bad Request) si l'ID n'est pas un entier
-        }
+        $campaign = Campaign::find($id);
+        return response()->json(["campaign" => !$campaign ? [] : $campaign]);
+    }
+
+    public function store(StoreCampaignRequest $request): JsonResponse
+    {
+        Campaign::create([
+            "title" => $request->input("title"),
+            "description" => $request->input("description"),
+            "image" => "default.png",
+            "target_amount" => $request->input("target_amount"),
+            "collected_amount" => 0,
+            "limit_date" => $request->input("limit_date"),
+            "category_id" => $request->input("category_id"),
+            "user_id" => auth()->id()
+        ]);
+
+        return response()->json(["message" => "votre cagnotte a été créée avec succès !"]);
     }
 }
