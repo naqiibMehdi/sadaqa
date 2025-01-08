@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 
-class UserController extends Controller
+class AuthController extends Controller
 {
     /**
      * Store a newly created resource in storage.
