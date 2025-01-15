@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->text("description");
             $table->string("image");
             $table->unsignedInteger("target_amount");
-            $table->unsignedInteger("collected_amount");
+            $table->unsignedInteger("collected_amount")->default(0);
             $table->timestamp("created_at")->useCurrent();
             $table->dateTime("limit_date")->nullable();
             $table->unsignedBigInteger("category_id");
