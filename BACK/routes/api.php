@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AuthController;
 
 Route::prefix("auth")->group(function () {
     Route::post("/register", [AuthController::class, "store"]);
@@ -13,6 +14,7 @@ Route::prefix("auth")->group(function () {
 Route::prefix("campaigns")->group(function () {
     Route::get("/", [CampaignController::class, "index"]);
     Route::get("/{slug}-{id}", [CampaignController::class, "show"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
+    Route::post("/{slug}-{id}/payment", [StripeController::class, "createCheckoutSession"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
 
 });
 
