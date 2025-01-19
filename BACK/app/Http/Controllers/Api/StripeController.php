@@ -67,7 +67,7 @@ class StripeController extends Controller
             "payment_method_types" => ["card"],
             "customer_email" => $request->email,
             "mode" => "payment",
-            "metadata" => ["campaign_id" => $campaign->id],
+            "metadata" => ["campaign_id" => $campaign->id, "names" => $request->name, "title_campaign" => $campaign->title],
             "success_url" => "http://localhost:8000/{$slug}-{$id}/?success",
             "cancel_url" => "http://localhost:8000/{$slug}-{$id}/?cancel",
 
