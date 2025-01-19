@@ -27,7 +27,7 @@ class CampaignController extends Controller
 
     public function show(string $slug, string $id): JsonResponse
     {
-        $campaign = Campaign::where("id", $id)->where('slug', $slug)->first();
+        $campaign = Campaign::with("participant")->where("id", $id)->where('slug', $slug)->first();
         if ($campaign) {
             $campaign->url_image = asset("storage/" . $campaign->image);
         }
