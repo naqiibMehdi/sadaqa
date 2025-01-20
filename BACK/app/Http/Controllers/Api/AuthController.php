@@ -30,8 +30,8 @@ class AuthController extends Controller
             "birth_date" => (new Carbon($replaceCharacterDate))->format('Y-m-d'),
             "email" => $request->input('email'),
             "password" => Hash::make($request->input('password')),
-            "subscribe_date" => Carbon::now(),
-            "img_profile" => asset("image/user.png"),
+            "subscribe_date" => now(),
+            "img_profile" => asset("logo.png"),
         ]);
 
 
