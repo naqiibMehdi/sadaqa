@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\StripeWebHookController;
 use Illuminate\Support\Facades\Route;
 
 Route::post("webhook", [StripeWebHookController::class, "webhook"]);
+
+Route::post("/forgot-password", [PasswordResetController::class, "sendResetLinkEmail"])->name("password.email");
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name("password.reset");
 
 Route::prefix("auth")->group(function () {
     Route::post("/register", [AuthController::class, "store"]);
