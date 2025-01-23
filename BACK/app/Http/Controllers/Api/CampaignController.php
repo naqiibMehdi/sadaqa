@@ -4,36 +4,54 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCampaignRequest;
+use App\Http\Resources\CampaignRessource;
 use App\Models\Campaign;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CampaignController extends Controller
 {
-    public function index(): JsonResponse
+    /**
+     * Permet d'afficher 9 cagnottes par page
+     *
+     * @return AnonymousResourceCollection|JsonResponse
+     */
+    public function index(): AnonymousResourceCollection|JsonResponse
     {
         $campaigns = Campaign::paginate(9);
+        if ($campaigns->isEmpty()) {
+            return response()->json(["message" => "Aucune campagnes disponible"], 404);
+        }
 
-        $campaigns->getCollection()->transform(function ($campaign) {
-            $campaign->url_image = asset("storage/" . $campaign->image);
-            return $campaign;
-        });
-
-        return response()->json(["campaigns" => $campaigns]);
+        return CampaignRessource::collection($campaigns);
     }
 
 
-    public function show(string $slug, string $id): JsonResponse
+    /**
+     *Permet d'afficher une seule cagnotte
+     *
+     * @param string $slug
+     * @param string $id
+     * @return CampaignRessource|JsonResponse
+     */
+    public function show(string $slug, string $id): CampaignRessource|JsonResponse
     {
         $campaign = Campaign::with("participant")->where("id", $id)->where('slug', $slug)->first();
-        if ($campaign) {
-            $campaign->url_image = asset("storage/" . $campaign->image);
+        if (!$campaign) {
+            return response()->json(["message" => "Cette cagnotte n'existe pas"], 404);
         }
-        return response()->json(["campaign" => !$campaign ? [] : $campaign]);
+        return new CampaignRessource($campaign);
     }
 
+    /**
+     * Permet de créer une cagnotte
+     *
+     * @param StoreCampaignRequest $request
+     * @return JsonResponse
+     */
     public function store(StoreCampaignRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -54,6 +72,14 @@ class CampaignController extends Controller
         return response()->json(["message" => "votre cagnotte a été créée avec succès !"]);
     }
 
+    /**
+     * permet de mettre à jour une cagnotte
+     *
+     * @param string $slug
+     * @param string $id
+     * @param StoreCampaignRequest $request
+     * @return JsonResponse
+     */
     public function update(string $slug, string $id, StoreCampaignRequest $request): JsonResponse
     {
         $campaign = Campaign::where("id", $id)->where('slug', $slug)->firstOrFail();
@@ -84,6 +110,13 @@ class CampaignController extends Controller
         return response()->json(["message" => "Cagnotte mis à jour avec succès"]);
     }
 
+    /**
+     * Permet de supprimer une cagnotte
+     *
+     * @param string $slug
+     * @param string $id
+     * @return JsonResponse
+     */
     public function destroy(string $slug, string $id): JsonResponse
     {
         $campaign = Campaign::where("id", $id)->where('slug', $slug)->firstOrFail();
