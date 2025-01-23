@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::table('campaigns', function (Blueprint $table) {
             $table->string("slug")->after("image");
+            $table->date("closing_date")->nullable()->after("limit_date");
         });
     }
 
@@ -22,6 +23,7 @@ return new class extends Migration {
     {
         Schema::table('campaigns', function (Blueprint $table) {
             $table->dropColumn("slug");
+            $table->dropColumn("closing_date");
         });
     }
 };
