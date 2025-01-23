@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\StoreResetPasswordRequest;
 use App\Mail\ResetPassword;
 use App\Models\User;
 use Carbon\Carbon;
@@ -60,10 +60,10 @@ class PasswordResetController extends Controller
     /**
      * Permet de réinitialiser le mot de passe en vérifiant l'email et le token
      *
-     * @param Request $request
+     * @param StoreResetPasswordRequest $request
      * @return JsonResponse
      */
-    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    public function resetPassword(StoreResetPasswordRequest $request): JsonResponse
 
     {
         $getDataResetPassword = DB::table('password_reset_tokens')->where("email", $request->input('email'))->first();
