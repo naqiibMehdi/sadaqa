@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ResetPasswordRequest extends FormRequest
+class StoreResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,10 +34,11 @@ class ResetPasswordRequest extends FormRequest
      */
     public function messages(): array
     {
-        return ["email.*" => [
-            "required" => "L'adresse email est obligatoire",
-            "exists" => "Cette adresse email n'existe pas",
-        ],
+        return [
+            "email.*" => [
+                "required" => "L'adresse email est obligatoire",
+                "email" => "L'adresse email n'est pas valide",
+            ],
             "password.*" => [
                 "required" => "Le mot de passe est requis",
                 "confirmed" => "le second mot de passe ne correspond pas au premier mot de passe",
