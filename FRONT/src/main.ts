@@ -2,15 +2,18 @@ import {createApp} from 'vue'
 import '@/style.css'
 import App from '@/App.vue'
 import router from "@/router/index"
+import {createPinia} from "pinia"
 
-// import Primevue
 import "primeicons/primeicons.css"
 import PrimeVue from "primevue/config"
 import Aura from "@primevue/themes/aura"
 
 const app = createApp(App)
 
+const pinia = createPinia()
+
 app
+    .use(pinia)
     .use(router)
     .use(PrimeVue, {
         theme: {
