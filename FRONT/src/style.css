@@ -54,7 +54,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Koh Santepheap", Verdana, sans-serif;
-    color: var(--text);
     text-decoration: none;
 }
 
@@ -71,6 +70,11 @@ h1 {
 img, svg {
     display: block;
     height: auto;
+    max-width: 100%;
+}
+
+a {
+    color: var(--text);
 }
 
 .container {
@@ -105,7 +109,7 @@ img, svg {
 }
 
 .form-inline .form-inputLabel_inline {
-    width: 50%;
+    width: 100%;
 }
 
 .main {
