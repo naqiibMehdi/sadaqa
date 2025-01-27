@@ -31,7 +31,7 @@ class AuthController extends Controller
             "email" => $request->input('email'),
             "password" => Hash::make($request->input('password')),
             "subscribe_date" => now(),
-            "img_profile" => asset("logo.png"),
+            "img_profile" => "https://ui-avatars.com/api/?name={$request->input("first_name")}+{$request->input("name")}&background=3078c0",
         ]);
 
 

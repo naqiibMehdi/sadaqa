@@ -26,7 +26,7 @@ class StoreRegisterUserRequest extends FormRequest
             "first_name" => "required|string|max:255",
             "public_name" => "required|string|max:255",
             "birth_date" => "required|date_format:d/m/Y",
-            "email" => "required|string|email|max:255|unique:users",
+            "email" => "required|email|max:255|unique:users,email",
             "password" => ["required", "confirmed", "regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/"],
         ];
     }
