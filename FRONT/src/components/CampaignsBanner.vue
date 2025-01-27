@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InputField from "@/components/InputField.vue";
 import MdiSearch from '~icons/mdi/search'
-import Nav from "@/components/Nav.vue";
+import Nav from "@/components/layouts/Nav.vue";
 </script>
 
 <template>

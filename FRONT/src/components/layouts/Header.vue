@@ -49,8 +49,8 @@ header {
   list-style: none;
 }
 
-.header-item a:hover {
-  color: var(--primary);
+.header-item:last-child a:hover {
+  background-color: var(--accent);
   cursor: pointer;
 }
 

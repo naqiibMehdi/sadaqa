@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import Header from "@/components/Header.vue";
-import Main from "@/components/Main.vue";
-import Footer from "@/components/Footer.vue";
+import Header from "@/components/layouts/Header.vue";
+import Main from "@/components/layouts/Main.vue";
+import Footer from "@/components/layouts/Footer.vue";
 import CustomButton from "@/components/CustomButton.vue";
 import MdiEdit from "~icons/mdi/edit"
 import MdiLock from "~icons/mdi/lock"

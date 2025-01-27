@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
-import Header from "@/components/Header.vue";
-import Main from "@/components/Main.vue";
+import Header from "@/components/layouts/Header.vue";
+import Main from "@/components/layouts/Main.vue";
 import InputField from "@/components/InputField.vue";
 import InputNumber from "primevue/inputnumber";
 import InputMask from "primevue/inputmask";
 import CustomButton from "@/components/CustomButton.vue"
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/layouts/Footer.vue";
 import {ref} from "vue";
 
 const amount = ref<number>(0)

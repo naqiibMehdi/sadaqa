@@ -10,14 +10,14 @@ import Footer from "@/components/layouts/Footer.vue";
 <template>
   <Header/>
   <Main>
-    <h1>Connectez-vous</h1>
     <div class="form-container">
+      <h1 class="forget-pwd-title">Vous avez oublié votre mot de passe ?</h1>
+      <p class="forget-pwd-text">Saisissez votre email afin de recevoir un email permettant de réinitialiser votre mot
+        de
+        passe.</p>
       <InputField placeholder="Email"/>
-      <InputField placeholder="Mot de passe"/>
-      <RouterLink :to="{name: 'forget-password'}" class="formConnexion-text">Mot de passe oublié ?</RouterLink>
       <div class="formConnexion-buttons-list">
-        <CustomButton label="Connexion"/>
-        <CustomButton label="S'inscrire" :outline="true"/>
+        <CustomButton label="Valider"/>
       </div>
     </div>
   </Main>
@@ -32,14 +32,8 @@ import Footer from "@/components/layouts/Footer.vue";
   row-gap: 1rem;
 }
 
-.formConnexion-text {
-  font-size: 0.9rem;
-  text-align: right;
-}
-
-.formConnexion-text:hover {
-  text-decoration: underline;
-  color: var(--accent);
+.forget-pwd-title {
+  text-align: center;
 }
 
 .formConnexion-buttons-list button {

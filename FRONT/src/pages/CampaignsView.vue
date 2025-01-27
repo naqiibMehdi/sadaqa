@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Header from "@/components/Header.vue"
-import Footer from "@/components/Footer.vue";
-import Main from "@/components/Main.vue";
+import Header from "@/components/layouts/Header.vue"
+import Footer from "@/components/layouts/Footer.vue";
+import Main from "@/components/layouts/Main.vue";
 import CampaignsBanner from "@/components/CampaignsBanner.vue";
 import CardCampaign from "@/components/CardCampaign.vue";
 import Pagination from "@/components/Pagination.vue";

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import Header from "@/components/Header.vue";
-import Main from "@/components/Main.vue";
-import Footer from "@/components/Footer.vue";
+import Header from "@/components/layouts/Header.vue";
+import Main from "@/components/layouts/Main.vue";
+import Footer from "@/components/layouts/Footer.vue";
 import FileUploaderProfil from "@/components/FileUploaderProfil.vue";
 import InputField from "@/components/InputField.vue";
 import CustomButton from "@/components/CustomButton.vue";

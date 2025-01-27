@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
-import Header from "@/components/Header.vue";
-import Main from "@/components/Main.vue";
+import Header from "@/components/layouts/Header.vue";
+import Main from "@/components/layouts/Main.vue";
 import InputField from "@/components/InputField.vue";
 import CustomButton from "@/components/CustomButton.vue"
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/layouts/Footer.vue";
 import QuillEditor from "@/components/QuillEditor.vue"
 import Select from "primevue/select";
 import FileUploader from "@/components/FileUploader.vue";

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import Nav from "@/components/Nav.vue";
+import Nav from "@/components/layouts/Nav.vue";
 import {Divider} from "primevue";
 import EntypoSocialTwitter from '~icons/entypo-social/twitter'
 import EntypoSocialFacebook from '~icons/entypo-social/facebook'
