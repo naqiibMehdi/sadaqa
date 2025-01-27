@@ -8,10 +8,12 @@ import FormPaymentView from "@/pages/FormPaymentView.vue";
 import CampaignsView from "@/pages/CampaignsView.vue";
 import CampaignView from "@/pages/CampaignView.vue"
 import DashBoardView from "@/pages/DashBoardView.vue";
+import FormForgetPassword from "@/pages/FormForgetPassword.vue";
 
 
 const routes = [
     {path: "/login", name: "login", component: FormLoginView},
+    {path: "/forget-password", name: "forget-password", component: FormForgetPassword},
     {path: "/register", name: "register", component: FormRegisterView},
     {path: "/contact", name: "contact", component: FormContact},
     {path: "/create-campaign", name: "createcampaign", component: FormCreateCampaignView},
