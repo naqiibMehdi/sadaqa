@@ -21,7 +21,7 @@ class CampaignController extends Controller
      */
     public function index(): AnonymousResourceCollection|JsonResponse
     {
-        $campaigns = Campaign::paginate(9);
+        $campaigns = Campaign::with(["participant", "user"])->paginate(9);
         if ($campaigns->isEmpty()) {
             return response()->json(["message" => "Aucune campagnes disponible"], 404);
         }

@@ -26,6 +26,7 @@ class CampaignRessource extends JsonResource
             "category_id" => $this->category_id,
             "closing_date" => $this->closing_date,
             "url_image" => asset("storage/" . $this->image),
+            "user" => new UserRessource($this->whenLoaded('user')),
             "participants" => ParticipantRessource::collection($this->whenLoaded('participant')),
         ];
     }

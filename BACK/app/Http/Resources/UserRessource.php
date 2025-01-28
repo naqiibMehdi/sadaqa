@@ -23,6 +23,7 @@ class UserRessource extends JsonResource
             "email" => $this->email,
             "subscribe_date" => $this->subscribe_date,
             "image_profile" => $this->img_profile,
+            "campaigns" => CampaignRessource::collection($this->whenLoaded('campaign')),
         ];
     }
 }

@@ -26,7 +26,7 @@ class StoreCampaignRequest extends FormRequest
             "description" => "required|string",
             "image" => "nullable|image|mimes:jpeg,png,jpg,webp|max:2048",
             "target_amount" => "required|numeric",
-            "limit_date" => "required|date",
+            "limit_date" => "nullable|required|date",
             "category_id" => "required|numeric",
         ];
     }

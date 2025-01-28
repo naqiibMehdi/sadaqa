@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -40,10 +41,21 @@ class AuthController extends Controller
 
     public function login(Request $request): JsonResponse
     {
-        $request->validate([
+        $rules = [
             "email" => "required|email",
             "password" => 'required'
-        ]);
+        ];
+
+
+        $messages = [
+            "email.*" => [
+                "required" => "L'email est obligatoire",
+                "email" => "L'email n'est pas au bon format"
+            ],
+            "password.required" => "Le mot de passe est obligatoire"
+        ];
+
+        Validator::validate($request->all(), $rules, $messages);
 
         $user = User::where("email", $request->email)->first();
 
@@ -57,7 +69,9 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->each(function ($token) {
+            $token->delete();
+        });
 
         return response()->json(["message" => "token supprimé avec succès"]);
 
