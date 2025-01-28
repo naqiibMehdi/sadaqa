@@ -6,7 +6,7 @@ withDefaults(defineProps<{
   label: string,
   outline?: boolean,
   customComponent?: object,
-  type: "button" | "submit" | "reset",
+  type?: "button" | "submit" | "reset",
   loading?: boolean,
 }>(), {outline: false, type: "button"})
 </script>
