@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import {RouterLink} from "vue-router";
+import {useAuthStore} from "@/stores/useAuthStore.ts";
+
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -7,7 +10,19 @@ import {RouterLink} from "vue-router";
     <div class="container">
       <p class="header-title">Sadaqa</p>
       <nav class="header-nav">
-        <ul class="header-list">
+        <ul class="header-list" v-if="authStore.token">
+          <li class="header-item">
+            <RouterLink :to="{name: 'dashboard'}">Dashboard</RouterLink>
+          </li>
+          <li class="header-item">
+            <RouterLink :to="{name: 'createcampaign'}">Créer une cagnotte</RouterLink>
+          </li>
+          <li class="header-item">
+            <RouterLink :to="{name: 'profil'}">Mon compte</RouterLink>
+          </li>
+        </ul>
+
+        <ul class="header-list" v-if="!authStore.token">
           <li class="header-item">
             <RouterLink :to="{name: 'campaigns'}">Recherche une cagnotte</RouterLink>
           </li>

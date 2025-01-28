@@ -16,22 +16,25 @@
     .buttonFilled {
         background-color: var(--primary);
         border: var(--accent);
+        color: var(--text);
     }
 
 
     .buttonFilled:not(:disabled):hover {
         background-color: var(--accent);
         border: none;
+        color: var(--text);
     }
 
     .buttonOutlined {
-        color: var(--background);
         border-color: var(--primary);
+        color: var(--text);
     }
 
     .buttonOutlined:not(:disabled):hover {
         border-color: var(--primary);
         background-color: var(--background-90);
+        color: var(--text);
     }
 
     .dv {

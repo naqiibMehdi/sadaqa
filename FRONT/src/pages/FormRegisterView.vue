@@ -8,7 +8,7 @@ import Footer from "@/components/layouts/Footer.vue";
 import Select from "primevue/select"
 import Message from 'primevue/message'
 import {ref, onMounted} from "vue";
-import {useAuthStore} from "@/stores/auth/useAuthStore.ts";
+import {useAuthStore} from "@/stores/useAuthStore.ts";
 import {storeToRefs} from "pinia";
 
 const day = ref<string | number>(0)
@@ -67,9 +67,9 @@ const resetForm = () => {
 const submitForm = async () => {
   await authStore.createUser({...userData.value, birth_date: formatedDate()})
 
-  if (authStore.status === "success") {
+  if (authStore.loading) {
     resetForm()
-  } else if (authStore.status === "error") {
+  } else if (!authStore.loading) {
     console.log("erreur lors de la création du user")
   }
 }
@@ -142,7 +142,7 @@ onMounted(() => yearsOptions.value = generateYears())
           }}
         </Message>
       </div>
-      <CustomButton label="Créer votre compte" type="submit" :loading="authStore.status === 'loading' "/>
+      <CustomButton label="Créer votre compte" type="submit" :loading="authStore.loading"/>
     </form>
   </Main>
   <Footer/>

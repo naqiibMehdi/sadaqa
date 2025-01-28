@@ -1,0 +1,68 @@
+import {acceptHMRUpdate, defineStore} from "pinia";
+import {postData} from "@/utils/axios.ts";
+import {AxiosError} from "axios";
+
+interface RegisterUser {
+    name: string,
+    first_name: string,
+    public_name: string,
+    email: string,
+    password: string,
+    password_confirmation: string,
+    birth_date: string
+}
+
+interface ErrorsRegister {
+    [key: string]: string[]
+}
+
+export const useAuthStore = defineStore("auth", {
+    state: (): {
+        errors: ErrorsRegister,
+        loading: boolean,
+        error: string | null,
+        token: string
+    } => ({
+        errors: {},
+        loading: false,
+        error: null,
+        token: ""
+    }),
+    actions: {
+        async createUser(userData: RegisterUser) {
+            this.loading = true
+            this.error = null
+            try {
+                await postData("/auth/register", userData);
+            } catch (err) {
+                if (err instanceof AxiosError) {
+                    this.error = err.message
+                    this.errors = err.response?.data?.errors;
+                }
+            } finally {
+                this.loading = false
+            }
+        },
+
+        async loginUser(userData: object) {
+            this.loading = true
+            this.error = null
+            this.errors = {}
+            try {
+                const response = await postData("/auth/login", userData);
+                this.error = response.message
+                this.token = response.token;
+            } catch (err) {
+                if (err instanceof AxiosError) {
+                    this.errors = err.response?.data?.errors;
+                }
+            } finally {
+                this.loading = false
+            }
+        }
+    },
+})
+
+if (import.meta.hot) {
+    import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot))
+}
