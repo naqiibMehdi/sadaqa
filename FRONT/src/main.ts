@@ -5,6 +5,7 @@ import router from "@/router/index"
 import {createPinia} from "pinia"
 
 import "primeicons/primeicons.css"
+import ToastService from 'primevue/toastservice';
 import PrimeVue from "primevue/config"
 import Aura from "@primevue/themes/aura"
 
@@ -15,6 +16,7 @@ const pinia = createPinia()
 app
     .use(pinia)
     .use(router)
+    .use(ToastService)
     .use(PrimeVue, {
         theme: {
             preset: Aura,
