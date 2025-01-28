@@ -5,43 +5,16 @@ import Main from "@/components/layouts/Main.vue";
 import CampaignsBanner from "@/components/CampaignsBanner.vue";
 import CardCampaign from "@/components/CardCampaign.vue";
 import Pagination from "@/components/Pagination.vue";
-import {ref} from "vue";
+import {useCampaignStore} from "@/stores/useCampaignStore.ts";
+import {onMounted, ref} from "vue";
 
+const campaignStore = useCampaignStore();
+
+onMounted(async () => {
+  return await campaignStore.getCampaigns()
+})
 
 const first = ref({})
-const tab = ref<object[]>([
-      {
-        id: 1,
-        imageUrl: "https://picsum.photos/800/600", // Image de base
-        thumbnailUrl: "https://picsum.photos/150/100" // Miniature
-      },
-      {
-        id: 2,
-        imageUrl: "https://picsum.photos/800/600", // Image de base
-        thumbnailUrl: "https://picsum.photos/200/150" // Miniature
-      },
-      {
-        id: 3,
-        imageUrl: "https://picsum.photos/800/600", // Image de base
-        thumbnailUrl: "https://picsum.photos/300/200" // Miniature
-      },
-      {
-        id: 4,
-        imageUrl: "https://picsum.photos/800/600", // Image de base
-        thumbnailUrl: "https://picsum.photos/400/300" // Miniature
-      },
-      {
-        id: 5,
-        imageUrl: "https://picsum.photos/800/600", // Image de base
-        thumbnailUrl: "https://picsum.photos/100/75" // Miniature
-      },
-      {
-        id: 6,
-        imageUrl: "https://picsum.photos/800/600", // Image de base
-        thumbnailUrl: "https://picsum.photos/120/90" // Miniature
-      },
-    ]
-)
 
 const te = (o) => {
   first.value = o
@@ -55,7 +28,7 @@ const te = (o) => {
   <Main>
     <CampaignsBanner/>
     <section class="container campaigns-cards">
-      <CardCampaign v-for="baseImage in tab" :baseUrl="baseImage.imageUrl" :key="baseImage.id"/>
+      <CardCampaign v-for="campaign in campaignStore.campaigns.data" :key="campaign.id" :campaign="campaign"/>
     </section>
     <p>{{ first }}</p>
     <Pagination @test="te"/>
