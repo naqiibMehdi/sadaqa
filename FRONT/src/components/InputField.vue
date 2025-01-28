@@ -2,14 +2,15 @@
 import {InputText} from "primevue";
 
 
-defineProps<{
+withDefaults(defineProps<{
   modelValue?: string,
   placeholder: string,
   id?: string,
   title?: string,
   size?: "small" | "large",
   invalid?: boolean | undefined | null
-}>()
+  type?: "text" | "number" | "password" | "email" | "url" | "tel"
+}>(), {type: "text"})
 
 const emit = defineEmits(["update:modelValue"]);
 const onInput = (e: Event) => {
@@ -23,7 +24,7 @@ const onInput = (e: Event) => {
 <template>
   <div class="form-inputLabel form-inputLabel_inline">
     <label :for="id" v-if="id">{{ title }}</label>
-    <InputText type="text" :placeholder="placeholder" :class="$style.fieldColorBorder" :id="id" :size="size"
+    <InputText :type="type" :placeholder="placeholder" :class="$style.fieldColorBorder" :id="id" :size="size"
                :value="modelValue" @input="onInput" :invalid="invalid"/>
   </div>
 </template>
