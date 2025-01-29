@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Card from "primevue/card"
 import CustomButton from "@/components/CustomButton.vue";
-import {useRoute} from "vue-router";
+import {useRoute, RouterLink} from "vue-router";
 import type {Campaign} from "@/types/types.ts";
 
 defineProps<{ campaign: Campaign }>()
@@ -11,29 +11,31 @@ const route = useRoute()
 
 
 <template>
-  <Card class="card-campaign">
-    <template #header>
-      <img :src="campaign.url_image" alt="">
-      <div class="card-campaign-profil">
-        <img :src="campaign.user.image_profile"
-             alt="photo de profil" class="card-campaign-profil-img">
-        <div class="card-campaign-profil-infos">
-          <p><span>{{ campaign.user.public_name }}</span><br/> Lancée le {{
-              (new Date(campaign.created_at).toLocaleDateString("fr-FR"))
-            }}</p>
+  <RouterLink :to="{name: 'campaign', params: {slug: campaign.slug, id: campaign.id}}">
+    <Card class="card-campaign">
+      <template #header>
+        <img :src="campaign.url_image" alt="image de la cagnotte">
+        <div class="card-campaign-profil">
+          <img :src="campaign.user?.image_profile"
+               alt="photo de profil" class="card-campaign-profil-img">
+          <div class="card-campaign-profil-infos">
+            <p><span>{{ campaign.user?.public_name }}</span><br/> Lancée le {{
+                (new Date(campaign.created_at)?.toLocaleDateString("fr-FR"))
+              }}</p>
+          </div>
         </div>
-      </div>
-    </template>
-    <template #title><h2 class="card-campaign-title">{{ campaign.title }}</h2></template>
-    <template #content>
-      <div class="card-campaign-content">
-        <p class="card-campaign-content-price">{{ campaign.collected_amount / 100 }} €</p>
-        <p class="card-campaign-content-participant">récoltés avec <span>{{ campaign.participants.length }}</span>
-          participants</p>
-        <CustomButton label="Participez" class="card-campaign-content-btn" v-if="route.name !== 'campaigns'"/>
-      </div>
-    </template>
-  </Card>
+      </template>
+      <template #title><h2 class="card-campaign-title">{{ campaign.title }}</h2></template>
+      <template #content>
+        <div class="card-campaign-content">
+          <p class="card-campaign-content-price">{{ campaign.collected_amount / 100 }} €</p>
+          <p class="card-campaign-content-participant">récoltés avec <span>{{ campaign.participants?.length }}</span>
+            participants</p>
+          <CustomButton label="Participez" class="card-campaign-content-btn" v-if="route.name !== 'campaigns'"/>
+        </div>
+      </template>
+    </Card>
+  </RouterLink>
 </template>
 
 <style scoped>
@@ -85,6 +87,10 @@ const route = useRoute()
   white-space: nowrap;
   text-overflow: ellipsis;
   font-weight: 900;
+}
+
+.card-campaign-title:first-letter {
+  text-transform: uppercase;
 }
 
 .card-campaign-content {

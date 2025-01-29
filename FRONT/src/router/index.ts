@@ -20,7 +20,7 @@ const routes = [
     {path: "/create-campaign", name: "createcampaign", component: FormCreateCampaignView, meta: {requireAuth: true}},
     {path: "/profil", name: "profil", component: ProfilView, meta: {requireAuth: true}},
     {path: "/campaigns", name: "campaigns", component: CampaignsView},
-    {path: "/campaign/titre-campaign", name: "campaign", component: CampaignView},
+    {path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)", name: "campaign", component: CampaignView},
     {path: "/dashboard", name: "dashboard", component: DashBoardView, meta: {requireAuth: true}},
     {path: "/payment", name: "payment", component: FormPaymentView},
 ]

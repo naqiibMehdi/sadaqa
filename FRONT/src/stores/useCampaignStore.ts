@@ -4,24 +4,51 @@ import type {Campaign} from "@/types/types.ts";
 
 export const useCampaignStore = defineStore("campaign", {
     state: (): {
-        campaigns: { data?: Campaign[], links?: {}, meta?: {} },
+        campaigns: { data: Campaign[], links: {}, meta: {} },
+        campaign: Campaign | null,
+        totalItems: number,
+        itemsPerPage: number,
+        currentPage: number,
         loading: boolean,
-        error: boolean | null
+        error: string | null
     } => ({
-        campaigns: {},
+        campaigns: {data: [], links: {}, meta: {}},
+        campaign: null,
+        totalItems: 0,
+        itemsPerPage: 9,
+        currentPage: 1,
         loading: false,
         error: null
     }),
     actions: {
-        async getCampaigns() {
+        async getCampaigns(page: number | string = 1) {
             this.loading = true
             try {
-                this.campaigns = await fetchData("/campaigns")
+                const response = await fetchData(`/campaigns?page=${page}`)
+                this.campaigns = response
+                this.totalItems = response.meta.total
             } catch (error) {
-                console.log(error)
+                console.log(this.error = "Erreur lors de la récupération des cagnottes")
             } finally {
                 this.loading = false
             }
+        },
+        async getOneCampaign(slug: string, id: string) {
+            this.loading = true
+            try {
+                const response = await fetchData(`/campaigns/${slug}-${id}`)
+                if (response) {
+                    this.campaign = response.data as Campaign
+                }
+            } catch (error) {
+                console.log(this.error = "Erreur lors de la récupération de la cagnotte")
+            } finally {
+                this.loading = false
+            }
+        },
+        async setPage(page: number) {
+            this.currentPage = page
+            await this.getCampaigns(page)
         }
     }
 })

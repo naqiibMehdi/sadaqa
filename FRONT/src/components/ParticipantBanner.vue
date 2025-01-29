@@ -2,6 +2,9 @@
 
 import {useRoute} from "vue-router";
 import {computed} from "vue";
+import type {Participant} from "@/types/types.ts";
+
+defineProps<{ participant: Participant, title: string }>()
 
 const route = useRoute()
 
@@ -13,10 +16,12 @@ const participantBannerDashboard = computed(() => {
 <template>
   <div class="participant-banner-infos">
     <div class="participant-banner-amount" v-if="route.name !== 'dashboard'">
-      100 €
+      {{ participant.amount / 100 }} €
     </div>
     <div :class="participantBannerDashboard">
-      <span v-if="route.name === 'dashboard'">titre de la cagnotte</span><span>Mehdi BENAMAR</span><span> a participé il y a 2 jours</span>
+      <span v-if="route.name === 'dashboard'" class="participant-title">{{ title }}</span><span
+        class="participant-name">{{ participant.name }}</span><span
+        class="participant-date"> a participé le {{ participant.participation_date }}</span>
     </div>
   </div>
 </template>
@@ -25,11 +30,13 @@ const participantBannerDashboard = computed(() => {
 .participant-banner-infos {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   width: 100%;
 }
 
 .participant-banner-amount {
+  width: max-content;
   background-color: var(--accent);
   padding: 6px 10px;
   border-radius: 5px;
@@ -37,7 +44,7 @@ const participantBannerDashboard = computed(() => {
 }
 
 .participant-banner-participant {
-  flex-grow: 2;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   background-color: var(--secondary20);
@@ -55,13 +62,15 @@ const participantBannerDashboard = computed(() => {
   margin-bottom: 1rem;
 }
 
-.participant-banner-participant span:first-child,
-.participant-banner-participant-dashboard span:first-child {
+.participant-title, .participant-name {
   font-weight: 600;
 }
 
-.participant-banner-participant span:last-child,
-.participant-banner-participant-dashboard span:last-child {
+.participant-name {
+  text-transform: capitalize;
+}
+
+.participant-date {
   font-size: 0.875rem;
 }
 </style>
