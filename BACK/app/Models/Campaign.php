@@ -9,7 +9,7 @@ class Campaign extends Model
     protected $table = "campaigns";
 
     protected $guarded = ["id"];
-
+    
     public $timestamps = false;
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

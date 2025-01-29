@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,10 +22,10 @@ class CampaignRessource extends JsonResource
             "slug" => $this->slug,
             "target_amount" => $this->target_amount,
             "collected_amount" => $this->collected_amount,
-            "created_at" => $this->created_at,
+            "created_at" => Carbon::parse($this->created_at)->toIso8601String(),
             "limit_date" => $this->limit_date,
             "category_id" => $this->category_id,
-            "closing_date" => $this->closing_date,
+            "closing_date" => Carbon::parse($this->closing_date)->toIso8601String(),
             "url_image" => asset("storage/" . $this->image),
             "user" => new UserRessource($this->whenLoaded('user')),
             "participants" => ParticipantRessource::collection($this->whenLoaded('participant')),
