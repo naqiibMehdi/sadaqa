@@ -1,14 +1,14 @@
-import FormLoginView from "@/pages/FormLoginView.vue";
-import FormRegisterView from "@/pages/FormRegisterView.vue";
-import FormContact from "@/pages/FormContactView.vue";
+import FormLoginView from "@/pages/forms/FormLoginView.vue";
+import FormRegisterView from "@/pages/forms/FormRegisterView.vue";
+import FormContact from "@/pages/forms/FormContactView.vue";
 import {createRouter, createWebHistory} from "vue-router"
-import FormCreateCampaignView from "@/pages/FormCreateCampaignView.vue";
-import ProfilView from "@/pages/ProfilView.vue";
-import FormPaymentView from "@/pages/FormPaymentView.vue";
-import CampaignsView from "@/pages/CampaignsView.vue";
-import CampaignView from "@/pages/CampaignView.vue"
-import DashBoardView from "@/pages/DashBoardView.vue";
-import FormForgetPassword from "@/pages/FormForgetPassword.vue";
+import FormCreateCampaignView from "@/pages/forms/FormCreateCampaignView.vue";
+import ProfilView from "@/pages/profile/ProfilView.vue";
+import FormPaymentView from "@/pages/forms/FormPaymentView.vue";
+import CampaignsView from "@/pages/campaigns/CampaignsView.vue";
+import CampaignView from "@/pages/campaigns/CampaignView.vue"
+import DashBoardView from "@/pages/dashboard/DashBoardView.vue";
+import FormForgetPassword from "@/pages/forms/FormForgetPassword.vue";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 
 
