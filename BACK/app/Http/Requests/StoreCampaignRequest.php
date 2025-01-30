@@ -26,7 +26,7 @@ class StoreCampaignRequest extends FormRequest
             "description" => "required|string",
             "image" => "nullable|image|mimes:jpeg,png,jpg,webp|max:2048",
             "target_amount" => "required|numeric",
-            "limit_date" => "nullable|required|date",
+            "limit_date" => "nullable|date",
             "category_id" => "required|numeric",
         ];
     }
@@ -47,10 +47,9 @@ class StoreCampaignRequest extends FormRequest
             ],
             "target_amount.*" => [
                 "required" => "Le montant à atteindre est obligatoire",
-                "numeric" => "Le montant comporte seulement des chiffres",
+                "numeric" => "Le montant comporte doit seulement des chiffres",
             ],
             "limit_date" => [
-                "required" => "La date de limite est obligatoire.",
                 "date" => "la date doit être au bon format"
             ],
             "category_id" => [
