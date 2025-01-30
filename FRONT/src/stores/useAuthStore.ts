@@ -1,16 +1,7 @@
 import {acceptHMRUpdate, defineStore} from "pinia";
 import {postData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
-
-interface RegisterUser {
-    name: string,
-    first_name: string,
-    public_name: string,
-    email: string,
-    password: string,
-    password_confirmation: string,
-    birth_date: string
-}
+import {RegisterUser} from "@/types/types.ts";
 
 interface ErrorsRegister {
     [key: string]: string[]
