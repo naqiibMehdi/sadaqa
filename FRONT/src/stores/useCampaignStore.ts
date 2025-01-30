@@ -1,6 +1,7 @@
 import {acceptHMRUpdate, defineStore} from "pinia";
-import {fetchData} from "@/utils/axios.ts";
-import type {Campaign} from "@/types/types.ts";
+import {fetchData, postMultiPartData} from "@/utils/axios.ts";
+import type {Campaign, errorFormCampaign} from "@/types/types.ts";
+import {AxiosError} from "axios";
 
 export const useCampaignStore = defineStore("campaign", {
     state: (): {
@@ -10,7 +11,8 @@ export const useCampaignStore = defineStore("campaign", {
         itemsPerPage: number,
         currentPage: number,
         loading: boolean,
-        error: string | null
+        error: string | null,
+        errorsFormCampaign: errorFormCampaign | null,
     } => ({
         campaigns: {data: [], links: {}, meta: {}},
         campaign: null,
@@ -18,9 +20,23 @@ export const useCampaignStore = defineStore("campaign", {
         itemsPerPage: 9,
         currentPage: 1,
         loading: false,
-        error: null
+        error: null,
+        errorsFormCampaign: null
     }),
     actions: {
+        async createCampaign(dataCampaign: object) {
+            this.loading = true;
+            try {
+                return await postMultiPartData("/campaigns", dataCampaign)
+            } catch (error) {
+                if (error instanceof AxiosError) {
+                    this.errorsFormCampaign = error.response?.data.errors
+                }
+            } finally {
+                this.loading = false;
+            }
+
+        },
         async getCampaigns(page: number | string = 1) {
             this.loading = true
             try {

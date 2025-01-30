@@ -1,3 +1,13 @@
+export interface RegisterUser {
+    name: string,
+    first_name: string,
+    public_name: string,
+    email: string,
+    password: string,
+    password_confirmation: string,
+    birth_date: string
+}
+
 export interface Campaign {
     id: number | string;
     title: string;
@@ -30,4 +40,12 @@ interface User {
     birth_date: Date;
     subscribe_date: Date;
     image_profile: string;
+}
+
+export interface errorFormCampaign {
+    title: string,
+    description: string,
+    image: File | string,
+    target_amount: string | number,
+    category_id: string | number
 }
