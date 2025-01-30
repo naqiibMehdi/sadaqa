@@ -31,6 +31,17 @@ export const postData = async (endpoint: string, data: object) => {
     }
 }
 
+export const postMultiPartData = async (endpoint: string, data: object) => {
+    try {
+        const response = await api.post(endpoint, data, {headers: {"Content-Type": "multipart/form-data"}})
+        return response.data
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw error
+        }
+    }
+}
+
 api.interceptors.request.use(
     (config) => {
         const authStore = useAuthStore();
