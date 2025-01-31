@@ -20,7 +20,11 @@ const routes = [
     {path: "/create-campaign", name: "createcampaign", component: FormCreateCampaignView, meta: {requireAuth: true}},
     {path: "/profil", name: "profil", component: ProfilView, meta: {requireAuth: true}},
     {path: "/campaigns", name: "campaigns", component: CampaignsView},
-    {path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)", name: "campaign", component: CampaignView},
+    {
+        path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)",
+        name: "campaign",
+        component: CampaignView,
+    },
     {path: "/dashboard", name: "dashboard", component: DashBoardView, meta: {requireAuth: true}},
     {path: "/payment", name: "payment", component: FormPaymentView},
 ]
@@ -34,10 +38,14 @@ router.beforeEach((to, _, next) => {
     const authStore = useAuthStore()
     const hasToken = authStore.token
 
-    if (!to.meta.requireAuth && hasToken) {
-        next({name: "dashboard"})
-    } else if (to.meta.requireAuth && !hasToken) {
-        next({name: "login"})
+    if ("requireAuth" in to.meta) {
+        if (!to.meta.requireAuth && hasToken) {
+            next({name: "dashboard"})
+        } else if (to.meta.requireAuth && !hasToken) {
+            next({name: "login"})
+        } else {
+            next()
+        }
     } else {
         next()
     }
