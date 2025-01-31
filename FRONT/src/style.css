@@ -139,6 +139,12 @@ a {
     white-space: nowrap;
 }
 
+.input-error {
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+}
+
 /*********** Quill component **********/
 
 .ql-toolbar {

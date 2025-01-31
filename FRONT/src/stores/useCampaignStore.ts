@@ -9,7 +9,7 @@ export const useCampaignStore = defineStore("campaign", {
         campaign: Campaign | null,
         totalItems: number,
         itemsPerPage: number,
-        currentPage: number,
+        currentPage: number | string,
         loading: boolean,
         error: string | null,
         errorsFormCampaign: errorFormCampaign | null,
@@ -26,8 +26,9 @@ export const useCampaignStore = defineStore("campaign", {
     actions: {
         async createCampaign(dataCampaign: object) {
             this.loading = true;
+            this.errorsFormCampaign = null
             try {
-                return await postMultiPartData("/campaigns", dataCampaign)
+                return postMultiPartData("/campaigns", dataCampaign)
             } catch (error) {
                 if (error instanceof AxiosError) {
                     this.errorsFormCampaign = error.response?.data.errors
@@ -37,7 +38,7 @@ export const useCampaignStore = defineStore("campaign", {
             }
 
         },
-        async getCampaigns(page: number | string = 1) {
+        async getCampaigns(page: number | string) {
             this.loading = true
             try {
                 const response = await fetchData(`/campaigns?page=${page}`)
@@ -62,7 +63,7 @@ export const useCampaignStore = defineStore("campaign", {
                 this.loading = false
             }
         },
-        async setPage(page: number) {
+        async setPage(page: number | string) {
             this.currentPage = page
             await this.getCampaigns(page)
         }

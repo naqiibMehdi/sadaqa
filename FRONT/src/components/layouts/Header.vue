@@ -12,6 +12,9 @@ const authStore = useAuthStore();
       <nav class="header-nav">
         <ul class="header-list" v-if="authStore.token">
           <li class="header-item">
+            <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
+          </li>
+          <li class="header-item">
             <RouterLink :to="{name: 'dashboard'}">Dashboard</RouterLink>
           </li>
           <li class="header-item">
@@ -24,7 +27,7 @@ const authStore = useAuthStore();
 
         <ul class="header-list" v-if="!authStore.token">
           <li class="header-item">
-            <RouterLink :to="{name: 'campaigns'}">Recherche une cagnotte</RouterLink>
+            <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
           </li>
           <li class="header-item">
             <RouterLink :to="{name: 'login'}">Connexion</RouterLink>

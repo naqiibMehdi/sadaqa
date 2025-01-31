@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import IcBaselinePhotoCamera from '~icons/ic/baseline-photo-camera'
+import IcBaselineDelete from '~icons/ic/baseline-delete'
 import {ref} from "vue";
 import {useToast} from "primevue/usetoast";
 
@@ -41,6 +42,10 @@ const convertToBase64 = (file: File) => {
   }
   reader.readAsDataURL(file)
 }
+
+const deleteUrlBase64 = () => {
+  urlBase64.value = null
+}
 </script>
 
 <template>
@@ -50,8 +55,9 @@ const convertToBase64 = (file: File) => {
       <IcBaselinePhotoCamera width="32" height="32"/>
       <p>Joindre une image principale</p>
     </div>
-    <div v-else class="fileUploader-banner-upload__bgImage" :style="{ backgroundImage: `url(${urlBase64})` }">
-
+    <div v-else class="fileUploader-banner-upload__bgImage" :style="{ backgroundImage: `url(${urlBase64})` }"
+         @click.stop>
+      <IcBaselineDelete width="32" height="32" class="icon-delete" @click="deleteUrlBase64"/>
     </div>
   </div>
 </template>
@@ -75,6 +81,26 @@ const convertToBase64 = (file: File) => {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.icon-delete {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  color: white;
+  background-color: darkred;
+  padding: 0.2rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: transform .2s;
+}
+
+
+.fileUploader-banner-upload__bgImage:hover .icon-delete {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .fileUploader-banner-upload:hover {

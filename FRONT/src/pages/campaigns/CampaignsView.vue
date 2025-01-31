@@ -12,7 +12,8 @@ import {useRoute, useRouter} from "vue-router";
 const campaignStore = useCampaignStore();
 const router = useRouter()
 const route = useRoute()
-const fetchCampaigns = async () => await campaignStore.getCampaigns()
+
+const fetchCampaigns = async () => await campaignStore.getCampaigns(campaignStore.currentPage)
 
 onMounted(() => {
   fetchCampaigns()
@@ -20,15 +21,19 @@ onMounted(() => {
 
 
 const onPageChange = (e: PageState) => {
+  console.log(e)
   campaignStore.setPage(e.page + 1)
   router.push({query: {page: campaignStore.currentPage}})
 }
 
-watch(() => route.query.page, () => {
-  if (route.fullPath === "/campaigns") {
-    fetchCampaigns()
+watch(() => route.query.page, (newPage) => {
+  if (!newPage) {
+    campaignStore.setPage(1)
+    return
   }
+  campaignStore.setPage(newPage as string)
 })
+
 
 </script>
 

@@ -46,6 +46,6 @@ export interface errorFormCampaign {
     title: string,
     description: string,
     image: File | string,
-    target_amount: string | number,
-    category_id: string | number
+    target_amount: string,
+    category_id: string
 }
