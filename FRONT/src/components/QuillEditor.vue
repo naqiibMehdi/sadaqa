@@ -1,48 +1,51 @@
 <script setup lang="ts">
-import Editor from "primevue/editor"
+import Quill from "quill"
 import "quill/dist/quill.snow.css"
-import {ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 
-const props = defineProps<{ modelValue: string }>()
+let editorRef = ref("")
+let quill: Quill
 
-const localContent = ref(props.modelValue)
-
-const emit = defineEmits(['update:modelValue'])
-
-watch(localContent, (newValue) => {
-  emit('update:modelValue', newValue)
+onMounted(() => {
+  quill = new Quill(editorRef.value, {
+    theme: "snow",
+    modules: {
+      toolbar: {
+        container: ['bold', 'italic', 'underline', 'link', 'image'],
+        handlers: {
+          image: handleImageUpload
+        }
+      },
+    }
+  })
 })
 
+const handleImageUpload = () => {
+  const input = document.createElement("input")
+  input.type = "file"
+  input.accept = "image/*"
+
+  input.click()
+}
 </script>
 
 <template>
-  <!--  <div class="quill-group">-->
-  <!--    <label for="">Description</label>-->
-  <!--    <div class="quill-editor">-->
-  <!--      <div ref="editorRef" class="quill-container"></div>-->
-  <!--    </div>-->
-  <!--  </div>-->
   <div class="quill-group">
     <label for="">Description</label>
-    <Editor editorStyle="height: 280px; font-size: 1rem" class="quill-editor" v-model="localContent">
-      <template v-slot:toolbar>
-        <span class="ql-formats">
-            <button v-tooltip="'Bold'" class="ql-bold"></button>
-            <button v-tooltip="'Italic'" class="ql-italic"></button>
-            <button v-tooltip="'Underline'" class="ql-underline"></button>
-            <button v-tooltip="'link'" class="ql-link"></button>
-            <button v-tooltip="'image'" class="ql-image"></button>
-        </span>
-      </template>
-    </Editor>
+    <div class="quill-editor">
+      <div ref="editorRef" class="quill-container"></div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-
 .quill-editor {
   margin-top: .9rem;
 }
 
-
+.quill-container {
+  min-height: 300px;
+  font-size: 1rem;
+  background-color: #fff;
+}
 </style>
