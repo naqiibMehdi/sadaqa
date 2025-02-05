@@ -13,40 +13,42 @@ Route::post("webhook", [StripeWebHookController::class, "webhook"]);
 Route::post("/forgot-password", [PasswordResetController::class, "sendResetLinkEmail"])->name("password.email");
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name("password.reset");
 
+Route::post("/upload-image", [\App\Http\Controllers\Api\ImageController::class, "upload"])->name("upload.image");
+
 Route::prefix("auth")->group(function () {
-    Route::post("/register", [AuthController::class, "store"]);
-    Route::post("/login", [AuthController::class, "login"]);
+  Route::post("/register", [AuthController::class, "store"]);
+  Route::post("/login", [AuthController::class, "login"]);
 
 });
 
 Route::prefix("campaigns")->group(function () {
-    Route::get("/", [CampaignController::class, "index"]);
-    Route::get("/{slug}-{id}", [CampaignController::class, "show"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
-    Route::post("/{slug}-{id}/payment", [StripeController::class, "createCheckoutSession"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
+  Route::get("/", [CampaignController::class, "index"]);
+  Route::get("/{slug}-{id}", [CampaignController::class, "show"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
+  Route::post("/{slug}-{id}/payment", [StripeController::class, "createCheckoutSession"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
 
 });
 
 
 Route::middleware("auth:sanctum")->group(function () {
-    /**
-     * Auth route
-     */
-    Route::post("auth/logout", [AuthController::class, "logout"]);
+  /**
+   * Auth route
+   */
+  Route::post("auth/logout", [AuthController::class, "logout"]);
 
-    /**
-     * Campaigns route
-     */
-    Route::post("/campaigns", [CampaignController::class, "store"]);
-    Route::put("/campaigns/{slug}-{id}/edit", [CampaignController::class, "update"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
-    Route::delete("/campaigns/{slug}-{id}", [CampaignController::class, "destroy"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
+  /**
+   * Campaigns route
+   */
+  Route::post("/campaigns", [CampaignController::class, "store"]);
+  Route::put("/campaigns/{slug}-{id}/edit", [CampaignController::class, "update"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
+  Route::delete("/campaigns/{slug}-{id}", [CampaignController::class, "destroy"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
 
-    /**
-     * User route
-     */
-    Route::prefix("user")->group(function () {
-        Route::get("/dashboard", [UserController::class, "dashboard"]);
-        Route::get("/profile", [UserController::class, "profile"]);
-    });
+  /**
+   * User route
+   */
+  Route::prefix("user")->group(function () {
+    Route::get("/dashboard", [UserController::class, "dashboard"]);
+    Route::get("/profile", [UserController::class, "profile"]);
+  });
 });
 
 //Route::get('/user', function (Request $request) {
