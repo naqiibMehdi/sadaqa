@@ -1,31 +1,58 @@
 <script setup lang="ts">
-import Quill from "quill"
+import Quill, {Range} from "quill"
 import "quill/dist/quill.snow.css"
 import {onMounted, ref} from "vue";
+import {postMultiPartData} from "@/utils/axios.ts";
+import {AxiosError} from "axios";
 
 let editorRef = ref("")
-let quill: Quill
+let quill: Quill | null
 
 onMounted(() => {
   quill = new Quill(editorRef.value, {
     theme: "snow",
     modules: {
       toolbar: {
-        container: ['bold', 'italic', 'underline', 'link', 'image'],
+        container: [
+          ['bold', 'italic', 'underline', 'link', 'image']
+        ],
         handlers: {
-          image: handleImageUpload
+          image: handleImageUpload,
         }
       },
     }
   })
+  quill?.root.addEventListener("keydown", deleteImage)
 })
 
+const deleteImage = (e: KeyboardEvent) => {
+  if (e.key === "Delete" || e.key === "Backspace") {
+    console.log(e)
+  }
+}
 const handleImageUpload = () => {
   const input = document.createElement("input")
   input.type = "file"
   input.accept = "image/*"
-
   input.click()
+
+  input.onchange = async (e: Event) => {
+    const file = (e.target as HTMLInputElement)?.files?.[0]
+    if (file) {
+      try {
+        const response = await postMultiPartData("upload-image", {image: file})
+        const range = quill?.getSelection() as Range
+        quill?.insertEmbed(range.index, "image", response.url)
+        quill?.setSelection(range.index + 1, 0)
+
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          console.log("erreur", e?.response?.data)
+
+        }
+      }
+    }
+  }
 }
 </script>
 
