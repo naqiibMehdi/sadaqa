@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\StripeWebHookController;
@@ -13,7 +14,8 @@ Route::post("webhook", [StripeWebHookController::class, "webhook"]);
 Route::post("/forgot-password", [PasswordResetController::class, "sendResetLinkEmail"])->name("password.email");
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name("password.reset");
 
-Route::post("/upload-image", [\App\Http\Controllers\Api\ImageController::class, "upload"])->name("upload.image");
+Route::post("/upload-image", [ImageController::class, "upload"])->name("upload.image");
+Route::post("/delete-image", [ImageController::class, "delete"])->name("delete.image");
 
 Route::prefix("auth")->group(function () {
   Route::post("/register", [AuthController::class, "store"]);
