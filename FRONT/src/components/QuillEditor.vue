@@ -2,10 +2,15 @@
 import Quill, {Range} from "quill"
 import "quill/dist/quill.snow.css"
 import {onMounted, ref} from "vue";
-import {postMultiPartData} from "@/utils/axios.ts";
+import {postData, postMultiPartData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
+import {useToast} from "primevue/usetoast";
 
+const toast = useToast();
+
+let selectedImage = ref<HTMLImageElement | null>(null)
 let editorRef = ref("")
+let errorsUploadImage = ref<string[]>([])
 let quill: Quill | null
 
 onMounted(() => {
@@ -22,12 +27,28 @@ onMounted(() => {
       },
     }
   })
-  quill?.root.addEventListener("keydown", deleteImage)
+  quill?.root.addEventListener("keydown", handleDeleteImage)
+  quill?.root.addEventListener("click", handleImageSelection)
 })
 
-const deleteImage = (e: KeyboardEvent) => {
-  if (e.key === "Delete" || e.key === "Backspace") {
-    console.log(e)
+const handleImageSelection = (e: Event) => {
+  const target = e.target as HTMLImageElement
+
+  if (target.tagName === "IMG") {
+    selectedImage.value = target
+  } else {
+    selectedImage.value = null
+  }
+}
+
+const handleDeleteImage = async (e: KeyboardEvent) => {
+  if (selectedImage.value && (e.key === "Backspace" || e.key === "Delete")) {
+    try {
+      await postData("delete-image", {url: selectedImage.value?.src})
+      selectedImage.value = null
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 const handleImageUpload = () => {
@@ -39,6 +60,7 @@ const handleImageUpload = () => {
   input.onchange = async (e: Event) => {
     const file = (e.target as HTMLInputElement)?.files?.[0]
     if (file) {
+      errorsUploadImage.value = []
       try {
         const response = await postMultiPartData("upload-image", {image: file})
         const range = quill?.getSelection() as Range
@@ -47,7 +69,13 @@ const handleImageUpload = () => {
 
       } catch (e) {
         if (e instanceof AxiosError) {
-          console.log("erreur", e?.response?.data)
+          errorsUploadImage.value = e.response?.data?.errors?.image
+          toast.add({
+            severity: 'error',
+            summary: 'Erreurs',
+            detail: errorsUploadImage.value.join("\n"),
+            life: 5000,
+          });
 
         }
       }
