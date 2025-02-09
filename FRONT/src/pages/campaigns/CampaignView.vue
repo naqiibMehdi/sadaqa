@@ -4,6 +4,7 @@ import Footer from "@/components/layouts/Footer.vue";
 import Main from "@/components/layouts/Main.vue";
 import CardCampaign from "@/components/CardCampaign.vue";
 import ParticipantBanner from "@/components/ParticipantBanner.vue";
+import Divider from 'primevue/divider';
 
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import {onMounted} from "vue";
@@ -30,9 +31,10 @@ onMounted(async () => {
           <CardCampaign :campaign="campaignStore.campaign"/>
         </section>
         <section class="campaign-card-description">
-          <p>{{ campaignStore.campaign.description }}</p>
+          <div v-html="campaignStore.campaign.description"></div>
         </section>
       </div>
+      <Divider/>
       <div class="campaign-footer">
         <h2>Liste des participants</h2>
         <p v-if="campaignStore.campaign.participants && campaignStore.campaign.participants.length <= 0">Il n'y a aucun
