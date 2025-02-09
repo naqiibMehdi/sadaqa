@@ -21,7 +21,6 @@ onMounted(() => {
 
 
 const onPageChange = (e: PageState) => {
-  console.log(e)
   campaignStore.setPage(e.page + 1)
   router.push({query: {page: campaignStore.currentPage}})
 }
@@ -45,7 +44,8 @@ watch(() => route.query.page, (newPage) => {
       <CardCampaign v-for="campaign in campaignStore.campaigns.data" :key="campaign.id" :campaign="campaign"/>
     </section>
     <section class="pagination">
-      <Paginator :rows="campaignStore.itemsPerPage"
+      <Paginator :first="(Number(campaignStore.currentPage) - 1) * campaignStore.itemsPerPage"
+                 :rows="campaignStore.itemsPerPage"
                  :totalRecords="campaignStore.totalItems" @page="onPageChange"/>
     </section>
   </Main>
