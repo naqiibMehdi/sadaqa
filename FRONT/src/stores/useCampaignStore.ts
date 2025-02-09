@@ -28,10 +28,10 @@ export const useCampaignStore = defineStore("campaign", {
             this.loading = true;
             this.errorsFormCampaign = null
             try {
-                return postMultiPartData("/campaigns", dataCampaign)
+                return await postMultiPartData("/campaigns", dataCampaign)
             } catch (error) {
                 if (error instanceof AxiosError) {
-                    this.errorsFormCampaign = error.response?.data.errors
+                    this.errorsFormCampaign = error.response?.data?.errors
                 }
             } finally {
                 this.loading = false;
