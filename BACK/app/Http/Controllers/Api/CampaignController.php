@@ -58,18 +58,6 @@ class CampaignController extends Controller
     $slug = Str::slug($validated["title"]);
     $imagePath = "default_cover_campaign.png";
 
-    preg_match_all('/data:image\/png;base64,([^"\']+)/', $validated["description"], $matches);
-
-    $urlEncoded = $matches[1][0];
-    if ($urlEncoded) {
-      $url_decoded = base64_decode($urlEncoded);
-      $fileName = uniqid() . '.png';
-      $path = "campaigns/description/" . $fileName;
-      Storage::disk('public')->put($path, $url_decoded);
-      $replaceHtmlSrcAttribute = Str::replace($matches[0][0], asset(Storage::url("campaigns/description/" . $fileName)), $request->input("description"));
-      dd($replaceHtmlSrcAttribute);
-    }
-
 
     if ($request->hasFile("image") && $request->file("image")->isValid()) {
       $imagePath = $request->file("image")->store("campaigns", "public");
