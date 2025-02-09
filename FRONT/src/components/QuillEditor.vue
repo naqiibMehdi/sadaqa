@@ -6,15 +6,19 @@ import {postData, postMultiPartData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
 import {useToast} from "primevue/usetoast";
 
+defineProps<{ modelValue: HTMLElement | string }>()
+const emit = defineEmits(["update:modelValue"]);
+
 const toast = useToast();
 
 let selectedImage = ref<HTMLImageElement | null>(null)
-let editorRef = ref("")
 let errorsUploadImage = ref<string[]>([])
+let editorContainer = ref<HTMLDivElement | string>("")
 let quill: Quill | null
 
+
 onMounted(() => {
-  quill = new Quill(editorRef.value, {
+  quill = new Quill(editorContainer.value, {
     theme: "snow",
     modules: {
       toolbar: {
@@ -29,6 +33,10 @@ onMounted(() => {
   })
   quill?.root.addEventListener("keydown", handleDeleteImage)
   quill?.root.addEventListener("click", handleImageSelection)
+  quill?.on("text-change", () => {
+    const content = quill?.root.innerHTML
+    emit("update:modelValue", content)
+  })
 })
 
 const handleImageSelection = (e: Event) => {
@@ -88,7 +96,7 @@ const handleImageUpload = () => {
   <div class="quill-group">
     <label for="">Description</label>
     <div class="quill-editor">
-      <div ref="editorRef" class="quill-container"></div>
+      <div ref="editorContainer" class="quill-container"></div>
     </div>
   </div>
 </template>

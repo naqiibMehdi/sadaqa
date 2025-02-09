@@ -32,22 +32,22 @@ const campaignData = ref<{
 
 const onSubmitFormCampaign = async () => {
   console.log(campaignData.value)
-  // const response = await campaignStore.createCampaign({
-  //   ...campaignData.value,
-  //   target_amount: Number(campaignData.value.target_amount) * 100
-  // });
-  //
-  // if (!campaignStore.errorsFormCampaign) {
-  //   campaignData.value = {
-  //     title: "",
-  //     description: "Insérer une description de votre projet",
-  //     image: "",
-  //     target_amount: "",
-  //     category_id: 1
-  //   }
-  //
-  //   await router.push({name: "campaign", params: {slug: response.data.slug, id: response.data.id}});
-  // }
+  const response = await campaignStore.createCampaign({
+    ...campaignData.value,
+    target_amount: Number(campaignData.value.target_amount) * 100
+  });
+
+  if (!campaignStore.errorsFormCampaign) {
+    campaignData.value = {
+      title: "",
+      description: "Insérer une description de votre projet",
+      image: "",
+      target_amount: "",
+      category_id: 1
+    }
+
+    await router.push({name: "campaign", params: {slug: response.data.slug, id: response.data.id}});
+  }
 }
 </script>
 
