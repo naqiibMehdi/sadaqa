@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\StripeController;
@@ -17,12 +18,20 @@ Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']
 Route::post("/upload-image", [ImageController::class, "upload"])->name("upload.image");
 Route::post("/delete-image", [ImageController::class, "delete"])->name("delete.image");
 
+
+//routes for authentication
 Route::prefix("auth")->group(function () {
   Route::post("/register", [AuthController::class, "store"]);
   Route::post("/login", [AuthController::class, "login"]);
 
 });
 
+//routes for categories
+Route::prefix("categories")->group(function () {
+  Route::get("/", [CategoryController::class, "index"]);
+});
+
+//routes for campaigns
 Route::prefix("campaigns")->group(function () {
   Route::get("/", [CampaignController::class, "index"]);
   Route::get("/{slug}-{id}", [CampaignController::class, "show"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
