@@ -8,27 +8,33 @@ import Footer from "@/components/layouts/Footer.vue";
 import QuillEditor from "@/components/QuillEditor.vue"
 import Select from "primevue/select";
 import FileUploader from "@/components/FileUploader.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import Message from "primevue/message";
 import {useRouter} from "vue-router";
+import {useCategoryStore} from "@/stores/useCategoryStore.ts";
 
 const router = useRouter()
 const campaignStore = useCampaignStore();
+const categoryStore = useCategoryStore()
 
 const campaignData = ref<{
   title: string,
   description: string,
   image: string,
-  target_amount: string | number,
-  category_id: number | string
+  target_amount: string | number | null,
+  category_id: number | string | null
 }>({
   title: "",
-  description: "Insérer une description de votre projet",
+  description: "",
   image: "",
-  target_amount: "",
-  category_id: 1
+  target_amount: null,
+  category_id: null
 });
+
+onMounted(() => {
+  categoryStore.getCategories()
+})
 
 const onSubmitFormCampaign = async () => {
   console.log(campaignData.value)
@@ -40,10 +46,10 @@ const onSubmitFormCampaign = async () => {
   if (!campaignStore.errorsFormCampaign) {
     campaignData.value = {
       title: "",
-      description: "Insérer une description de votre projet",
+      description: "",
       image: "",
-      target_amount: "",
-      category_id: 1
+      target_amount: null,
+      category_id: null
     }
 
     await router.push({name: "campaign", params: {slug: response.data.slug, id: response.data.id}});
@@ -65,9 +71,21 @@ const onSubmitFormCampaign = async () => {
           {{ campaignStore.errorsFormCampaign?.title?.[0] }}
         </Message>
       </div>
+
       <label for="campaignCategory">Choisissez une catégorie</label>
-      <Select placeholder="Choisissez une catégorie" :options="['Animaux', 'Medecine']" labelId="campaignCategory"
-              v-model="campaignData.category_id"/>
+      <Select placeholder="Choisissez une catégorie"
+              :options="categoryStore.categories"
+              optionLabel="name"
+              optionValue="id"
+              labelId="campaignCategory"
+              v-model="campaignData.category_id"
+              :invalid="((campaignStore.errorsFormCampaign && campaignStore.errorsFormCampaign?.category_id?.[0] !== '') as boolean)"
+      />
+      <Message severity="error" variant="simple" size="small"
+               v-if="campaignStore.errorsFormCampaign?.category_id?.[0]">
+        {{ campaignStore.errorsFormCampaign?.category_id?.[0] }}
+      </Message>
+
       <div class="input-error">
         <InputField placeholder="Ex: 10" id="campaignamount" title="Montant de la cagnotte" type="number"
                     v-model="campaignData.target_amount as string"

@@ -2,6 +2,14 @@
 import InputField from "@/components/InputField.vue";
 import MdiSearch from '~icons/mdi/search'
 import Nav from "@/components/layouts/Nav.vue";
+import {onMounted} from "vue";
+import {useCategoryStore} from "@/stores/useCategoryStore.ts";
+
+const categoryStore = useCategoryStore()
+
+onMounted(() => {
+  categoryStore.getCategories()
+})
 </script>
 
 <template>
@@ -14,7 +22,7 @@ import Nav from "@/components/layouts/Nav.vue";
         <InputField placeholder="Ex: construction d'un puit" size="large" class="campaigns-input"/>
       </div>
     </form>
-    <Nav :links="['animaux', 'sports', 'médecine', 'agriculture']" prefixClass="campaigns"/>
+    <Nav :links="categoryStore.categoriesNames" prefixClass="campaigns"/>
   </section>
 </template>
 
