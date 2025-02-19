@@ -25,7 +25,7 @@ class StoreCampaignRequest extends FormRequest
       "title" => "required|string",
       "description" => "required|string",
       "image" => "nullable|image|mimes:jpeg,png,jpg,webp|max:2048",
-      "target_amount" => "required|numeric",
+      "target_amount" => "required|numeric|min:1",
       "limit_date" => "nullable|date",
       "category_id" => "required|numeric|exists:categories,id",
     ];
@@ -48,7 +48,8 @@ class StoreCampaignRequest extends FormRequest
       ],
       "target_amount.*" => [
         "required" => "Le montant à atteindre est obligatoire",
-        "numeric" => "Le montant comporte doit seulement des chiffres",
+        "numeric" => "Le montant  doit seulement comporter des chiffres",
+        "min" => "Le montant minimal doit être de 1 euros"
       ],
       "limit_date" => [
         "date" => "la date doit être au bon format"
