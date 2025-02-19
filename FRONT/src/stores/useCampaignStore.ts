@@ -9,7 +9,7 @@ export const useCampaignStore = defineStore("campaign", {
         campaign: Campaign | null,
         totalItems: number,
         itemsPerPage: number,
-        currentPage: number | string,
+        currentPage: number,
         loading: boolean,
         error: string | null,
         errorsFormCampaign: errorFormCampaign | null,
@@ -63,7 +63,7 @@ export const useCampaignStore = defineStore("campaign", {
                 this.loading = false
             }
         },
-        async setPage(page: number | string) {
+        async setPage(page: number) {
             this.currentPage = page
             await this.getCampaigns(page)
         }

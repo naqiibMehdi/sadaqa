@@ -21,7 +21,7 @@ onMounted(() => {
 
 
 const onPageChange = (e: PageState) => {
-  campaignStore.setPage(e.page + 1)
+  campaignStore.setPage(Number(e.page + 1))
   router.push({query: {page: campaignStore.currentPage}})
 }
 
@@ -30,7 +30,7 @@ watch(() => route.query.page, (newPage) => {
     campaignStore.setPage(1)
     return
   }
-  campaignStore.setPage(newPage as string)
+  campaignStore.setPage(Number(newPage))
 })
 
 
