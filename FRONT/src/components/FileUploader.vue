@@ -45,6 +45,7 @@ const convertToBase64 = (file: File) => {
 
 const deleteUrlBase64 = () => {
   urlBase64.value = null
+  emit('update:modelValue', "")
 }
 </script>
 
