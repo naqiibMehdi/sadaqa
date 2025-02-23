@@ -13,26 +13,31 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    /**
-     * permet d'afficher le dashboard de l'utilisateur connecté
-     *
-     * @return JsonResponse|AnonymousResourceCollection
-     */
-    public function dashboard()
-    {
-        $getCampaignsFromUser = Campaign::where("user_id", Auth::id())->get();
+  /**
+   * permet d'afficher le dashboard de l'utilisateur connecté
+   *
+   * @return JsonResponse|AnonymousResourceCollection
+   */
+  public function dashboard(): JsonResponse|AnonymousResourceCollection
+  {
+    $getCampaignsFromUser = Campaign::with("participant")->where("user_id", Auth::id())->get();
 
-        if ($getCampaignsFromUser->isEmpty()) {
-            return response()->json(["message" => "aucune cagnotte trouvée pour cet utilisateur"], 404);
-        }
-
-        return CampaignRessource::collection($getCampaignsFromUser);
+    if ($getCampaignsFromUser->isEmpty()) {
+      return response()->json(["message" => "aucune cagnotte trouvée pour cet utilisateur"], 404);
     }
 
-    public function profile()
-    {
-        $getUserInfos = User::where("id", Auth::id())->first();
+    return CampaignRessource::collection($getCampaignsFromUser);
+  }
 
-        return new UserRessource($getUserInfos);
-    }
+  /**
+   * retourne les informations de l'utilisateur connecté actuellement
+   *
+   * @return UserRessource
+   */
+  public function profile(): UserRessource
+  {
+    $getUserInfos = User::where("id", Auth::id())->first();
+
+    return new UserRessource($getUserInfos);
+  }
 }
