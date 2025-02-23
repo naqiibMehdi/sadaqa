@@ -39,8 +39,11 @@ onMounted(async () => {
         <h2>Liste des participants</h2>
         <p v-if="campaignStore.campaign.participants && campaignStore.campaign.participants.length <= 0">Il n'y a aucun
           participants pour cette cagnotte</p>
-        <ParticipantBanner v-for="participant in campaignStore.campaign.participants" :key="participant.id"
-                           :participant="participant" :title="campaignStore.campaign.title" v-else/>
+        <ParticipantBanner
+            :participants="campaignStore?.campaign?.participants"
+            :title="campaignStore.campaign.title"
+            v-else
+        />
       </div>
     </section>
   </Main>

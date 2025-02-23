@@ -7,6 +7,14 @@ import CustomButton from "@/components/CustomButton.vue";
 import MdiEdit from "~icons/mdi/edit"
 import MdiLock from "~icons/mdi/lock"
 import ParticipantBanner from "@/components/ParticipantBanner.vue";
+import {useUserStore} from "@/stores/useUserStore.ts";
+import {onMounted} from "vue";
+
+const userStore = useUserStore()
+
+onMounted(() => {
+  userStore.getCampaignsOfUSer()
+})
 </script>
 
 <template>
@@ -15,15 +23,16 @@ import ParticipantBanner from "@/components/ParticipantBanner.vue";
     <section class="container dashboard">
       <h1 class="dashboard-title">Votre Dashboard</h1>
       <div class="dashboard-list-campaigns">
-        <article class="dashboard-campaign">
+        <article class="dashboard-campaign" v-for="campaign in userStore.campaignsUser">
           <div class="dashboard-campaign-img">
-            <img src="https://picsum.photos/800/600" alt="image principale de la cagnotte"/>
+            <img :src="campaign?.url_image" alt="image principale de la cagnotte"/>
           </div>
           <div class="dashboard-campaign-infos">
-            <h2>titre de la cagnotte</h2>
+            <h2>{{ campaign.title }}</h2>
             <div class="dashboard-campaign-subinfos">
-              <p>10000 €</p>
-              <p>40 participants</p>
+              <p>{{ campaign.collected_amount / 100 }} €</p>
+              <p>{{ campaign.participants?.length }}
+                participant{{ campaign.participants?.length && campaign.participants?.length > 1 ? 's' : '' }}</p>
             </div>
             <div class="dashboard-campaign-list-btn">
               <CustomButton label="modifier" :customComponent="MdiEdit"/>
@@ -35,8 +44,7 @@ import ParticipantBanner from "@/components/ParticipantBanner.vue";
     </section>
     <section class="container participants">
       <h2 class="dashboard-second-title">Donateurs récents:</h2>
-      <ParticipantBanner/>
-      <ParticipantBanner/>
+      <ParticipantBanner :participants="userStore.participants"/>
     </section>
   </Main>
   <Footer/>

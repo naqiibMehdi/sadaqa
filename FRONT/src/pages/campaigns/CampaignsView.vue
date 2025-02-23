@@ -13,7 +13,7 @@ const campaignStore = useCampaignStore();
 const router = useRouter()
 const route = useRoute()
 
-const fetchCampaigns = async () => await campaignStore.getCampaigns(campaignStore.currentPage)
+const fetchCampaigns = async () => await campaignStore.getCampaigns(1)
 
 onMounted(() => {
   fetchCampaigns()

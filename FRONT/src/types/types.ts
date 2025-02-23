@@ -26,9 +26,10 @@ export interface Campaign {
 
 export interface Participant {
     id: number | string;
+    title?: string
     name: string;
     amount: number;
-    participation_date: Date;
+    participation_date: Date | string;
 }
 
 interface User {

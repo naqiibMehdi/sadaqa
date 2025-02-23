@@ -4,7 +4,7 @@ import {useRoute} from "vue-router";
 import {computed} from "vue";
 import type {Participant} from "@/types/types.ts";
 
-defineProps<{ participant: Participant, title: string }>()
+defineProps<{ participants: Participant[] | [] | undefined, title?: string }>()
 
 const route = useRoute()
 
@@ -14,14 +14,14 @@ const participantBannerDashboard = computed(() => {
 </script>
 
 <template>
-  <div class="participant-banner-infos">
+  <div class="participant-banner-infos" v-for="participant in participants" :key="participant.id">
     <div class="participant-banner-amount" v-if="route.name !== 'dashboard'">
       {{ participant.amount / 100 }} €
     </div>
     <div :class="participantBannerDashboard">
-      <span v-if="route.name === 'dashboard'" class="participant-title">{{ title }}</span><span
-        class="participant-name">{{ participant.name }}</span><span
-        class="participant-date"> a participé le {{ participant.participation_date }}</span>
+      <span v-if="route.name === 'dashboard'" class="participant-title">{{ participant.title || title }}</span>
+      <span class="participant-name">{{ participant.name }}</span>
+      <span class="participant-date"> a participé le {{ participant.participation_date }}</span>
     </div>
   </div>
 </template>
