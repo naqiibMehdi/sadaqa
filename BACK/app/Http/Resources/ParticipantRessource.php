@@ -8,18 +8,18 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ParticipantRessource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
-    {
-        return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "amount" => $this->amount,
-            "participation_date" => Carbon::parse($this->participation_date)->format('d/m/Y'),
-        ];
-    }
+  /**
+   * Transform the resource into an array.
+   *
+   * @return array<string, mixed>
+   */
+  public function toArray(Request $request): array
+  {
+    return [
+      "id" => $this->id,
+      "name" => $this->name,
+      "amount" => $this->amount,
+      "participation_date" => Carbon::parse($this->participation_date),
+    ];
+  }
 }

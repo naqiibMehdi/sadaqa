@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -40,4 +41,28 @@ class UserController extends Controller
 
     return new UserRessource($getUserInfos);
   }
+
+  /**
+   * retourne la liste de tous les participants récents liés aux cagnottes de l'utilisateur
+   *
+   * @return JsonResponse
+   */
+  public function getAllParticipants(): JsonResponse
+  {
+    $participants = DB::table('participants')
+      ->join('campaigns', 'participants.campaign_id', '=', 'campaigns.id')
+      ->join('users', 'campaigns.user_id', '=', 'users.id')
+      ->where('users.id', Auth::id())
+      ->select('participants.*', 'campaigns.title')
+      ->orderBy('participants.participation_date', 'desc')
+      ->get();
+
+    if ($participants->isEmpty()) {
+      return response()->json(["message" => "Il n'y a aucun participants pour les cagnottes actuelles"]);
+    }
+
+    return response()->json($participants);
+  }
 }
+
+
