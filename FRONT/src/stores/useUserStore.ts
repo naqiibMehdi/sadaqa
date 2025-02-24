@@ -19,8 +19,7 @@ export const useUserStore = defineStore("user", {
         async getCampaignsOfUSer() {
             this.error = ""
             this.campaignsUser = []
-            this.participants = []
-            
+
             try {
                 const response = await fetchData("user/dashboard");
                 this.campaignsUser = response.data
@@ -30,19 +29,21 @@ export const useUserStore = defineStore("user", {
                 }
             }
         },
+        async getParticipantsOfUser() {
+            this.error = ""
+            this.participants = []
+
+            try {
+                this.participants = await fetchData("user/participants")
+            } catch (err) {
+                if (err instanceof AxiosError) {
+                    this.error = "Erreur de chargement des participants"
+                }
+            }
+        },
 
     },
-    getters: {
-        getAllParticipantsOfUser() {
-            this.campaignsUser.forEach(campaign => {
-                if (campaign.participants) {
-                    for (let p of campaign.participants) {
-                        this.participants.push({title: campaign.title, ...p})
-                    }
-                }
-            })
-        }
-    }
+    getters: {}
 })
 
 if (import.meta.hot) {

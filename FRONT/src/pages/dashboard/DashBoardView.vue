@@ -9,11 +9,13 @@ import MdiLock from "~icons/mdi/lock"
 import ParticipantBanner from "@/components/ParticipantBanner.vue";
 import {useUserStore} from "@/stores/useUserStore.ts";
 import {onMounted} from "vue";
+import {RouterLink} from "vue-router";
 
 const userStore = useUserStore()
 
 onMounted(() => {
   userStore.getCampaignsOfUSer()
+  userStore.getParticipantsOfUser()
 })
 </script>
 
@@ -35,7 +37,9 @@ onMounted(() => {
                 participant{{ campaign.participants?.length && campaign.participants?.length > 1 ? 's' : '' }}</p>
             </div>
             <div class="dashboard-campaign-list-btn">
-              <CustomButton label="modifier" :customComponent="MdiEdit"/>
+              <RouterLink :to="{name: 'campaign.update', params: {slug: campaign.slug, id: campaign.id}}">
+                <CustomButton label="modifier" :customComponent="MdiEdit"/>
+              </RouterLink>
               <CustomButton label="clôturer" :customComponent="MdiLock"/>
             </div>
           </div>
@@ -112,7 +116,13 @@ onMounted(() => {
   gap: 1rem;
 }
 
-.dashboard-campaign-list-btn button {
+.dashboard-campaign-list-btn a button:first-child {
+  width: 100%;
+}
+
+
+.dashboard-campaign-list-btn button:last-child,
+.dashboard-campaign-list-btn a {
   width: 50%;
   font-size: 1.125rem;
 }

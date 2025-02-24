@@ -21,7 +21,9 @@ const participantBannerDashboard = computed(() => {
     <div :class="participantBannerDashboard">
       <span v-if="route.name === 'dashboard'" class="participant-title">{{ participant.title || title }}</span>
       <span class="participant-name">{{ participant.name }}</span>
-      <span class="participant-date"> a participé le {{ participant.participation_date }}</span>
+      <span class="participant-date"> a participé le {{
+          (new Date(participant.participation_date)?.toLocaleDateString("fr-FR"))
+        }}</span>
     </div>
   </div>
 </template>

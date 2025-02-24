@@ -3,6 +3,7 @@ import FormRegisterView from "@/pages/forms/FormRegisterView.vue";
 import FormContact from "@/pages/forms/FormContactView.vue";
 import {createRouter, createWebHistory} from "vue-router"
 import FormCreateCampaignView from "@/pages/forms/FormCreateCampaignView.vue";
+import FormUpdateCampaignView from "@/pages/forms/FormUpdateCampaignView.vue";
 import ProfilView from "@/pages/profile/ProfilView.vue";
 import FormPaymentView from "@/pages/forms/FormPaymentView.vue";
 import CampaignsView from "@/pages/campaigns/CampaignsView.vue";
@@ -24,6 +25,11 @@ const routes = [
         path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)",
         name: "campaign",
         component: CampaignView,
+    },
+    {
+        path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)/edit",
+        name: "campaign.update",
+        component: FormUpdateCampaignView,
     },
     {path: "/dashboard", name: "dashboard", component: DashBoardView, meta: {requireAuth: true}},
     {path: "/payment", name: "payment", component: FormPaymentView},
