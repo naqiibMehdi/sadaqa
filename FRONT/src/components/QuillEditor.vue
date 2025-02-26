@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import Quill, {Range} from "quill"
 import "quill/dist/quill.snow.css"
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {postData, postMultiPartData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
 import {useToast} from "primevue/usetoast";
 
-defineProps<{ modelValue: HTMLElement | string }>()
+const props = defineProps<{ modelValue: HTMLElement | string | undefined }>()
 const emit = defineEmits(["update:modelValue"]);
 
 const toast = useToast();
@@ -31,13 +31,28 @@ onMounted(() => {
       },
     }
   })
+
   quill?.root.addEventListener("keydown", handleDeleteImage)
   quill?.root.addEventListener("click", handleImageSelection)
   quill?.on("text-change", () => {
     const content = quill?.root.innerHTML
     emit("update:modelValue", content)
   })
+
+  if (props.modelValue) {
+    quill.clipboard.dangerouslyPasteHTML(props.modelValue as string)
+    const editorLength = quill.getLength()
+    quill.setSelection(editorLength, 0)
+  }
 })
+
+watch(() => props.modelValue, (newValue) => {
+  if (newValue !== undefined && quill) {
+    quill.clipboard.dangerouslyPasteHTML(newValue as string);
+    const editorLength = quill.getLength();
+    quill.setSelection(editorLength, 0);
+  }
+});
 
 const handleImageSelection = (e: Event) => {
   const target = e.target as HTMLImageElement

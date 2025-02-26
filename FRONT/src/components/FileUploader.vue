@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IcBaselinePhotoCamera from '~icons/ic/baseline-photo-camera'
 import IcBaselineDelete from '~icons/ic/baseline-delete'
-import {ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useToast} from "primevue/usetoast";
 
 const toast = useToast()
@@ -9,8 +9,18 @@ const toast = useToast()
 const urlBase64 = ref<string | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
 
-defineProps<{ modelValue: File | string }>()
+const props = defineProps<{ modelValue: File | string, mainImage?: string | null }>()
 const emit = defineEmits(['update:modelValue'])
+
+onMounted(() => {
+  urlBase64.value = props.mainImage ? props.mainImage : null
+})
+
+watch(() => props.mainImage, (newUrl) => {
+  if (newUrl !== undefined) {
+    urlBase64.value = newUrl
+  }
+})
 const triggerFileInput = () => {
   fileInput.value?.click()
 }

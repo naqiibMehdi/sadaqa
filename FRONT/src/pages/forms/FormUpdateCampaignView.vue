@@ -8,33 +8,53 @@ import Footer from "@/components/layouts/Footer.vue";
 import QuillEditor from "@/components/QuillEditor.vue"
 import Select from "primevue/select";
 import FileUploader from "@/components/FileUploader.vue";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import Message from "primevue/message";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {useCategoryStore} from "@/stores/useCategoryStore.ts";
 
 const router = useRouter()
+const route = useRoute()
 const campaignStore = useCampaignStore();
 const categoryStore = useCategoryStore()
 
+const slug = route.params.slug
+const id = route.params.id
+
 const campaignData = ref<{
   title: string,
-  description: string,
-  image: string,
+  description: string | HTMLElement
+  image: string | File,
   target_amount: string | number | null,
-  category_id: number | string | null
+  category_id: string | number | null
 }>({
-  title: "",
-  description: "",
+  title: campaignStore?.campaign?.title ?? "",
+  description: campaignStore?.campaign?.description ?? "",
   image: "",
-  target_amount: null,
-  category_id: null
+  target_amount: ((campaignStore?.campaign?.target_amount ?? 0) / 100).toString(),
+  category_id: campaignStore?.campaign?.category_id ?? null
 });
 
-onMounted(() => {
-  categoryStore.getCategories()
+
+onMounted(async () => {
+  await categoryStore.getCategories()
+  await campaignStore.getOneCampaign(slug as string, id as string)
+
 })
+
+watch(() => campaignStore.campaign, (newCampaign) => {
+  if (newCampaign) {
+    campaignData.value = {
+      title: newCampaign.title ?? "",
+      description: newCampaign.description ?? "",
+      image: "",
+      target_amount: ((newCampaign.target_amount ?? 0) / 100).toString(),
+      category_id: newCampaign.category_id ?? null
+    };
+  }
+});
+
 
 const onSubmitFormCampaign = async () => {
   console.log(campaignData.value)
@@ -62,7 +82,7 @@ const onSubmitFormCampaign = async () => {
   <Main>
     <h1>Créer votre cagnotte</h1>
     <form class="form-container" @submit.prevent="onSubmitFormCampaign" enctype="multipart/form-data">
-      <FileUploader v-model="campaignData.image"/>
+      <FileUploader v-model="campaignData.image" :mainImage="campaignStore?.campaign?.url_image"/>
       <div class="input-error">
         <InputField placeholder="Titre de la cagnotte" id="campaigntitle" title="Titre de la cagnotte"
                     v-model="campaignData.title"
