@@ -97,7 +97,7 @@ class CampaignController extends Controller
     if ($request->hasFile("image") && $request->file("image")->isValid()) {
       $imagePath = $request->file("image")->store("campaigns", "public");
 
-      if ($campaign->image === "default_cover_campaign.png") {
+      if ($campaign->image === "campaigns/default_cover_campaign.png") {
         $validated["image"] = $imagePath;
       } else {
         Storage::disk("public")->delete($campaign->image);
@@ -108,7 +108,7 @@ class CampaignController extends Controller
     $campaign->update($validated);
 
 
-    return response()->json(["message" => "Cagnotte mis à jour avec succès"]);
+    return response()->json(["message" => "Cagnotte mis à jour avec succès", "data" => $campaign]);
   }
 
   /**
