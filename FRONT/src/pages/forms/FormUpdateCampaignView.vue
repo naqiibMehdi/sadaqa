@@ -7,6 +7,7 @@ import CustomButton from "@/components/CustomButton.vue"
 import Footer from "@/components/layouts/Footer.vue";
 import QuillEditor from "@/components/QuillEditor.vue"
 import Select from "primevue/select";
+import {useToast} from "primevue/usetoast";
 import FileUploader from "@/components/FileUploader.vue";
 import {onMounted, ref, watch} from "vue";
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
@@ -18,6 +19,7 @@ const router = useRouter()
 const route = useRoute()
 const campaignStore = useCampaignStore();
 const categoryStore = useCategoryStore()
+const toast = useToast()
 
 const slug = route.params.slug
 const id = route.params.id
@@ -25,7 +27,7 @@ const id = route.params.id
 const campaignData = ref<{
   title: string,
   description: string | HTMLElement
-  image: string | File,
+  image?: string | File,
   target_amount: string | number | null,
   category_id: string | number | null
 }>({
@@ -57,8 +59,10 @@ watch(() => campaignStore.campaign, (newCampaign) => {
 
 
 const onSubmitFormCampaign = async () => {
-  console.log(campaignData.value)
-  const response = await campaignStore.createCampaign({
+  if (campaignData.value.image === "") {
+    delete campaignData.value.image
+  }
+  await campaignStore.UpdateOneCampaign(slug as string, id as string, {
     ...campaignData.value,
     target_amount: Number(campaignData.value.target_amount) * 100
   });
@@ -71,8 +75,8 @@ const onSubmitFormCampaign = async () => {
       target_amount: null,
       category_id: null
     }
-
-    await router.push({name: "campaign", params: {slug: response.data.slug, id: response.data.id}});
+    toast.add({severity: 'success', summary: "Message de succès", detail: campaignStore.successMessage, life: 5000});
+    await router.push({name: "campaign", params: {slug: campaignStore.campaign?.slug, id: campaignStore.campaign?.id}});
   }
 }
 </script>
@@ -82,7 +86,13 @@ const onSubmitFormCampaign = async () => {
   <Main>
     <h1>Créer votre cagnotte</h1>
     <form class="form-container" @submit.prevent="onSubmitFormCampaign" enctype="multipart/form-data">
-      <FileUploader v-model="campaignData.image" :mainImage="campaignStore?.campaign?.url_image"/>
+      <FileUploader v-model="campaignData.image" :mainImage="campaignStore?.campaign?.url_image"
+                    :key="campaignStore?.campaign?.id"/>
+      <Message severity="error" variant="simple" size="small"
+               v-if="campaignStore.errorsFormCampaign && typeof campaignStore.errorsFormCampaign?.image?.[0] === 'object' ">
+        <p>{{ campaignStore.errorsFormCampaign?.image?.[0]?.max }}</p>
+        <p>{{ campaignStore.errorsFormCampaign?.image?.[0]?.mimes }}</p>
+      </Message>
       <div class="input-error">
         <InputField placeholder="Titre de la cagnotte" id="campaigntitle" title="Titre de la cagnotte"
                     v-model="campaignData.title"
@@ -116,7 +126,7 @@ const onSubmitFormCampaign = async () => {
         </Message>
       </div>
       <div class="input-error">
-        <QuillEditor v-model="campaignData.description"/>
+        <QuillEditor v-model="campaignData.description" :key="campaignStore?.campaign?.id"/>
         <Message severity="error" variant="simple" size="small"
                  v-if="campaignStore.errorsFormCampaign?.target_amount?.[0]">
           {{ campaignStore.errorsFormCampaign?.description?.[0] }}
