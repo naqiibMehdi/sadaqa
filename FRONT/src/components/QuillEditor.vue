@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Quill, {Range} from "quill"
 import "quill/dist/quill.snow.css"
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import {postData, postMultiPartData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
 import {useToast} from "primevue/usetoast";
@@ -45,14 +45,6 @@ onMounted(() => {
     quill.setSelection(editorLength, 0)
   }
 })
-
-watch(() => props.modelValue, (newValue) => {
-  if (newValue !== undefined && quill) {
-    quill.clipboard.dangerouslyPasteHTML(newValue as string);
-    const editorLength = quill.getLength();
-    quill.setSelection(editorLength, 0);
-  }
-});
 
 const handleImageSelection = (e: Event) => {
   const target = e.target as HTMLImageElement

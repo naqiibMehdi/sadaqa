@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IcBaselinePhotoCamera from '~icons/ic/baseline-photo-camera'
 import IcBaselineDelete from '~icons/ic/baseline-delete'
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import {useToast} from "primevue/usetoast";
 
 const toast = useToast()
@@ -16,11 +16,6 @@ onMounted(() => {
   urlBase64.value = props.mainImage ? props.mainImage : null
 })
 
-watch(() => props.mainImage, (newUrl) => {
-  if (newUrl !== undefined) {
-    urlBase64.value = newUrl
-  }
-})
 const triggerFileInput = () => {
   fileInput.value?.click()
 }
