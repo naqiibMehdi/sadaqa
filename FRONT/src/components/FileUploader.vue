@@ -9,7 +9,7 @@ const toast = useToast()
 const urlBase64 = ref<string | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
 
-const props = defineProps<{ modelValue: File | string, mainImage?: string | null }>()
+const props = defineProps<{ modelValue: File | string | undefined, mainImage?: string | null }>()
 const emit = defineEmits(['update:modelValue'])
 
 onMounted(() => {

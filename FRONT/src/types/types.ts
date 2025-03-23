@@ -43,10 +43,10 @@ interface User {
     image_profile: string;
 }
 
-export interface errorFormCampaign {
+export interface errorsFormCampaign {
     title: string,
     description: string,
-    image: File | string,
+    image: string | { max?: string, mimes?: string }[],
     target_amount: string,
     category_id: string
 }
