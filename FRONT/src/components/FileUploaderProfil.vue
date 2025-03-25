@@ -13,6 +13,7 @@
 <style scoped>
 .fileUploaderProfil-banner-upload {
   position: relative;
+  width: 100%;
   height: 200px;
   border: 2px solid var(--text5);
   display: flex;

@@ -4,12 +4,15 @@ import FormContact from "@/pages/forms/FormContactView.vue";
 import {createRouter, createWebHistory} from "vue-router"
 import FormCreateCampaignView from "@/pages/forms/FormCreateCampaignView.vue";
 import FormUpdateCampaignView from "@/pages/forms/FormUpdateCampaignView.vue";
-import ProfilView from "@/pages/profile/ProfilView.vue";
+import ProfilView from "@/pages/user/ProfilView.vue";
 import FormPaymentView from "@/pages/forms/FormPaymentView.vue";
 import CampaignsView from "@/pages/campaigns/CampaignsView.vue";
 import CampaignView from "@/pages/campaigns/CampaignView.vue"
 import DashBoardView from "@/pages/dashboard/DashBoardView.vue";
 import FormForgetPassword from "@/pages/forms/FormForgetPassword.vue";
+import AccountView from "@/pages/user/AccountView.vue";
+import AddressView from "@/pages/user/AddressView.vue";
+import IbanView from "@/pages/user/IbanView.vue";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 
 
@@ -19,7 +22,6 @@ const routes = [
     {path: "/forget-password", name: "forget-password", component: FormForgetPassword},
     {path: "/contact", name: "contact", component: FormContact},
     {path: "/create-campaign", name: "createcampaign", component: FormCreateCampaignView, meta: {requireAuth: true}},
-    {path: "/profil", name: "profil", component: ProfilView, meta: {requireAuth: true}},
     {path: "/campaigns", name: "campaigns", component: CampaignsView},
     {
         path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)",
@@ -33,6 +35,29 @@ const routes = [
     },
     {path: "/dashboard", name: "dashboard", component: DashBoardView, meta: {requireAuth: true}},
     {path: "/payment", name: "payment", component: FormPaymentView},
+    {
+        path: "/account",
+        name: "account",
+        component: AccountView,
+        meta: {requireAuth: true},
+        children: [
+            {
+                path: "profil",
+                name: "profil",
+                component: ProfilView
+            },
+            {
+                path: "address",
+                name: "address",
+                component: AddressView
+            },
+            {
+                path: "bank-account",
+                name: "iban",
+                component: IbanView
+            }
+        ]
+    },
 ]
 
 const router = createRouter({
