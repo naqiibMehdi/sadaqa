@@ -32,14 +32,14 @@ export interface Participant {
     participation_date: Date | string;
 }
 
-interface User {
-    id: number | string;
+export interface User {
+    id?: number | string;
     name: string;
     first_name: string;
-    public_name: string;
+    public_name?: string;
     email: string;
     birth_date: Date;
-    subscribe_date: Date;
+    subscribe_date?: Date;
     image_profile: string;
 }
 

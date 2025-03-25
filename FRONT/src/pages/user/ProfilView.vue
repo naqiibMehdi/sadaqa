@@ -3,21 +3,30 @@
 import FileUploaderProfil from "@/components/FileUploaderProfil.vue";
 import InputField from "@/components/InputField.vue";
 import CustomButton from "@/components/CustomButton.vue";
+import {useUserStore} from "@/stores/useUserStore.ts";
+import {onMounted} from "vue";
+import {storeToRefs} from "pinia";
+
+const userStore = useUserStore()
+const {user} = storeToRefs(userStore)
+
+onMounted(() => {
+  userStore.getInfosUser()
+})
 </script>
 
 <template>
   <section class="profil">
-    <div class="profil-image">
-      <FileUploaderProfil/>
-    </div>
+    <FileUploaderProfil :image-profile="user.image_profile"/>
     <form class="form-container profil-form">
       <div class="form-inline">
-        <InputField placeholder="Nom" id="nom" title="nom"/>
-        <InputField placeholder="Prénom" id="prenom" title="prénom"/>
+        <InputField placeholder="Nom" id="nom" title="nom" v-model="user.name"/>
+        <InputField placeholder="Prénom" id="prenom" title="prénom" v-model="user.first_name"/>
       </div>
-      <InputField placeholder="example@gmail.com" id="email" title="Adresse email"/>
-      <InputField placeholder="06 00 00 00 00" id="borncountry" title="Numéro de téléphone"/>
-      <InputField placeholder="date naissance" id="email" title="Date de naissance"/>
+      <InputField placeholder="example@gmail.com" id="email" title="Adresse email" v-model="user.email"/>
+      <p>Date de naissance:
+        <strong>{{ (new Date(user.birth_date).toLocaleDateString()) }}</strong>
+      </p>
       <CustomButton label="Modifier mon profil"/>
     </form>
   </section>
@@ -30,10 +39,6 @@ import CustomButton from "@/components/CustomButton.vue";
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-}
-
-.profil-image {
-  width: 220px;
 }
 
 .profil-form {
