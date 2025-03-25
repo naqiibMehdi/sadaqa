@@ -58,7 +58,7 @@ Route::middleware("auth:sanctum")->group(function () {
    */
   Route::prefix("user")->group(function () {
     Route::get("/dashboard", [UserController::class, "dashboard"]);
-    Route::get("/profile", [UserController::class, "profile"]);
+    Route::get("/user", [UserController::class, "profile"]);
     Route::get("/participants", [UserController::class, "getAllParticipants"]);
   });
 });
