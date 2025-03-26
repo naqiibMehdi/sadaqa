@@ -8,8 +8,9 @@ withDefaults(defineProps<{
   id?: string,
   title?: string,
   size?: "small" | "large",
-  invalid?: boolean | undefined | null
-  type?: "text" | "number" | "password" | "email" | "url" | "tel"
+  invalid?: boolean | undefined | null,
+  type?: "text" | "number" | "password" | "email" | "url" | "tel",
+  disabled?: boolean
 }>(), {type: "text"})
 
 const emit = defineEmits(["update:modelValue"]);
@@ -25,7 +26,7 @@ const onInput = (e: Event) => {
   <div class="form-inputLabel form-inputLabel_inline">
     <label :for="id" v-if="id">{{ title }}</label>
     <InputText :type="type" :placeholder="placeholder" :class="$style.fieldColorBorder" :id="id" :size="size"
-               :value="modelValue" @input="onInput" :invalid="invalid"/>
+               :value="modelValue" @input="onInput" :invalid="invalid" :disabled="disabled"/>
   </div>
 </template>
 

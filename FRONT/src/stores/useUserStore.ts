@@ -1,5 +1,5 @@
 import {acceptHMRUpdate, defineStore} from "pinia";
-import {fetchData} from "@/utils/axios.ts";
+import {fetchData, postMultiPartData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
 import type {Campaign, Participant, User} from "@/types/types.ts";
 
@@ -8,6 +8,8 @@ interface propState {
     participants: Participant[],
     user: User,
     error: string
+    errorUpdateUserInfos: { name?: string[], first_name?: string[], email?: string[], image?: string[] } | null,
+    successMessage: string
 }
 
 export const useUserStore = defineStore("user", {
@@ -15,7 +17,9 @@ export const useUserStore = defineStore("user", {
         campaignsUser: [],
         participants: [],
         user: {name: "", first_name: "", email: "", image_profile: "", birth_date: new Date()},
-        error: ""
+        error: "",
+        errorUpdateUserInfos: null,
+        successMessage: ""
     }),
     actions: {
         async getCampaignsOfUSer() {
@@ -53,6 +57,26 @@ export const useUserStore = defineStore("user", {
             } catch (err) {
                 if (err instanceof AxiosError) {
                     this.error = "Erreur de chargement des données de l'utilisateur"
+                }
+            }
+        },
+
+        async updateInfosUser(dataUser: {
+            name: string,
+            first_name: string,
+            email: string,
+            image: File | string
+        }) {
+            this.error = ""
+
+            try {
+                const response = await postMultiPartData("user/profile/edit?_method=PUT", dataUser)
+                this.user = response.data
+                this.successMessage = response.message
+                this.errorUpdateUserInfos = null
+            } catch (err) {
+                if (err instanceof AxiosError) {
+                    this.errorUpdateUserInfos = err.response?.data.errors
                 }
             }
         },

@@ -5,7 +5,8 @@ import {ref} from "vue";
 import {useToast} from "primevue/usetoast";
 
 interface Props {
-  imageProfile: string
+  imageProfile: string,
+  disabled: boolean
 }
 
 defineProps<Props>()
@@ -15,6 +16,7 @@ const toast = useToast()
 
 const urlBase64 = ref<string | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
+const imageFile = defineModel()
 
 const triggerFileInput = () => {
   fileInput.value?.click()
@@ -24,17 +26,8 @@ const handleFileChange = (e: Event) => {
   const file = input.files?.[0]
 
   if (file) {
-    if (!["image/png", "image/jpeg", "image/webp", "image/jpg"].includes(file.type)) {
-      toast.add({
-        severity: 'error',
-        summary: "Message d'erreur",
-        detail: "Vous pouver seulement joindre un fichier image à votre photo de profile",
-        life: 5000
-      });
-      return
-    }
     convertToBase64(file)
-    //emit('update:modelValue', file)
+    imageFile.value = file
   }
 }
 
@@ -49,7 +42,7 @@ const convertToBase64 = (file: File) => {
 
 const deleteUrlBase64 = () => {
   urlBase64.value = null
-  //emit('update:modelValue', "")
+  imageFile.value = ""
 }
 </script>
 
@@ -58,8 +51,8 @@ const deleteUrlBase64 = () => {
     <input type="file" hidden="" ref="fileInput" @change="handleFileChange">
     <img :src="urlBase64 || imageProfile" alt="image de profile" class="fileUploaderProfil-banner-upload"/>
     <div class="fileUploaderProfil-button-list">
-      <IcBaselineEdit width="40" height="40" class="icon-edit" @click="triggerFileInput"/>
-      <IcBaselineDelete width="40" height="40" class="icon-delete" @click="deleteUrlBase64"/>
+      <IcBaselineEdit width="40" height="40" class="icon-edit" @click="triggerFileInput" v-if="!disabled"/>
+      <IcBaselineDelete width="40" height="40" class="icon-delete" @click="deleteUrlBase64" v-if="imageFile"/>
     </div>
   </div>
 </template>
@@ -76,6 +69,7 @@ const deleteUrlBase64 = () => {
   width: 150px;
   height: 150px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .fileUploaderProfil-button-list {
