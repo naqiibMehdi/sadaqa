@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateUserProfileFormRequest;
 use App\Http\Resources\CampaignRessource;
 use App\Http\Resources\UserRessource;
 use App\Models\Campaign;
@@ -11,6 +12,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -40,6 +43,24 @@ class UserController extends Controller
     $getUserInfos = User::where("id", Auth::id())->first();
 
     return new UserRessource($getUserInfos);
+  }
+
+  public function updateUserProfile(StoreUpdateUserProfileFormRequest $request)
+  {
+    $user = User::where("id", Auth::id())->first();
+    $validated = $request->validated();
+
+    if ($request->hasFile("image") && $request->file("image")->isValid()) {
+      if (!Str::contains($user->img_profile, "http")) {
+        Storage::disk("public")->delete($user->img_profile);
+      }
+      $imagePath = $request->file("image")->store("profile", "public");
+      $user->img_profile = $imagePath;
+    }
+
+    $user->update($validated);
+
+    return response()->json(["message" => "Mise à jour effectuée", "data" => new UserRessource($user)]);
   }
 
   /**

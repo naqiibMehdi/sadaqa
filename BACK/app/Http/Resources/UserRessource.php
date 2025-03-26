@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class UserRessource extends JsonResource
 {
@@ -23,7 +24,7 @@ class UserRessource extends JsonResource
       "birth_date" => Carbon::parse($this->birth_date)->toIso8601String(),
       "email" => $this->email,
       "subscribe_date" => Carbon::parse($this->subscribe_date)->toIso8601String(),
-      "image_profile" => $this->img_profile,
+      "image_profile" => Str::contains($this->img_profile, "http") ? $this->img_profile : asset("storage/" . $this->img_profile),
       "campaigns" => CampaignRessource::collection($this->whenLoaded('campaign')),
     ];
   }
