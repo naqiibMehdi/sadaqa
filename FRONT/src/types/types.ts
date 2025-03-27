@@ -43,6 +43,15 @@ export interface User {
     image_profile: string;
 }
 
+export interface Address {
+    id?: number,
+    address: string,
+    city: string,
+    postal_code: string,
+    country: string,
+    user_id: number
+}
+
 export interface errorsFormCampaign {
     title: string,
     description: string,
