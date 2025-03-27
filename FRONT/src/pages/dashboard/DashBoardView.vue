@@ -48,7 +48,8 @@ onMounted(() => {
     </section>
     <section class="container participants">
       <h2 class="dashboard-second-title">Donateurs récents:</h2>
-      <ParticipantBanner :participants="userStore.participants"/>
+      <p v-if="userStore.participants?.length === 0">Il n'y a aucun participants pour les cagnottes actuelles</p>
+      <ParticipantBanner :participants="userStore.participants" v-else/>
     </section>
   </Main>
   <Footer/>
@@ -79,6 +80,10 @@ onMounted(() => {
 
 .dashboard-second-title {
   margin-bottom: 3.5rem;
+}
+
+.participants p {
+  text-align: center;
 }
 
 .dashboard-campaign-img {
