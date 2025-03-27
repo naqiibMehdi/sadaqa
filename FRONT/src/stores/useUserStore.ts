@@ -9,7 +9,8 @@ interface propState {
     user: User,
     error: string
     errorUpdateUserInfos: { name?: string[], first_name?: string[], email?: string[], image?: string[] } | null,
-    successMessage: string
+    successMessage: string,
+    loading: boolean
 }
 
 export const useUserStore = defineStore("user", {
@@ -19,7 +20,8 @@ export const useUserStore = defineStore("user", {
         user: {name: "", first_name: "", email: "", image_profile: "", birth_date: new Date()},
         error: "",
         errorUpdateUserInfos: null,
-        successMessage: ""
+        successMessage: "",
+        loading: false
     }),
     actions: {
         async getCampaignsOfUSer() {
@@ -68,6 +70,7 @@ export const useUserStore = defineStore("user", {
             image: File | string
         }) {
             this.error = ""
+            this.loading = true
 
             try {
                 const response = await postMultiPartData("user/profile/edit?_method=PUT", dataUser)
@@ -78,6 +81,8 @@ export const useUserStore = defineStore("user", {
                 if (err instanceof AxiosError) {
                     this.errorUpdateUserInfos = err.response?.data.errors
                 }
+            } finally {
+                this.loading = false
             }
         },
 
