@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCreateAddressRequest;
 use App\Http\Requests\StoreUpdateUserProfileFormRequest;
 use App\Http\Resources\CampaignRessource;
 use App\Http\Resources\UserRessource;
+use App\Models\Address;
 use App\Models\Campaign;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -34,6 +36,28 @@ class UserController extends Controller
   }
 
   /**
+   * retourne la liste de tous les participants récents liés aux cagnottes de l'utilisateur
+   *
+   * @return JsonResponse
+   */
+  public function getAllParticipants(): JsonResponse
+  {
+    $participants = DB::table('participants')
+      ->join('campaigns', 'participants.campaign_id', '=', 'campaigns.id')
+      ->join('users', 'campaigns.user_id', '=', 'users.id')
+      ->where('users.id', Auth::id())
+      ->select('participants.*', 'campaigns.title')
+      ->orderBy('participants.participation_date', 'desc')
+      ->get();
+
+    if ($participants->isEmpty()) {
+      return response()->json(["message" => "Il n'y a aucun participants pour les cagnottes actuelles"], 400);
+    }
+
+    return response()->json($participants);
+  }
+
+  /**
    * retourne les informations de l'utilisateur connecté actuellement
    *
    * @return UserRessource
@@ -45,7 +69,13 @@ class UserController extends Controller
     return new UserRessource($getUserInfos);
   }
 
-  public function updateUserProfile(StoreUpdateUserProfileFormRequest $request)
+  /**
+   * Permet à l'utilisateur de modifier ses informations de base
+   *
+   * @param StoreUpdateUserProfileFormRequest $request
+   * @return JsonResponse
+   */
+  public function updateUserProfile(StoreUpdateUserProfileFormRequest $request): JsonResponse
   {
     $user = User::where("id", Auth::id())->first();
     $validated = $request->validated();
@@ -63,26 +93,20 @@ class UserController extends Controller
     return response()->json(["message" => "Mise à jour effectuée", "data" => new UserRessource($user)]);
   }
 
-  /**
-   * retourne la liste de tous les participants récents liés aux cagnottes de l'utilisateur
-   *
-   * @return JsonResponse
-   */
-  public function getAllParticipants(): JsonResponse
+  public function registerAddress(StoreCreateAddressRequest $request): JsonResponse
   {
-    $participants = DB::table('participants')
-      ->join('campaigns', 'participants.campaign_id', '=', 'campaigns.id')
-      ->join('users', 'campaigns.user_id', '=', 'users.id')
-      ->where('users.id', Auth::id())
-      ->select('participants.*', 'campaigns.title')
-      ->orderBy('participants.participation_date', 'desc')
-      ->get();
+    $validated = $request->validated();
 
-    if ($participants->isEmpty()) {
-      return response()->json(["message" => "Il n'y a aucun participants pour les cagnottes actuelles"]);
-    }
+    $address = Address::create([...$validated, "user_id" => Auth::id()]);
 
-    return response()->json($participants);
+    return response()->json(["message" => "Informations enregistrées avec succès", "data" => $address]);
+  }
+
+  public function getAddress()
+  {
+    $address = Address::where("user_id", Auth::id())->first();
+
+    return response()->json(["data" => $address]);
   }
 }
 

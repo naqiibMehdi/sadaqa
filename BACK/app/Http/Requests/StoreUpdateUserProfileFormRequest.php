@@ -28,8 +28,10 @@ class StoreUpdateUserProfileFormRequest extends FormRequest
     return [
       "name" => "required|string|max:255",
       "first_name" => "required|string|max:255",
-      "email" => ["required",
-        "email", "max:255",
+      "email" => [
+        "required",
+        "email",
+        "max:255",
         Rule::unique('users', 'email')->ignore($userId)
       ],
       "image" => "nullable|image|mimes:jpeg,png,jpg,webp|max:1024"

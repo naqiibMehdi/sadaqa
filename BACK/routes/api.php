@@ -58,9 +58,11 @@ Route::middleware("auth:sanctum")->group(function () {
    */
   Route::prefix("user")->group(function () {
     Route::get("/dashboard", [UserController::class, "dashboard"]);
-    Route::get("/profile", [UserController::class, "profile"]);
     Route::get("/participants", [UserController::class, "getAllParticipants"]);
+    Route::get("/profile", [UserController::class, "profile"]);
     Route::put("/profile/edit", [UserController::class, "updateUserProfile"]);
+    Route::post("/address", [UserController::class, "registerAddress"]);
+    Route::get("/address", [UserController::class, "getAddress"]);
   });
 });
 
