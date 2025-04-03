@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
-    protected $table = 'addresses';
+  protected $table = 'addresses';
 
-    protected $guarded = ['id'];
+  protected $guarded = ['id'];
 
-    public $timestamps = false;
+  protected $hidden = ['user_id'];
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+  public $timestamps = false;
+
+  public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(User::class);
+  }
 }

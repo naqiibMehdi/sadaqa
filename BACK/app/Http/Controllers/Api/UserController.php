@@ -102,6 +102,17 @@ class UserController extends Controller
     return response()->json(["message" => "Informations enregistrées avec succès", "data" => $address]);
   }
 
+  public function editAddress(StoreCreateAddressRequest $request): JsonResponse
+  {
+    $validated = $request->validated();
+
+    $address = Address::where("user_id", Auth::id())->first();
+
+    $address->update($validated);
+
+    return response()->json(["message" => "Mise à jour de l'adresse avec succès", "data" => $address]);
+  }
+
   public function getAddress()
   {
     $address = Address::where("user_id", Auth::id())->first();

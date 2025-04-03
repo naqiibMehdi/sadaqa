@@ -32,12 +32,11 @@ class StoreCreateAddressRequest extends FormRequest
       "postal_code" => ["required", "regex:/^[0-9]{5}$/"],
       "country" => "required|string",
       "user_id" => [
-        "required",
-        "numeric",
         "exists:users,id",
-        $this->isMethod("PUT") ? Rule::unique("addresses", "user_id")->ignore($userId) : "unique:addresses,user_id",
+        "unique:addresses,user_id"
       ],
     ];
+
   }
 
   /**
@@ -65,8 +64,8 @@ class StoreCreateAddressRequest extends FormRequest
         "string" => "Le pays doit être de type texte.",
       ],
       "user_id.*" => [
-        "required" => "l'utilisateur est obligatoire",
-        "exists" => "L'utilisateur n'existe pas",
+//        "required" => "l'utilisateur est obligatoire",
+//        "exists" => "L'utilisateur n'existe pas",
         "unique" => "L'utilisateur possède déjà une adresse",
         "numeric" => "L'id doit être de type numérique"
       ],

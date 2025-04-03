@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\CategoryController;
@@ -57,12 +58,18 @@ Route::middleware("auth:sanctum")->group(function () {
    * User route
    */
   Route::prefix("user")->group(function () {
-    Route::get("/dashboard", [UserController::class, "dashboard"]);
-    Route::get("/participants", [UserController::class, "getAllParticipants"]);
-    Route::get("/profile", [UserController::class, "profile"]);
-    Route::put("/profile/edit", [UserController::class, "updateUserProfile"]);
-    Route::post("/address", [UserController::class, "registerAddress"]);
-    Route::get("/address", [UserController::class, "getAddress"]);
+    Route::controller(UserController::class)->group(function () {
+      Route::get("/dashboard", "dashboard");
+      Route::get("/participants", "getAllParticipants");
+      Route::get("/profile", "profile");
+      Route::put("/profile/edit", "updateUserProfile");
+    });
+
+    Route::controller(AddressController::class)->group(function () {
+      Route::post("/address", "registerAddress");
+      Route::put("/address/edit", "editAddress");
+      Route::get("/address", "getAddress");
+    });
   });
 });
 
