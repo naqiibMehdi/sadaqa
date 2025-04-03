@@ -28,7 +28,6 @@ export const useAddressStore = defineStore("address", {
             try {
                 const response = await fetchData("user/address");
                 this.address = response.data
-                console.log(response)
             } catch (err) {
                 if (err instanceof AxiosError) {
                     this.errorsAddress = err.response?.data.errors
@@ -39,6 +38,22 @@ export const useAddressStore = defineStore("address", {
             this.loading = true
             try {
                 const response = await postMultiPartData("user/address", dataAddress);
+                this.address = response.data
+                this.message = response.message
+                this.errorsAddress = null
+            } catch (err) {
+                if (err instanceof AxiosError) {
+                    this.errorsAddress = err.response?.data.errors
+                }
+            } finally {
+                this.loading = false
+            }
+        },
+
+        async editAddress(dataAddress: Address) {
+            this.loading = true
+            try {
+                const response = await postMultiPartData("user/address/edit?_method=PUT", dataAddress);
                 this.address = response.data
                 this.message = response.message
                 this.errorsAddress = null
