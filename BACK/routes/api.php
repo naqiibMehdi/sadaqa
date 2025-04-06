@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\IbanController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\StripeController;
@@ -70,7 +71,11 @@ Route::middleware("auth:sanctum")->group(function () {
       Route::put("/address/edit", "editAddress");
       Route::get("/address", "getAddress");
     });
+
+    Route::post("/iban", [IbanController::class, "store"]);
+    Route::get("/iban", [IbanController::class, "show"]);
   });
+  
 });
 
 //Route::get('/user', function (Request $request) {

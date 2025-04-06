@@ -3,30 +3,37 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+  use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'users';
+  protected $table = 'users';
 
-    protected $guarded = ["id"];
+  protected $guarded = ["id"];
 
 
-    protected $hidden = ["password"];
+  protected $hidden = ["password"];
 
-    public $timestamps = false;
+  public $timestamps = false;
 
-    public function address(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(Address::class);
-    }
+  public function address(): HasOne
+  {
+    return $this->hasOne(Address::class);
+  }
 
-    public function campaign(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Campaign::class);
-    }
+  public function campaign(): HasMany
+  {
+    return $this->hasMany(Campaign::class);
+  }
+
+  public function iban(): HasOne
+  {
+    return $this->hasOne(Iban::class);
+  }
 }
