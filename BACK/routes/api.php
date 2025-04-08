@@ -72,10 +72,14 @@ Route::middleware("auth:sanctum")->group(function () {
       Route::get("/address", "getAddress");
     });
 
-    Route::post("/iban", [IbanController::class, "store"]);
-    Route::get("/iban", [IbanController::class, "show"]);
+    Route::controller(IbanController::class)->group(function () {
+      Route::get("/iban", "show");
+      Route::post("/iban", "store");
+      Route::put("/iban/edit", "edit");
+      Route::delete("/iban", "destroy");
+    });
   });
-  
+
 });
 
 //Route::get('/user', function (Request $request) {

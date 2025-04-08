@@ -32,7 +32,7 @@ class StoreIbanFormRequest extends FormRequest
         Rule::unique('ibans')->where(function ($query) {
           return $query->where('user_id', Auth::id());
         }),
-        "regex:/^FR[\d]{2}\s?([\d]{4}\s?){4}\s?[\dA-Z]{4}\s?[\d]{3}$/i"
+        "regex:/^FR[\dA-Z]{25}$/i"
       ]
     ];
   }
