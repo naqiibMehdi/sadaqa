@@ -50,6 +50,20 @@ export const useAuthStore = defineStore("auth", {
             } finally {
                 this.loading = false
             }
+        },
+
+        async logoutUser(userData: object) {
+            this.loading = true
+            try {
+                await postData("/auth/logout", userData);
+                this.token = "";
+            } catch (err) {
+                if (err instanceof AxiosError) {
+                    this.errors = err.response?.data?.errors;
+                }
+            } finally {
+                this.loading = false
+            }
         }
     },
 })
