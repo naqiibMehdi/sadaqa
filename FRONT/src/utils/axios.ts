@@ -42,6 +42,17 @@ export const postMultiPartData = async (endpoint: string, data: object) => {
     }
 }
 
+export const deleteData = async (endpoint: string, data: object) => {
+    try {
+        const response = await api.delete(endpoint, data)
+        return response.data
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw error
+        }
+    }
+}
+
 api.interceptors.request.use(
     (config) => {
         const authStore = useAuthStore();

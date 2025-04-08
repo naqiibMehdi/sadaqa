@@ -3,8 +3,11 @@
 import InputField from "@/components/InputField.vue";
 import CustomButton from "@/components/CustomButton.vue";
 import {useIbanStore} from "@/stores/useIbanStore.ts";
-import {computed, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import Message from "primevue/message";
+import {useToast} from "primevue/usetoast";
+
+const toast = useToast()
 
 const ibanStore = useIbanStore()
 
@@ -12,16 +15,42 @@ const iban = ref(ibanStore.iban)
 const disable = ref(true)
 
 const labelButton = computed(() => disable.value ? "Modifier  mon IBAN" : "Enregistrer mon IBAN")
-const registerIban = () => {
-  ibanStore.registerIban({iban: iban.value!})
+
+onMounted(() => {
+  ibanStore.getIban()
+})
+
+watch(() => ibanStore.iban, (newIban) => {
+  iban.value = newIban
+})
+const registerIban = async () => {
+  await ibanStore.registerIban({iban: iban.value!})
+  toast.add({severity: 'success', summary: "Message de succès", detail: ibanStore.message, life: 5000});
 }
 
-const editIban = () => {
-  disable.value = false
+const editIban = async () => {
+  if (!disable.value) {
+    await ibanStore.editIban({iban: iban.value!})
+    if (!ibanStore.errorsIban || ibanStore.errorsIban.length < 1) {
+      disable.value = true
+      toast.add({severity: 'success', summary: "Message de succès", detail: ibanStore.message, life: 5000});
+    }
+    return
+  }
+
+  disable.value = !disable.value
 }
 
 const cancelFormData = () => {
+  ibanStore.errorsIban = []
+  iban.value = ibanStore.iban
   disable.value = true
+}
+
+const deleteIban = async () => {
+  await ibanStore.deleteIban({})
+  toast.add({severity: 'success', summary: "Message de succès", detail: ibanStore.message, life: 5000});
+
 }
 </script>
 
@@ -38,7 +67,7 @@ const cancelFormData = () => {
       >
         {{ error }}
       </Message>
-      <InputField placeholder="FR0000000000000" id="iban" title="IBAN:" v-model="iban!"
+      <InputField placeholder="format: FR0000000000000" id="iban" title="IBAN:" v-model="iban!"
                   :disabled="disable && ibanStore.iban !== null"/>
       <small>* Seul les IBAN de France sont acceptés</small>
       <CustomButton label="Ajouter un IBAN" type="submit" :loading="ibanStore.loading" v-if="!ibanStore.iban"/>
@@ -59,7 +88,8 @@ const cancelFormData = () => {
         <CustomButton
             label="Supprimer"
             :disabled="ibanStore.loading"
-            v-if="disable"
+            v-if="ibanStore.iban && disable"
+            @click="deleteIban"
         />
       </div>
     </form>
