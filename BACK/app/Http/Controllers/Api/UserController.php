@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCreateAddressRequest;
 use App\Http\Requests\StoreUpdateUserProfileFormRequest;
 use App\Http\Resources\CampaignRessource;
 use App\Http\Resources\UserRessource;
-use App\Models\Address;
 use App\Models\Campaign;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -93,31 +92,46 @@ class UserController extends Controller
     return response()->json(["message" => "Mise à jour effectuée", "data" => new UserRessource($user)]);
   }
 
-  public function registerAddress(StoreCreateAddressRequest $request): JsonResponse
+  public function deleteAccount(Request $request)
   {
-    $validated = $request->validated();
+    $user = User::with("campaign")->where("id", auth()->id())->first();
+    $listCampaignsImages = $user->campaign()->get()->pluck("image");
+    $listImageDescription = $user->campaign()->get()->pluck("description");
 
-    $address = Address::create([...$validated, "user_id" => Auth::id()]);
 
-    return response()->json(["message" => "Informations enregistrées avec succès", "data" => $address]);
-  }
+    if (!Str::contains($user->img_profile, "http")) {
+      Storage::disk("public")->delete($user->img_profile);
+    }
 
-  public function editAddress(StoreCreateAddressRequest $request): JsonResponse
-  {
-    $validated = $request->validated();
+    if ($listCampaignsImages->isNotEmpty()) {
+      $listCampaignsImages->each(function ($image) {
+        if (!Str::contains($image, "default_cover")) {
+          Storage::disk("public")->delete($image);
+        }
+      });
+    }
 
-    $address = Address::where("user_id", Auth::id())->first();
+    if ($listImageDescription->isNotEmpty()) {
+      $listImageDescription->each(function ($description) {
+        if (preg_match_all('/<img[^>]+src=["\'](.*?)["\']/', $description, $matches)) {
+          $matches = collect($matches[1]);
 
-    $address->update($validated);
+          if ($matches->isNotEmpty()) {
+            $matches->each(function ($imageUrl) {
+              Storage::disk("public")->delete(Str::after($imageUrl, "storage"));
+            });
+          }
+        }
+      });
+    }
 
-    return response()->json(["message" => "Mise à jour de l'adresse avec succès", "data" => $address]);
-  }
+    $request->user()->tokens()->each(function ($token) {
+      $token->delete();
+    });
 
-  public function getAddress()
-  {
-    $address = Address::where("user_id", Auth::id())->first();
+    User::destroy(auth()->id());
 
-    return response()->json(["data" => $address]);
+    return response()->json(["message" => "Votre compte a bien été supprimé"]);
   }
 }
 

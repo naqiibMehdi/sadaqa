@@ -64,6 +64,7 @@ Route::middleware("auth:sanctum")->group(function () {
       Route::get("/participants", "getAllParticipants");
       Route::get("/profile", "profile");
       Route::put("/profile/edit", "updateUserProfile");
+      Route::delete("/profile", "deleteAccount");
     });
 
     Route::controller(AddressController::class)->group(function () {
