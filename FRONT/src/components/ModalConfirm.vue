@@ -10,8 +10,8 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  message: "Etes-vous sûr de vouloir vous déconnecter ?",
-  header: 'Se déconnecter'
+  message: `Etes-vous sûr de vouloir vous supprimer votre compte ?\nCela mènera à la perte de toutes vos informations (données personnelles, cagnottes et don des participants)`,
+  header: 'Suppression'
 })
 
 const confirm = useConfirm()

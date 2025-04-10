@@ -1,5 +1,5 @@
 import {acceptHMRUpdate, defineStore} from "pinia";
-import {fetchData, postMultiPartData} from "@/utils/axios.ts";
+import {deleteData, fetchData, postMultiPartData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
 import type {Campaign, Participant, User} from "@/types/types.ts";
 
@@ -80,6 +80,21 @@ export const useUserStore = defineStore("user", {
             } catch (err) {
                 if (err instanceof AxiosError) {
                     this.errorUpdateUserInfos = err.response?.data.errors
+                }
+            } finally {
+                this.loading = false
+            }
+        },
+
+        async deleteAccountUser() {
+            this.error = ""
+            this.loading = true
+            try {
+                const response = await deleteData("user/profile", {})
+                this.successMessage = response.message
+            } catch (err) {
+                if (err instanceof AxiosError) {
+                    this.error = "Erreur de suppression du compte utilisateur"
                 }
             } finally {
                 this.loading = false

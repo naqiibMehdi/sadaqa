@@ -50,7 +50,7 @@ const submitLogin = async () => {
       <RouterLink :to="{name: 'forget-password'}" class="formConnexion-text">Mot de passe oublié ?</RouterLink>
       <div class="formConnexion-buttons-list">
         <CustomButton label="Connexion" type="submit" :loading="authStore.loading"/>
-        <CustomButton label="S'inscrire" :outline="true"/>
+        <CustomButton label="S'inscrire" :outline="true" :disabled="authStore.loading"/>
       </div>
     </form>
   </Main>
