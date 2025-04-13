@@ -33,8 +33,12 @@ const routes = [
         name: "campaign.update",
         component: FormUpdateCampaignView,
     },
+    {
+        path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)/payment",
+        name: "payment",
+        component: FormPaymentView
+    },
     {path: "/dashboard", name: "dashboard", component: DashBoardView, meta: {requireAuth: true}},
-    {path: "/payment", name: "payment", component: FormPaymentView},
     {
         path: "/account",
         name: "account",

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Card from "primevue/card"
-import CustomButton from "@/components/CustomButton.vue";
 import {useRoute, RouterLink} from "vue-router";
 import type {Campaign} from "@/types/types.ts";
 
@@ -31,7 +30,9 @@ const route = useRoute()
           <p class="card-campaign-content-price">{{ campaign.collected_amount / 100 }} €</p>
           <p class="card-campaign-content-participant">récoltés avec <span>{{ campaign.participants?.length }}</span>
             participants</p>
-          <CustomButton label="Participez" class="card-campaign-content-btn" v-if="route.name !== 'campaigns'"/>
+          <RouterLink :to="{name: 'payment'}" class="card-campaign-content-btn" v-if="route.name !== 'campaigns'">
+            Participez
+          </RouterLink>
         </div>
       </template>
     </Card>
@@ -104,6 +105,10 @@ const route = useRoute()
   width: 100%;
   font-size: 1.125rem;
   margin-top: 1rem;
+  padding: 0.5em 2em;
+  background-color: var(--primary);
+  border-radius: .5rem;
+  text-align: center;
 }
 
 .card-campaign-content-price {

@@ -4,12 +4,20 @@ import Header from "@/components/layouts/Header.vue";
 import Main from "@/components/layouts/Main.vue";
 import InputField from "@/components/InputField.vue";
 import InputNumber from "primevue/inputnumber";
-import InputMask from "primevue/inputmask";
 import CustomButton from "@/components/CustomButton.vue"
 import Footer from "@/components/layouts/Footer.vue";
 import {ref} from "vue";
+import {usePaymentStore} from "@/stores/usePaymentStore.ts";
+import {useRoute} from "vue-router";
+import Message from "primevue/message";
 
-const amount = ref<number>(0)
+const route = useRoute()
+const paymentStore = usePaymentStore()
+const formPayment = ref({name: "", email: "", amount: 0})
+
+const sendPayment = async () => {
+  await paymentStore.checkoutSessionPayment(route.params.slug as string, route.params.id as string, formPayment.value)
+}
 
 </script>
 
@@ -17,30 +25,26 @@ const amount = ref<number>(0)
   <Header/>
   <Main>
     <h1>Formulaire de payement</h1>
-    <form class="form-container">
+    <form class="form-container" @submit.prevent="sendPayment">
       <div class="form-inputLabel form-inputLabel_inline">
         <label for="currency-fr" class="font-bold block mb-2">Montant de votre donation</label>
-        <InputNumber v-model="amount" inputId="currency-fr" mode="currency" currency="EUR" locale="fr-FR"
-                     fluid/>
+        <InputNumber v-model="formPayment.amount" inputId="currency-fr" mode="currency" currency="EUR" locale="fr-FR"
+                     minFractionDigits="0" maxFractionDigits="0" size="large"/>
+        <Message severity="error" variant="simple" size="small" v-if="paymentStore.errors?.amount">
+          {{ paymentStore.errors?.amount }}
+        </Message>
       </div>
-      <InputField placeholder="Votre nom et prénom" title="Vos coordonnées" id="names"/>
-      <InputField placeholder="Email"/>
-      <div class="form-inputLabel form-inputLabel_inline">
-        <label for="numberCreditCard">Votre carte bancaire</label>
-        <InputMask id="numberCreditCard" mask="9999999999999999999" placeholder="1234 1234 1234 1234" slotChar=""
-                   fluid/>
-      </div>
-      <div class="form-inline">
-        <div class="form-inputLabel form-inputLabel_inline">
-          <InputMask mask="99/99" placeholder="MM/AA" slotChar="MM/AA"
-                     fluid/>
-        </div>
-        <div class="form-inputLabel form-inputLabel_inline">
-          <InputMask mask="999" placeholder="CVC" slotChar=""
-                     fluid/>
-        </div>
-      </div>
-      <CustomButton label="Payer"/>
+      <InputField placeholder="Votre nom et prénom" title="Vos coordonnées" id="name" v-model="formPayment.name"/>
+      <Message severity="error" variant="simple" size="small" v-if="paymentStore.errors?.name">
+        {{ paymentStore.errors?.name }}
+      </Message>
+      <InputField placeholder="Email" id="email" v-model="formPayment.email"/>
+      <Message severity="error" variant="simple" size="small" v-if="paymentStore.errors?.email">
+        {{ paymentStore.errors?.email }}
+      </Message>
+
+      <CustomButton label="Payer" type="submit" :loading="paymentStore.loading"/>
+      {{ formPayment }}
     </form>
   </Main>
   <Footer/>
