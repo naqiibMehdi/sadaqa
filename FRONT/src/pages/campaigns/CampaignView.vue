@@ -9,16 +9,27 @@ import Divider from 'primevue/divider';
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import {onMounted} from "vue";
 import {useRoute} from "vue-router";
+import {useToast} from "primevue/usetoast";
 
+const toast = useToast()
 const route = useRoute()
 const slug = route.params.slug as string
 const id = route.params.id as string
 
 const campaignStore = useCampaignStore();
 
+
 onMounted(async () => {
+  if (route.query.cancel && route.query.cancel === "1") {
+    toast.add({severity: 'error', summary: "Echec", detail: "Votre payement a été annulé", life: 5000});
+  }
+  if (route.query.success && route.query.success === "1") {
+    toast.add({severity: 'success', summary: "Succès", detail: "Payement réalisé avec succès", life: 5000});
+  }
   return await campaignStore.getOneCampaign(slug, id);
 })
+
+
 </script>
 
 <template>
