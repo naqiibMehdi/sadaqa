@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {RouterLink} from "vue-router";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
+import logo from "@/assets/title-accent.svg"
 
 const authStore = useAuthStore();
 </script>
@@ -8,7 +9,7 @@ const authStore = useAuthStore();
 <template>
   <header class="header">
     <div class="container">
-      <p class="header-title">Sadaqa</p>
+      <img :src="logo" alt="logo principal du site web" class="header-logo">
       <nav class="header-nav">
         <ul class="header-list" v-if="authStore.token">
           <li class="header-item">
@@ -25,7 +26,7 @@ const authStore = useAuthStore();
           </li>
         </ul>
 
-        <ul class="header-list" v-if="!authStore.token">
+        <ul class="header-list" v-else>
           <li class="header-item">
             <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
           </li>
@@ -54,6 +55,11 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.header-logo {
+  width: 100px;
+  height: 38px;
 }
 
 .header-nav {
