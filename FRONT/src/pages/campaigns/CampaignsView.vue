@@ -13,10 +13,9 @@ const campaignStore = useCampaignStore();
 const router = useRouter()
 const route = useRoute()
 
-const fetchCampaigns = async () => await campaignStore.getCampaigns(1)
 
-onMounted(() => {
-  fetchCampaigns()
+onMounted(async () => {
+  await campaignStore.getCampaigns(route.query.page as string || 1)
 })
 
 
