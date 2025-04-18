@@ -68,8 +68,8 @@ class StripeController extends Controller
       "customer_email" => $request->email,
       "mode" => "payment",
       "metadata" => ["campaign_id" => $campaign->id, "names" => $request->name, "title_campaign" => $campaign->title],
-      "success_url" => env("APP_FRONT") . "/campaigns/{$slug}-{$id}/?success",
-      "cancel_url" => env("APP_FRONT") . "/campaigns/{$slug}-{$id}/?cancel",
+      "success_url" => env("APP_FRONT") . "/campaigns/{$slug}-{$id}/?success=1",
+      "cancel_url" => env("APP_FRONT") . "/campaigns/{$slug}-{$id}/?cancel=1",
 
     ]);
     return response()->json(["session_checkout_id" => $checkoutSession->id]);

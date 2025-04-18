@@ -38,7 +38,7 @@ class StripeWebHookController extends Controller
 
     if ($event->type === "checkout.session.completed") {
       $this->createParticipant($event);
-      SendStripeEmailJob::dispatch($event->data->object->customer_email, new StripeEmail($this->emailData($event)))->delay(now()->addSeconds(30));
+      SendStripeEmailJob::dispatch($event->data->object->customer_email, new StripeEmail($this->emailData($event)))->delay(now()->addSeconds(10));
     }
 
     return response()->json(['message' => 'WebHook received']);
