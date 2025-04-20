@@ -94,7 +94,7 @@ a {
     display: flex;
     flex-direction: column;
     row-gap: 1.3rem;
-    width: calc(100% / 2);
+    width: 100%;
     max-width: 800px;
 }
 

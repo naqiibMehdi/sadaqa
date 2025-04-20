@@ -47,7 +47,7 @@ const submitLogin = async () => {
           authStore.errors.password?.[0]
         }}
       </Message>
-      <RouterLink :to="{name: 'forget-password'}" class="formConnexion-text">Mot de passe oublié ?</RouterLink>
+      <RouterLink :to="{name: 'password.forget'}" class="formConnexion-text">Mot de passe oublié ?</RouterLink>
       <div class="formConnexion-buttons-list">
         <CustomButton label="Connexion" type="submit" :loading="authStore.loading"/>
         <CustomButton label="S'inscrire" :outline="true" :disabled="authStore.loading"/>
