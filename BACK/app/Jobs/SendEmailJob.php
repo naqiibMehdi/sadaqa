@@ -7,7 +7,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 
-class SendStripeEmailJob implements ShouldQueue
+class SendEmailJob implements ShouldQueue
 {
   use Queueable;
 

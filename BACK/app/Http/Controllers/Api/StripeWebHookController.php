@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\SendStripeEmailJob;
+use App\Jobs\SendEmailJob;
 use App\Mail\StripeEmail;
 use App\Models\Campaign;
 use App\Models\Participant;
@@ -38,7 +38,7 @@ class StripeWebHookController extends Controller
 
     if ($event->type === "checkout.session.completed") {
       $this->createParticipant($event);
-      SendStripeEmailJob::dispatch($event->data->object->customer_email, new StripeEmail($this->emailData($event)))->delay(now()->addSeconds(10));
+      SendEmailJob::dispatch($event->data->object->customer_email, new StripeEmail($this->emailData($event)))->delay(now()->addSeconds(10));
     }
 
     return response()->json(['message' => 'WebHook received']);
