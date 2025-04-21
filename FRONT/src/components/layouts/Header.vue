@@ -1,16 +1,53 @@
 <script setup lang="ts">
-import {RouterLink} from "vue-router";
+import {RouterLink, useRoute} from "vue-router";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 import logo from "@/assets/title-accent.svg"
+import MobileMenu from "@/components/MobileMenu.vue";
+import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 
+
+const route = useRoute()
 const authStore = useAuthStore();
+const isMenuOpen = ref(false)
+const isMobile = ref(window.innerWidth < 992)
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const updateWidth = () => {
+  isMobile.value = window.innerWidth < 992
+  if (!isMobile.value) {
+    isMenuOpen.value = false
+  }
+}
+
+const animateHamburger = computed(() => isMenuOpen.value ? "open" : "")
+
+onMounted(() => {
+  window.addEventListener("resize", updateWidth)
+})
+
+onUnmounted(() => {
+  window.addEventListener("resize", updateWidth)
+})
+
+watch(() => route.path, () => {
+  isMenuOpen.value = false
+})
+
 </script>
 
 <template>
   <header class="header">
     <div class="container">
       <img :src="logo" alt="logo principal du site web" class="header-logo">
-      <nav class="header-nav">
+      <div v-if="isMobile" class="hamburger" :class="animateHamburger" @click="toggleMenu">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <nav class="header-nav" v-else>
         <ul class="header-list" v-if="authStore.token">
           <li class="header-item">
             <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
@@ -39,6 +76,7 @@ const authStore = useAuthStore();
         </ul>
       </nav>
     </div>
+    <MobileMenu :is-menu-open="isMenuOpen"/>
   </header>
 </template>
 
@@ -49,6 +87,7 @@ header {
   justify-content: center;
   height: 60px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-inline: 10px;
 }
 
 .header .container {
@@ -76,6 +115,34 @@ header {
 .header-item:last-child a:hover {
   background-color: var(--accent);
   cursor: pointer;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, left 0.3s ease;
+}
+
+.line {
+  width: 25px;
+  height: 3px;
+  background-color: black;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.open .line:nth-child(1) {
+  transform: rotate(45deg) translate(7px, 6px);
+}
+
+.hamburger.open .line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open .line:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
 }
 
 </style>
