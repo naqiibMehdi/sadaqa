@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import Nav from "@/components/layouts/Nav.vue";
-import {Divider} from "primevue";
 import EntypoSocialTwitter from '~icons/entypo-social/twitter'
 import EntypoSocialFacebook from '~icons/entypo-social/facebook'
 import EntypoSocialInstagram from '~icons/entypo-social/instagram'
@@ -18,7 +17,6 @@ import EntypoSocialInstagram from '~icons/entypo-social/instagram'
       <div class="footer-nav">
         <Nav title="Ressource" :links="['ressource 1', 'ressource 2']"/>
         <Nav title="A Propos" :links="['ressource 1', 'ressource 2']"/>
-        <Divider type="solid" layout="vertical" class="dv"/>
         <div class="footer-icons">
           <EntypoSocialFacebook class="footer-icons-fb"/>
           <EntypoSocialTwitter class="footer-icons-tw"/>
@@ -34,7 +32,8 @@ footer {
   background-color: var(--text5);
   display: flex;
   justify-content: center;
-  padding: 1.8rem 0;
+  padding-inline: 10px;
+  padding-block: 30px;
 }
 
 .footer-text {

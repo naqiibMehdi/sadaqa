@@ -9,14 +9,14 @@ import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 const route = useRoute()
 const authStore = useAuthStore();
 const isMenuOpen = ref(false)
-const isMobile = ref(window.innerWidth < 992)
+const isMobile = ref(window.innerWidth < 768)
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 
 const updateWidth = () => {
-  isMobile.value = window.innerWidth < 992
+  isMobile.value = window.innerWidth < 768
   if (!isMobile.value) {
     isMenuOpen.value = false
   }
@@ -29,7 +29,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  window.addEventListener("resize", updateWidth)
+  window.removeEventListener("resize", updateWidth)
 })
 
 watch(() => route.path, () => {

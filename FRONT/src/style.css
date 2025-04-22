@@ -1,4 +1,6 @@
 /* link: https://www.realtimecolors.com/?colors=080d12-f2f7fb-317AC1-88bbed-479cf2&fonts=Koh%20Santepheap-Koh%20Santepheap */
+@import "mobile.css";
+
 :root {
     --text: hsl(210, 38%, 5%);
     --text5: hsl(210, 38%, 5%, 5%);
@@ -37,13 +39,6 @@
         color: var(--text);
     }
 
-    .dv {
-        height: 86px;
-    }
-
-    .dv::before {
-        border-inline-start: 2px solid var(--text);
-    }
 
     button.p-paginator-page-selected {
         background: var(--accent);
@@ -116,15 +111,15 @@ a {
 }
 
 .main {
-    min-height: calc(100svh - (59px + 220px + 32px));
+    min-height: calc(100svh - (60px + 222px + 64px));
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 2rem;
 }
 
-.main:not(:has(.campaigns-banner), :has(.dashboard)) {
-    min-height: calc(100svh - (59px + 220px + 64px));
+.main:not(:has(.campaigns-banner, .dashboard)) {
+    min-height: calc(100svh - (60px + 222px + 64px));
     justify-content: center;
     margin: 2rem 0;
 }
