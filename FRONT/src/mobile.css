@@ -1,11 +1,54 @@
 @media screen and (max-width: 768px) {
-
-    h1 {
-        font-size: 1.25rem;
+    :root {
+        font-size: 14px;
+        --min-height-footer-mobile: 402px;
     }
 
+    h1 {
+        margin-block: 1rem !important;
+        text-align: center;
+    }
+
+    /* HEADER */
+    .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: var(--background);
+        z-index: 2000;
+    }
+
+    /* MAIN */
     .main {
-        min-height: calc(100svh - (60px + 490px - 64px)) !important;
+        min-height: calc(100svh - (var(--min-height-footer-mobile) - 88px)) !important;
+        margin-top: 60px !important;
+    }
+
+    /* FOOTER */
+    .footer {
+        min-height: var(--min-height-footer-mobile);
+        /*max-height: var(--max-height-footer-mobile);*/
+    }
+
+    .footer .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-text {
+        text-align: center;
+        text-overflow: ellipsis;
+    }
+
+    .footer-nav {
+        flex-direction: column;
+        align-items: center !important;
+        gap: 2rem;
+
+        & .nav-title {
+            margin-bottom: .5rem !important;
+        }
     }
 
 
@@ -54,33 +97,21 @@
         padding-inline: 10px;
     }
 
+    /* ACCOUNT */
+    .account {
+        grid-template-columns: 1fr !important;
 
-    /* FOOTER */
-    .footer {
-        min-height: 402px;
-        max-height: 490px;
-    }
+        & .account-nav-aside {
+            display: none;
+        }
 
-    .footer .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+        & .p-divider {
+            display: none;
+        }
 
-    .footer-text {
-        text-align: center;
-        text-overflow: ellipsis;
-    }
-
-    .footer-nav {
-        flex-direction: column;
-        align-items: center !important;
-        gap: 2rem;
-
-        & .nav-title {
-            margin-bottom: .5rem !important;
+        & .input-error {
+            width: 100% !important;
         }
     }
-
 
 }

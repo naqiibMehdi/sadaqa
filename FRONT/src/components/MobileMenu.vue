@@ -25,6 +25,12 @@ const authStore = useAuthStore();
         <li class="header-item">
           <RouterLink :to="{name: 'profil'}">Mon compte</RouterLink>
         </li>
+        <li class="header-item">
+          <RouterLink :to="{name: 'address'}" active-class="active-link">Mon adresse</RouterLink>
+        </li>
+        <li class="header-item">
+          <RouterLink :to="{name: 'iban'}" active-class="active-link">Coordonnée bancaire</RouterLink>
+        </li>
       </ul>
 
       <ul class="header-list" v-else>
