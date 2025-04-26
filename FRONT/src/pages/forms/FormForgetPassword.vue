@@ -49,7 +49,7 @@ const sendEmail = async () => {
   row-gap: 1rem;
 }
 
-.forget-pwd-title {
+.forget-pwd-title, .forget-pwd-text {
   text-align: center;
 }
 

@@ -6,15 +6,23 @@ import InputField from "@/components/InputField.vue";
 import InputNumber from "primevue/inputnumber";
 import CustomButton from "@/components/CustomButton.vue"
 import Footer from "@/components/layouts/Footer.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {usePaymentStore} from "@/stores/usePaymentStore.ts";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import Message from "primevue/message";
+import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 
 const route = useRoute()
+const router = useRouter()
 const paymentStore = usePaymentStore()
+const campaignStore = useCampaignStore()
 const formPayment = ref({name: "", email: "", amount: 0})
 
+onMounted(() => {
+  if (!campaignStore.campaign) {
+    router.push({name: "campaigns"})
+  }
+})
 const sendPayment = async () => {
   await paymentStore.checkoutSessionPayment(route.params.slug as string, route.params.id as string, formPayment.value)
 }

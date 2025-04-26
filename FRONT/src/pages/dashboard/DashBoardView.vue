@@ -32,7 +32,7 @@ onMounted(() => {
           <div class="dashboard-campaign-infos">
             <h2>{{ campaign.title }}</h2>
             <div class="dashboard-campaign-subinfos">
-              <p>{{ campaign.collected_amount / 100 }} €</p>
+              <p>Collecté: {{ campaign.collected_amount / 100 }} €</p>
               <p>{{ campaign.participants?.length }}
                 participant{{ campaign.participants?.length && campaign.participants?.length > 1 ? 's' : '' }}</p>
             </div>
