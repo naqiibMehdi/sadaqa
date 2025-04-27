@@ -12,12 +12,92 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+/**
+ * @group Cagnottes
+ */
 class CampaignController extends Controller
 {
   /**
+   * Afficher les cagnottes
+   *
    * Permet d'afficher 9 cagnottes par page
    *
    * @return AnonymousResourceCollection|JsonResponse
+   *
+   * @response 404 {
+   *   "message" => "Aucune campagnes disponible"
+   * }
+   *
+   * @response 200 {
+   *  "data": [
+   *    {
+   *      "id": 19,
+   *      "title": "Dolorem qui corrupti qui ducimus iste quo enim dolores odit atque repellendus.",
+   *      "description": "Sunt provident et sed dolorem. Qui similique voluptate fuga maxime eveniet.",
+   *      "slug": "perspiciatis-eos-consequatur-assumenda-quia-quae-saepe",
+   *      "target_amount": 52776,
+   *      "collected_amount": 587,
+   *      "created_at": "2025-03-18T23:18:17+00:00",
+   *      "limit_date": "2025-04-29T11:23:01+00:00",
+   *      "category_id": 6,
+   *      "closing_date": "2025-03-13T17:46:57+00:00",
+   *      "url_image": "http://localhost:8000/storage/campaigns/default_cover_campaign.png",
+   *      "user": {
+   *        "id": 4,
+   *        "name": "Jean Delaunay",
+   *        "first_name": "Thomas",
+   *        "public_name": "Claudine Pineau",
+   *        "birth_date": "1999-01-29T00:00:00+00:00",
+   *        "email": "laetitia99@example.org",
+   *        "subscribe_date": "2013-08-04T00:00:00+00:00",
+   *        "image_profile": "http://localhost:8000/storage/profile/3LadULEk1ydAR7sylwtkSXSGAGF4B2YwKGeL6JQU.jpg"
+   *      },
+   *      "participants": []
+   *    },
+   *  ],
+   *  "links": {
+   *  "first": "http://localhost:8000/api/campaigns?page=1",
+   *  "last": "http://localhost:8000/api/campaigns?page=3",
+   *  "prev": "http://localhost:8000/api/campaigns?page=2",
+   *  "next": null
+   *  },
+   *  "meta": {
+   *    "current_page": 3,
+   *    "from": 19,
+   *    "last_page": 3,
+   *    "links": [
+   *      {
+   *        "url": "http://localhost:8000/api/campaigns?page=2",
+   *        "label": "pagination.previous",
+   *        "active": false
+   *      },
+   *      {
+   *        "url": "http://localhost:8000/api/campaigns?page=1",
+   *        "label": "1",
+   *        "active": false
+   *      },
+   *      {
+   *        "url": "http://localhost:8000/api/campaigns?page=2",
+   *        "label": "2",
+   *        "active": false
+   *      },
+   *      {
+   *        "url": "http://localhost:8000/api/campaigns?page=3",
+   *        "label": "3",
+   *        "active": true
+   *      },
+   *      {
+   *        "url": null,
+   *        "label": "pagination.next",
+   *        "active": false
+   *      }
+   * ],
+   *    "path": "http://localhost:8000/api/campaigns",
+   *    "per_page": 9,
+   *    "to": 26,
+   *    "total": 26
+   *  }
+   * }
    */
   public function index(): AnonymousResourceCollection|JsonResponse
   {

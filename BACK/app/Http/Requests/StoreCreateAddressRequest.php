@@ -29,7 +29,7 @@ class StoreCreateAddressRequest extends FormRequest
     return [
       "address" => "required|string",
       "city" => "required|string",
-      "postal_code" => ["required", "regex:/^[0-9]{5}$/"],
+      "postal_code" => ["required", "size:5"],
       "country" => "required|string",
       "user_id" => [
         "exists:users,id",
@@ -57,17 +57,15 @@ class StoreCreateAddressRequest extends FormRequest
       ],
       "postal_code.*" => [
         "required" => "Le code postal est obligatoire.",
-        "regex" => "le code postal doit être de 5 chiffres.",
+        "size" => "le code postal doit être de 5 chiffres.",
       ],
       "country.*" => [
         "required" => "Le pays est obligatoire.",
         "string" => "Le pays doit être de type texte.",
       ],
       "user_id.*" => [
-//        "required" => "l'utilisateur est obligatoire",
-//        "exists" => "L'utilisateur n'existe pas",
+        "exists" => "L'utilisateur n'existe pas",
         "unique" => "L'utilisateur possède déjà une adresse",
-        "numeric" => "L'id doit être de type numérique"
       ],
     ];
   }
