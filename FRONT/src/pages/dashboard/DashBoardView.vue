@@ -57,6 +57,10 @@ onMounted(() => {
 
 <style scoped>
 
+.dashboard-list-campaigns {
+  padding-inline: 10px;
+}
+
 .dashboard-list-campaigns article:not(:last-child) {
   margin-bottom: 1.8rem;
 }

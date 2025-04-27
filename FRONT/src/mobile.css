@@ -3,7 +3,7 @@
         font-size: 14px;
         --min-height-footer-mobile: 402px;
     }
-    
+
     h1 {
         margin-block: 1.6rem !important;
         text-align: center;
@@ -108,7 +108,7 @@
             display: none;
         }
 
-        & .p-divider {
+        & .p-divider-vertical {
             display: none;
         }
 

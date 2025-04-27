@@ -50,7 +50,7 @@ watch(() => route.path, updateRouteInfo)
   max-width: 1200px;
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(min-content, 240px) max-content  minmax(300px, 1fr);
+  grid-template-columns: minmax(max-content, 200px) max-content  minmax(250px, 1fr);
   column-gap: 2rem;
 }
 
@@ -58,5 +58,7 @@ watch(() => route.path, updateRouteInfo)
   align-self: center;
   justify-self: center;
   width: 100%;
+  position: sticky;
+  top: 0
 }
 </style>

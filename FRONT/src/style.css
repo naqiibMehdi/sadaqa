@@ -1,4 +1,5 @@
 /* link: https://www.realtimecolors.com/?colors=080d12-f2f7fb-317AC1-88bbed-479cf2&fonts=Koh%20Santepheap-Koh%20Santepheap */
+@import "tablet.css";
 @import "mobile.css";
 
 :root {

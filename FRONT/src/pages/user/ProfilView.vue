@@ -8,12 +8,21 @@ import {onMounted, ref, watch} from "vue";
 import {storeToRefs} from "pinia";
 import Message from "primevue/message";
 import {User} from "@/types/types.ts";
+import Divider from "primevue/divider";
+import {useAuthStore} from "@/stores/useAuthStore.ts";
+import {useRouter} from "vue-router";
+import {useToast} from "primevue/usetoast";
+import ModalConfirm from "@/components/ModalConfirm.vue";
 
 const userStore = useUserStore()
 const {user, errorUpdateUserInfos} = storeToRefs(userStore)
 const disabled = ref(true)
 const image = ref<File | string>("")
 const formUserData = ref<User>(user.value)
+const authStore = useAuthStore()
+const router = useRouter()
+const toast = useToast()
+const modalConfirmDelete = ref<typeof ModalConfirm | null>(null)
 
 onMounted(() => {
   userStore.getInfosUser()
@@ -52,6 +61,19 @@ const cancelFormData = () => {
   image.value = ""
   errorUpdateUserInfos.value = null
   disabled.value = true
+}
+
+const deleteAccount = async () => {
+  await userStore.deleteAccountUser()
+  authStore.token = ""
+  await router.push({name: "login"})
+  toast.add({severity: 'success', summary: "Message de succès", detail: userStore.successMessage, life: 5000});
+}
+
+const confirmDeleteAccount = () => {
+  if (modalConfirmDelete.value) {
+    modalConfirmDelete.value.callConfirm()
+  }
 }
 </script>
 
@@ -97,12 +119,43 @@ const cancelFormData = () => {
       <CustomButton label="Annuler" :outline="true" v-if="!disabled"
                     @click="cancelFormData" :disabled="userStore.loading"/>
     </form>
+    <Divider/>
+    <h2>Modifier mon mot de passe</h2>
+    <form class="form-container profil-password">
+      <InputField
+          placeholder="Mot de passe"
+          id="password"
+          title="Mot de passe"
+          type="password"
+      />
+      <InputField
+          placeholder="Confirmer votre mot de passe"
+          id="password_confirmation"
+          title="Confirmez votre mot de passe"
+          type="password"
+      />
+      <Message severity="error" variant="simple" size="small">
+
+      </Message>
+      <div class="formConnexion-buttons-list">
+        <CustomButton label="Modifier mon mot de passe" type="submit"/>
+      </div>
+    </form>
+    <Divider/>
+    <div class="profil-delete-account">
+      <h2 class="profil-delete-account-title">Mon compte</h2>
+      <p>Si vous supprimez votre compte, cela mènera à la perte de toutes vos informations (données personnelles,
+        cagnottes et don des participants)</p>
+      <ModalConfirm ref="modalConfirmDelete" group="delete" :acceptFn="deleteAccount">
+        <CustomButton label="Supprimer mon compte" @click="confirmDeleteAccount" class="profil-delete-account-button"/>
+      </ModalConfirm>
+    </div>
   </section>
 </template>
 
 <style scoped>
 
-.profil {
+.profil, .profil-delete-account {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,10 +164,26 @@ const cancelFormData = () => {
 
 .profil-form {
   width: 100%;
+  max-width: none;
+  padding-inline: 10px;
 }
 
 .profil-form .input-error {
   width: 50%;
+}
+
+.profil-delete-account {
+  padding-inline: 10px;
+}
+
+.profil-delete-account-button {
+  background-color: red;
+  color: white;
+}
+
+.profil-delete-account .profil-delete-account-button:hover {
+  background-color: darkred;
+  color: white;
 }
 
 .buttonFilled {

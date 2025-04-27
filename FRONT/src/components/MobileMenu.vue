@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import {RouterLink} from 'vue-router';
+import {RouterLink, useRouter} from 'vue-router';
 import {useAuthStore} from '@/stores/useAuthStore.ts';
+import {useToast} from "primevue/usetoast";
 
 defineProps({
   isMenuOpen: Boolean
 });
 
 const authStore = useAuthStore();
+const router = useRouter()
+const toast = useToast()
+const logout = async () => {
+  await authStore.logoutUser({})
+  await router.push({name: "login"})
+  toast.add({severity: 'success', summary: "Message de succès", detail: "Compte déconnecté avec succès", life: 5000});
+}
 </script>
 
 <template>
@@ -30,6 +38,9 @@ const authStore = useAuthStore();
         </li>
         <li class="header-item">
           <RouterLink :to="{name: 'iban'}" active-class="active-link">Coordonnée bancaire</RouterLink>
+        </li>
+        <li class="nav-aside-link">
+          <RouterLink to="" role="button" @click="logout" label="test">Se déconnecter</RouterLink>
         </li>
       </ul>
 

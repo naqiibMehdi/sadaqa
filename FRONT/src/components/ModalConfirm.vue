@@ -10,7 +10,7 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  message: `Etes-vous sûr de vouloir vous supprimer votre compte ?\nCela mènera à la perte de toutes vos informations (données personnelles, cagnottes et don des participants)`,
+  message: `Etes-vous sûr de vouloir vous supprimer votre compte ?`,
   header: 'Suppression'
 })
 

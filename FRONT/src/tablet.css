@@ -1,0 +1,22 @@
+@media screen and (max-width: 992px) {
+    .form-container {
+        padding-inline: 10px;
+    }
+
+    .participant-banner-amount {
+        min-width: max-content;
+    }
+
+    .account {
+        column-gap: 1rem !important;
+    }
+
+    /* PROFILE */
+    .profil-form .form-inline {
+        flex-direction: column;
+
+        & .input-error {
+            width: 100% !important;
+        }
+    }
+}
