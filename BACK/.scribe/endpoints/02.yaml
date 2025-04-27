@@ -1,0 +1,445 @@
+name: Cagnottes
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/campaigns
+    metadata:
+      groupName: Cagnottes
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Afficher les cagnottes'
+      description: "Permet d'afficher 9 cagnottes par page"
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+           "data": [
+             {
+               "id": 19,
+               "title": "Dolorem qui corrupti qui ducimus iste quo enim dolores odit atque repellendus.",
+               "description": "Sunt provident et sed dolorem. Qui similique voluptate fuga maxime eveniet.",
+               "slug": "perspiciatis-eos-consequatur-assumenda-quia-quae-saepe",
+               "target_amount": 52776,
+               "collected_amount": 587,
+               "created_at": "2025-03-18T23:18:17+00:00",
+               "limit_date": "2025-04-29T11:23:01+00:00",
+               "category_id": 6,
+               "closing_date": "2025-03-13T17:46:57+00:00",
+               "url_image": "http://localhost:8000/storage/campaigns/default_cover_campaign.png",
+               "user": {
+                 "id": 4,
+                 "name": "Jean Delaunay",
+                 "first_name": "Thomas",
+                 "public_name": "Claudine Pineau",
+                 "birth_date": "1999-01-29T00:00:00+00:00",
+                 "email": "laetitia99@example.org",
+                 "subscribe_date": "2013-08-04T00:00:00+00:00",
+                 "image_profile": "http://localhost:8000/storage/profile/3LadULEk1ydAR7sylwtkSXSGAGF4B2YwKGeL6JQU.jpg"
+               },
+               "participants": []
+             },
+           ],
+           "links": {
+           "first": "http://localhost:8000/api/campaigns?page=1",
+           "last": "http://localhost:8000/api/campaigns?page=3",
+           "prev": "http://localhost:8000/api/campaigns?page=2",
+           "next": null
+           },
+           "meta": {
+             "current_page": 3,
+             "from": 19,
+             "last_page": 3,
+             "links": [
+               {
+                 "url": "http://localhost:8000/api/campaigns?page=2",
+                 "label": "pagination.previous",
+                 "active": false
+               },
+               {
+                 "url": "http://localhost:8000/api/campaigns?page=1",
+                 "label": "1",
+                 "active": false
+               },
+               {
+                 "url": "http://localhost:8000/api/campaigns?page=2",
+                 "label": "2",
+                 "active": false
+               },
+               {
+                 "url": "http://localhost:8000/api/campaigns?page=3",
+                 "label": "3",
+                 "active": true
+               },
+               {
+                 "url": null,
+                 "label": "pagination.next",
+                 "active": false
+               }
+          ],
+             "path": "http://localhost:8000/api/campaigns",
+             "per_page": 9,
+             "to": 26,
+             "total": 26
+           }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "message" => "Aucune campagnes disponible"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/campaigns/{slug}-{id}'
+    metadata:
+      groupName: Cagnottes
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Permet d'afficher une seule cagnotte"
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      slug:
+        name: slug
+        description: 'The slug of the .'
+        required: true
+        example: 0cl
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      id:
+        name: id
+        description: 'The ID of the .'
+        required: true
+        example: '564'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      slug: 0cl
+      id: '564'
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 404
+        content: '{"message":"Cette cagnotte n''existe pas"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/campaigns
+    metadata:
+      groupName: Cagnottes
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Permet de créer une cagnotte'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: true
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      image:
+        name: image
+        description: 'validation.image validation.max.'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      target_amount:
+        name: target_amount
+        description: validation.min.
+        required: true
+        example: 16
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      limit_date:
+        name: limit_date
+        description: validation.date.
+        required: false
+        example: '2025-04-27T18:19:27'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      category_id:
+        name: category_id
+        description: 'The <code>id</code> of an existing record in the categories table.'
+        required: true
+        example: 4326.41688
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      title: architecto
+      description: 'Eius et animi quos velit et.'
+      target_amount: 16
+      limit_date: '2025-04-27T18:19:27'
+      category_id: 4326.41688
+    fileParameters:
+      image: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/campaigns/{slug}-{id}/edit'
+    metadata:
+      groupName: Cagnottes
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'permet de mettre à jour une cagnotte'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      slug:
+        name: slug
+        description: 'The slug of the .'
+        required: true
+        example: 0cl
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      id:
+        name: id
+        description: 'The ID of the .'
+        required: true
+        example: '564'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      slug: 0cl
+      id: '564'
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: true
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      image:
+        name: image
+        description: 'validation.image validation.max.'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      target_amount:
+        name: target_amount
+        description: validation.min.
+        required: true
+        example: 16
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      limit_date:
+        name: limit_date
+        description: validation.date.
+        required: false
+        example: '2025-04-27T18:19:28'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      category_id:
+        name: category_id
+        description: 'The <code>id</code> of an existing record in the categories table.'
+        required: true
+        example: 4326.41688
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      title: architecto
+      description: 'Eius et animi quos velit et.'
+      target_amount: 16
+      limit_date: '2025-04-27T18:19:28'
+      category_id: 4326.41688
+    fileParameters:
+      image: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/campaigns/{slug}-{id}'
+    metadata:
+      groupName: Cagnottes
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Permet de supprimer une cagnotte'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      slug:
+        name: slug
+        description: 'The slug of the .'
+        required: true
+        example: 0cl
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      id:
+        name: id
+        description: 'The ID of the .'
+        required: true
+        example: '564'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      slug: 0cl
+      id: '564'
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
