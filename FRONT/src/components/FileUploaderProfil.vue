@@ -2,7 +2,6 @@
 import IcBaselineDelete from '~icons/ic/baseline-delete'
 import IcBaselineEdit from '~icons/ic/baseline-edit'
 import {ref} from "vue";
-import {useToast} from "primevue/usetoast";
 
 interface Props {
   imageProfile: string,
@@ -10,9 +9,6 @@ interface Props {
 }
 
 defineProps<Props>()
-
-
-const toast = useToast()
 
 const urlBase64 = ref<string | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -49,7 +45,8 @@ const deleteUrlBase64 = () => {
 <template>
   <div class="fileUploaderProfil">
     <input type="file" hidden="" ref="fileInput" @change="handleFileChange">
-    <img :src="imageFile ? urlBase64 : imageProfile" alt="image de profile" class="fileUploaderProfil-banner-upload"/>
+    <img :src="imageFile ? urlBase64 as string : imageProfile" alt="image de profile"
+         class="fileUploaderProfil-banner-upload"/>
     <div class="fileUploaderProfil-button-list">
       <IcBaselineEdit width="40" height="40" class="icon-edit" @click="triggerFileInput" v-if="!disabled"/>
       <IcBaselineDelete width="40" height="40" class="icon-delete" @click="deleteUrlBase64" v-if="imageFile"/>
