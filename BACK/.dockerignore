@@ -1,0 +1,11 @@
+/vendor
+/node_modules
+/storage/logs
+.git
+.gitignore
+.dockerignore
+composer.lock
+.scribe
+public/docs
+public/storage
+config/scribe.php
