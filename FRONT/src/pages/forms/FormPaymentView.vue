@@ -52,7 +52,6 @@ const sendPayment = async () => {
       </Message>
 
       <CustomButton label="Payer" type="submit" :loading="paymentStore.loading"/>
-      {{ formPayment }}
     </form>
   </Main>
   <Footer/>

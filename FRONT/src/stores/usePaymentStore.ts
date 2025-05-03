@@ -30,7 +30,6 @@ export const usePaymentStore = defineStore("payment", {
 
         await stripe?.redirectToCheckout({sessionId: idStripe})
 
-        console.log(idStripe)
       } catch (error) {
         if (error instanceof AxiosError) {
           this.errors.name = error.response?.data?.name?.[0]
