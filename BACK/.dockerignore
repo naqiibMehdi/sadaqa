@@ -3,6 +3,7 @@
 /storage/logs
 .git
 .gitignore
+.env
 .dockerignore
 composer.lock
 .scribe

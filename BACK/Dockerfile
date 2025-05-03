@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client
 
 # Install PHP extensions
-cat .extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip curl intl
 
