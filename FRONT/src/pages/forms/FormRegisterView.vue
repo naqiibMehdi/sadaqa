@@ -10,10 +10,12 @@ import Message from 'primevue/message'
 import {ref, onMounted} from "vue";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 import {storeToRefs} from "pinia";
+import {useRouter} from "vue-router";
 
 const day = ref<string | number>(0)
 const month = ref<string | number>(0)
 const year = ref<string | number>(0)
+const router = useRouter()
 
 const daysOptions = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
 const monthsOptions = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
@@ -43,9 +45,7 @@ const generateYears = () => {
 }
 
 const formatedDate = () => {
-  const d = day.value.toString().padStart(2, "0")
-  const m = month.value.toString().padStart(2, "0")
-  return [d, m, year.value,].join("/")
+  return `${year.value}-${month.value}-${day.value}`
 }
 
 const resetForm = () => {
@@ -67,10 +67,9 @@ const resetForm = () => {
 const submitForm = async () => {
   await authStore.createUser({...userData.value, birth_date: formatedDate()})
 
-  if (authStore.loading) {
+  if (authStore.errors === null) {
     resetForm()
-  } else if (!authStore.loading) {
-    console.log("erreur lors de la création du user")
+    await router.push({name: "login"})
   }
 }
 
@@ -88,62 +87,63 @@ onMounted(() => yearsOptions.value = generateYears())
         <div class="formRegister-input-error">
           <InputField placeholder="Nom" id="nom" title="nom" v-model="userData.name"
                       :invalid="errors?.name && errors?.name?.[0] !== '' "/>
-          <Message severity="error" variant="simple" size="small" v-if="errors.name?.[0]">{{
-              errors.name?.[0]
+          <Message severity="error" variant="simple" size="small" v-if="errors?.name?.[0]">{{
+              errors?.name?.[0]
             }}
           </Message>
         </div>
         <div class="formRegister-input-error">
           <InputField placeholder="Prénom" id="prenom" title="prénom" v-model="userData.first_name"
                       :invalid="errors?.first_name && errors.first_name?.[0] !== '' "/>
-          <Message severity="error" variant="simple" size="small" v-if="errors.first_name?.[0]">{{
-              errors.first_name?.[0]
+          <Message severity="error" variant="simple" size="small" v-if="errors?.first_name?.[0]">{{
+              errors?.first_name?.[0]
             }}
           </Message>
         </div>
       </div>
       <InputField placeholder="Ex: Toto" id="publicname" title="nom Public" v-model="userData.public_name"
                   :invalid="errors?.public_name && errors.public_name?.[0] !== '' "/>
-      <Message severity="error" variant="simple" size="small" v-if="errors.public_name?.[0]">{{
-          errors.public_name?.[0]
+      <Message severity="error" variant="simple" size="small" v-if="errors?.public_name?.[0]">{{
+          errors?.public_name?.[0]
         }}
       </Message>
       <InputField placeholder="Email" id="email" title="email" v-model="userData.email"
                   :invalid="errors?.email && errors.email?.[0] !== '' "/>
-      <Message severity="error" variant="simple" size="small" v-if="errors.email?.[0]">{{
-          errors.email?.[0]
+      <Message severity="error" variant="simple" size="small" v-if="errors?.email?.[0]">{{
+          errors?.email?.[0]
         }}
       </Message>
       <InputField placeholder="Mot de passe" id="password" title="mot de passe" v-model="userData.password"
                   :invalid="errors?.password && errors?.password?.[0] !== '' "/>
-      <Message severity="error" variant="simple" size="small" v-if="errors.password?.[0]">{{
-          errors.password?.[0]
+      <Message severity="error" variant="simple" size="small" v-if="errors?.password?.[0]">{{
+          errors?.password?.[0]
         }}
       </Message>
       <InputField placeholder="Mot de passe" id="confirmation_password" title="Confirmez votre mot de passe"
                   v-model="userData.password_confirmation"
-                  :invalid="errors.password && errors?.password?.[0] !== '' "/>
-      <Message severity="error" variant="simple" size="small" v-if="errors.password?.[0]">{{
-          errors.password?.[0]
+                  :invalid="errors?.password && errors?.password?.[0] !== '' "/>
+      <Message severity="error" variant="simple" size="small" v-if="errors?.password?.[0]">{{
+          errors?.password?.[0]
         }}
       </Message>
       <div class="formRegister-date">
         <p class="formRegister-title">Vous devez être majeur</p>
         <div class="formRegister-select">
           <Select v-model="day" placeholder="Jour" :options="daysOptions"
-                  :invalid="errors.birth_date && errors?.birth_date?.[0] !== '' "/>
+                  :invalid="errors?.birth_date && errors?.birth_date?.[0] !== '' "/>
           <Select v-model="month" placeholder="Mois" :options="monthsOptions"
-                  :invalid="errors.birth_date && errors?.birth_date?.[0] !== '' "/>
+                  :invalid="errors?.birth_date && errors?.birth_date?.[0] !== '' "/>
           <Select v-model="year" placeholder="Année" :options="yearsOptions"
-                  :invalid="errors.birth_date && errors?.birth_date?.[0] !== '' "/>
+                  :invalid="errors?.birth_date && errors?.birth_date?.[0] !== '' "/>
         </div>
-        <Message severity="error" variant="simple" size="small" v-if="errors.birth_date?.[0]">{{
-            errors.birth_date?.[0]
+        <Message severity="error" variant="simple" size="small" v-if="errors?.birth_date?.[0]">{{
+            errors?.birth_date?.[0]
           }}
         </Message>
       </div>
       <CustomButton label="Créer votre compte" type="submit" :loading="authStore.loading"/>
     </form>
+    {{ formatedDate() }}
   </Main>
   <Footer/>
 </template>

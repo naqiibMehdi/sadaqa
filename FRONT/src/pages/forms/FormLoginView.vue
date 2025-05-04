@@ -37,13 +37,13 @@ const submitLogin = async () => {
     <form class="form-container" @submit.prevent="submitLogin">
       <InputField placeholder="Email" v-model="userData.email"
                   :invalid="authStore.errors?.email && authStore.errors.email?.[0] !== '' "/>
-      <Message severity="error" variant="simple" size="small" v-if="authStore.errors.email?.[0]">{{
-          authStore.errors.email?.[0]
+      <Message severity="error" variant="simple" size="small" v-if="authStore?.errors?.email?.[0]">{{
+          authStore?.errors?.email?.[0]
         }}
       </Message>
       <InputField type="password" placeholder="Mot de passe" v-model="userData.password"
                   :invalid="authStore.errors?.password && authStore.errors.password?.[0] !== '' "/>
-      <Message severity="error" variant="simple" size="small" v-if="authStore.errors.password?.[0]">{{
+      <Message severity="error" variant="simple" size="small" v-if="authStore.errors?.password?.[0]">{{
           authStore.errors.password?.[0]
         }}
       </Message>
