@@ -41,6 +41,8 @@ COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.c
 # Enable Apache mods
 RUN a2enmod rewrite
 
+#renommer le fichier .env.production
+RUN mv /var/www/html/.env.production /var/www/html/.env
 
 # Donner les permissions nécessaires aux fichiers de stockage
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache

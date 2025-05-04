@@ -26,7 +26,7 @@ class CampaignRessource extends JsonResource
       "limit_date" => $this->limit_date ? Carbon::parse($this->limit_date)->toIso8601String() : null,
       "category_id" => $this->category_id,
       "closing_date" => $this->closing_date ? Carbon::parse($this->closing_date)->toIso8601String() : null,
-      "url_image" => asset("storage/" . $this->image),
+      "url_image" => env("APP_URL") === "https://saddaqa.fr" ? env("APP_URL") . "/storage/" . $this->image : asset("/storage/" . $this->image),
       "user" => new UserRessource($this->whenLoaded('user')),
       "participants" => ParticipantRessource::collection($this->whenLoaded('participant')),
     ];

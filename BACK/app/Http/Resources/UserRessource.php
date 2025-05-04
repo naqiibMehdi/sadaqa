@@ -24,7 +24,10 @@ class UserRessource extends JsonResource
       "birth_date" => Carbon::parse($this->birth_date)->toIso8601String(),
       "email" => $this->email,
       "subscribe_date" => Carbon::parse($this->subscribe_date)->toIso8601String(),
-      "image_profile" => Str::contains($this->img_profile, "http") ? $this->img_profile : asset("storage/" . $this->img_profile),
+      "image_profile" => Str::contains($this->img_profile, "avatars") ? $this->img_profile :
+        (
+        env("APP_URL") === "https://saddaqa.fr" ? env("APP_URL") . "/storage/" . $this->img_profile : asset("storage/" . $this->img_profile)
+        ),
       "campaigns" => CampaignRessource::collection($this->whenLoaded('campaign')),
     ];
   }
