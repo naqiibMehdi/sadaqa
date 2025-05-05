@@ -143,7 +143,6 @@ onMounted(() => yearsOptions.value = generateYears())
       </div>
       <CustomButton label="Créer votre compte" type="submit" :loading="authStore.loading"/>
     </form>
-    {{ formatedDate() }}
   </Main>
   <Footer/>
 </template>
