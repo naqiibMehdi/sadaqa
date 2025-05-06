@@ -37,6 +37,8 @@ RUN composer install --no-interaction --optimize-autoloader
 
 # Copier le fichier de configuration Apache personnalisé
 COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY entrypoint.sh /var/www/html
+RUN chmod +x /var/www/html/entrypoint.sh
 
 # Enable Apache mods
 RUN a2enmod rewrite
