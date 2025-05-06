@@ -26,7 +26,7 @@ class UserRessource extends JsonResource
       "subscribe_date" => Carbon::parse($this->subscribe_date)->toIso8601String(),
       "image_profile" => Str::contains($this->img_profile, "avatars") ? $this->img_profile :
         (
-        env("APP_URL") === "https://saddaqa.fr" ? env("APP_URL") . "/storage/" . $this->img_profile : asset("storage/" . $this->img_profile)
+        Str::contains(env("APP_URL"), "saddaqa") ? env("APP_URL") . "/storage/" . $this->img_profile : asset("storage/" . $this->img_profile)
         ),
       "campaigns" => CampaignRessource::collection($this->whenLoaded('campaign')),
     ];

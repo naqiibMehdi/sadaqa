@@ -46,7 +46,7 @@ class StoreRegisterUserRequest extends FormRequest
       "public_name.required" => "Le nom publique est obligatoire",
       "public_name.max" => "Le nom publique ne doit pas dépassé 255 caractères",
       "birth_date.required" => "La date de naissance est obligatoire",
-      "birth_date.date_format" => "La date de naissance doit être au format suivant: jj/mm/yyyy",
+      "birth_date.date" => "La date de naissance doit être au format suivant: jj/mm/yyyy",
       "email.required" => "L'email est obligatoire",
       "email.unique" => "L'email existe déjà",
       "email.email" => "L'email n'est pas au bon format",

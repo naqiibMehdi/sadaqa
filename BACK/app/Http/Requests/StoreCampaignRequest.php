@@ -23,7 +23,7 @@ class StoreCampaignRequest extends FormRequest
   {
     return [
       "title" => "required|string",
-      "description" => "required|string",
+      "description" => "required|string|max:60000",
       "image" => "nullable|image|mimes:jpeg,png,jpg,webp|max:2048",
       "target_amount" => "required|numeric|min:1",
       "limit_date" => "nullable|date",
@@ -41,7 +41,7 @@ class StoreCampaignRequest extends FormRequest
     return [
       "title.required" => "Le titre est obligatoire.",
       "description.required" => "La description est obligatoire.",
-      "description.max" => "65535 caractères maximum",
+      "description.max" => "60000 caractères maximum",
       "image.*" => [
         "max" => "La taille de l'image doit être inférieur à 2MB",
         "mimes" => "format accepté: jpeg, png, jpg, webp.",

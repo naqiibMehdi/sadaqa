@@ -219,7 +219,7 @@ class CampaignController extends Controller
   {
     $validated = $request->validated();
     $slug = Str::slug($validated["title"]);
-    $imagePath = "default_cover_campaign.png";
+    $imagePath = "campaigns/default_cover_campaign.png";
 
 
     if ($request->hasFile("image") && $request->file("image")->isValid()) {
