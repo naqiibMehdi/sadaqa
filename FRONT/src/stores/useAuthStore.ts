@@ -25,6 +25,7 @@ export const useAuthStore = defineStore("auth", {
       this.error = null
       try {
         await postData("/auth/register", userData);
+        this.errors = null
       } catch (err) {
         if (err instanceof AxiosError) {
           this.error = err.message

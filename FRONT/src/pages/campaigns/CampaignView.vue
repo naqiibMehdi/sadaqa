@@ -42,6 +42,7 @@ onMounted(async () => {
           <CardCampaign :campaign="campaignStore.campaign"/>
         </section>
         <section class="campaign-card-description">
+          <h2 class="campaign-card-description-title">Description</h2>
           <div v-html="campaignStore.campaign.description"></div>
         </section>
       </div>
@@ -87,6 +88,25 @@ onMounted(async () => {
   column-gap: 3rem;
 }
 
+.campaign-card-description {
+  place-self: center;
+}
+
+.campaign-card-description-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+::v-global(.campaign-card-description a) {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+::v-global(.campaign-card-description img) {
+  width: 450px;
+  object-fit: contain;
+}
+
 .campaign-footer {
   display: flex;
   flex-direction: column;
@@ -94,6 +114,5 @@ onMounted(async () => {
   gap: 1rem;
   width: 70%;
 }
-
 
 </style>
