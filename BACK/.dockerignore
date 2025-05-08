@@ -4,6 +4,7 @@
 .git
 .gitignore
 .env
+.env.example
 .dockerignore
 composer.lock
 .scribe
