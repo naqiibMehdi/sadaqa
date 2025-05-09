@@ -119,7 +119,7 @@ a {
     margin-bottom: 2rem;
 }
 
-.main:not(:has(.campaigns-banner, .dashboard)) {
+.main:not(:has(.campaigns-banner, .dashboard, .home)) {
     min-height: calc(100svh - (60px + 222px + 64px));
     justify-content: center;
     margin: 2rem 0;

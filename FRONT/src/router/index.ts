@@ -15,9 +15,12 @@ import AccountView from "@/pages/user/AccountView.vue";
 import AddressView from "@/pages/user/AddressView.vue";
 import IbanView from "@/pages/user/IbanView.vue";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
+import ErrorView from "@/pages/error/ErrorView.vue";
+import HomeView from "@/pages/home/HomeView.vue";
 
 
 const routes = [
+  {path: "/", name: "home", component: HomeView},
   {path: "/login", name: "login", component: FormLoginView, meta: {requireAuth: false}},
   {path: "/register", name: "register", component: FormRegisterView, meta: {requireAuth: false}},
   {path: "/forget-password", name: "password.forget", component: FormForgetPassword},
@@ -65,6 +68,15 @@ const routes = [
       }
     ]
   },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/error-404"
+  },
+  {
+    path: "/error-404",
+    name: "error",
+    component: ErrorView
+  }
 ]
 
 const router = createRouter({

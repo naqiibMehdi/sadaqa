@@ -41,7 +41,9 @@ watch(() => route.path, () => {
 <template>
   <header class="header">
     <div class="container">
-      <img :src="logo" alt="logo principal du site web" class="header-logo">
+      <RouterLink :to="{name: 'home'}">
+        <img :src="logo" alt="logo principal du site web" class="header-logo">
+      </RouterLink>
       <div v-if="isMobile" class="hamburger" :class="animateHamburger" @click="toggleMenu">
         <div class="line"></div>
         <div class="line"></div>
