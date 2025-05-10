@@ -2,10 +2,12 @@
 import Card from "primevue/card"
 import {useRoute, RouterLink} from "vue-router";
 import type {Campaign} from "@/types/types.ts";
+import {useAuthStore} from "@/stores/useAuthStore.ts";
 
 defineProps<{ campaign: Campaign }>()
 
 const route = useRoute()
+const authStore = useAuthStore()
 </script>
 
 
@@ -32,6 +34,13 @@ const route = useRoute()
             participants</p>
           <RouterLink :to="{name: 'payment'}" class="card-campaign-content-btn" v-if="route.name !== 'campaigns'">
             Participez
+          </RouterLink>
+          <RouterLink
+              :to="{name: 'campaign.update', params: {slug: campaign.slug, id: campaign.id}}"
+              class="card-campaign-content-btn"
+              v-if="route.name !== 'campaigns' && authStore.token !== ''"
+          >
+            Modifier
           </RouterLink>
         </div>
       </template>
