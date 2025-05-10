@@ -84,7 +84,7 @@ const onSubmitFormCampaign = async () => {
 <template>
   <Header/>
   <Main>
-    <h1>Créer votre cagnotte</h1>
+    <h1>Mettez à jour votre cagnotte</h1>
     <form class="form-container" @submit.prevent="onSubmitFormCampaign" enctype="multipart/form-data">
       <FileUploader v-model="campaignData.image" :mainImage="campaignStore?.campaign?.url_image"
                     :key="campaignStore?.campaign?.id"/>
