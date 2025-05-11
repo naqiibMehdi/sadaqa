@@ -7,7 +7,8 @@ type Props = {
   customComponent?: object,
   type?: "button" | "submit" | "reset",
   loading?: boolean,
-  disabled?: boolean
+  disabled?: boolean,
+  size?: "small" | "large",
 }
 
 withDefaults(defineProps<Props>(), {outline: false, type: "button"})
@@ -21,6 +22,7 @@ withDefaults(defineProps<Props>(), {outline: false, type: "button"})
       :type="type"
       :loading="loading"
       :disabled="disabled"
+      :size="size"
   >
     <template #icon>
       <component :is="customComponent"/>
