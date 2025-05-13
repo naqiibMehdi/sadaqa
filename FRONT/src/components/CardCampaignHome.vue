@@ -1,75 +1,101 @@
 <script setup lang="ts">
-import Card from "primevue/card"
-import type {Campaign} from "@/types/types.ts";
+import {computed} from "vue";
 
-// defineProps<{ campaign: Campaign }>()
+type Props = {
+  campaign: { title: string, target_amount: number, collected_amount: number, url_image: string }
+}
+
+const props = defineProps<Props>()
+
+const amountFormatted = (key: "target_amount" | "collected_amount") => computed(() => {
+  return new Intl.NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 0
+  }).format(props.campaign[key])
+})
 
 </script>
 
 
 <template>
-  <Card class="card-campaign">
-    <template #header>
-      <img src="https://picsum.photos/200/300" alt="image de la cagnotte">
-    </template>
-    <template #title><h2 class="card-campaign-title">Titre cagnotte</h2></template>
-    <template #content>
-      <div class="card-campaign-content">
-        <p class="card-campaign-content-price">100 000 €</p>
-        <p class="card-campaign-content-participant">récoltés avec <span>200 000 €</span></p>
+  <article class="cardCampaignHome">
+    <p class="cardCampaignHome_title">{{ campaign.title }}</p>
+    <div class="cardCampaignHome_body">
+      <div class="cardCampaignHome_body_image" :style="{backgroundImage: `url(${campaign.url_image})`}"></div>
+      <div class="cardCampaignHome_body_content">
+        <p class="cardCampaignHome_body_content_price">{{ amountFormatted("collected_amount") }}</p>
+        <p class="cardCampaignHome_body_total_price">récoltés sur <span>{{ amountFormatted("target_amount") }}</span>
+        </p>
       </div>
-    </template>
-  </Card>
+    </div>
+  </article>
 </template>
 
 <style scoped>
-.card-campaign {
+.cardCampaignHome {
   overflow: hidden;
   border-radius: unset;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
 }
 
-.card-campaign:hover {
+.cardCampaignHome:hover {
   cursor: pointer;
 }
 
 
-.card-campaign-profil-infos p,
-.card-campaign-profil-infos span {
-  color: #ffffff;
-  text-shadow: 0 1px 1px var(--text), 0 1px 4px var(--text);
-}
-
-.card-campaign-profil-infos span {
-  font-size: 1rem;
-}
-
-.card-campaign-title {
+.cardCampaignHome_title {
   font-size: 1.125rem;
   text-align: center;
   text-transform: capitalize;
   overflow: hidden;
-  white-space: nowrap;
+  text-wrap: auto;
   text-overflow: ellipsis;
   font-weight: 900;
+  height: 44px;
 }
 
-.card-campaign-title:first-letter {
+.cardCampaignHome_title:first-letter {
   text-transform: uppercase;
 }
 
-.card-campaign-content {
+.cardCampaignHome_body {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  border: solid 1px var(--text5);
+}
+
+.cardCampaignHome_body_image {
+  height: 148px;
+  width: 100%;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.cardCampaignHome_body_content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .5rem;
+  margin-block: 14px;
 }
 
 
-.card-campaign-content-price {
+.cardCampaignHome_body_content_price {
   font-size: 1.75rem;
+  font-weight: 600;
 }
 
-.card-campaign-content-participant span {
+
+.cardCampaignHome_body_total_price span {
   font-weight: 600;
 }
 </style>

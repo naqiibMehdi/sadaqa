@@ -7,6 +7,17 @@ import homeDonation from "@/assets/home-donation.svg"
 import hand from "@/assets/hand.svg"
 import gift from "@/assets/gift.svg"
 import CardCampaignHome from "@/components/CardCampaignHome.vue";
+import Divider from 'primevue/divider';
+import {useCampaignStore} from "@/stores/useCampaignStore.ts";
+import {onMounted} from "vue";
+
+const campaignStore = useCampaignStore()
+
+
+onMounted(async () => {
+  await campaignStore.getCampaigns(1)
+})
+
 </script>
 
 <template>
@@ -42,12 +53,20 @@ import CardCampaignHome from "@/components/CardCampaignHome.vue";
         </div>
       </section>
       <section class="home-third-section">
-        <h3>Beaucoup de générosité et de solidarité !</h3>
+        <h2 class="home-third-section_title">Beaucoup de générosité et de solidarité !</h2>
+        <p class="home-third-section_text">Grâce aux cagnottes en ligne, chaque don effectué sur la plate forme, minime
+          soit-il, apaise les coeurs de
+          ceux
+          qui en ont le plus besoin</p>
+        <Divider align="center" style="width: 300px"/>
         <div class="home-third-section_campaigns">
-          <CardCampaignHome/>
-          <CardCampaignHome/>
-          <CardCampaignHome/>
+          <CardCampaignHome
+              v-for="(campaign, idx) in campaignStore.campaignsHome"
+              :key="idx"
+              :campaign="campaign"
+          />
         </div>
+        <RouterLink :to="{name: 'campaigns'}" class="home-third-section_link">Voir plus de cagnottes &gt</RouterLink>
       </section>
     </div>
   </Main>
@@ -133,11 +152,20 @@ import CardCampaignHome from "@/components/CardCampaignHome.vue";
   padding-block: 40px;
 }
 
+.home-third-section_text {
+  max-width: 650px;
+  text-align: center;
+}
+
 .home-third-section_campaigns {
   display: grid;
-  grid-template-columns: repeat(3, 300px);
+  grid-template-columns: repeat(3, 280px);
   justify-content: center;
   gap: 1.6rem;
+}
+
+.home-third-section_link {
+  color: #8e9297
 }
 
 </style>

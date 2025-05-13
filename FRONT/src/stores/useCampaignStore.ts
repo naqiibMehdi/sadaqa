@@ -86,6 +86,18 @@ export const useCampaignStore = defineStore("campaign", {
       this.currentPage = page
       await this.getCampaigns(page)
     }
+  },
+  getters: {
+    campaignsHome(): { title: string, target_amount: number, collected_amount: number, url_image: string }[] {
+      const tab = this.campaigns.data?.map(({title, target_amount, collected_amount, url_image}) => ({
+        title,
+        target_amount,
+        collected_amount,
+        url_image
+      }))
+
+      return tab?.slice(0, 3)
+    }
   }
 })
 
