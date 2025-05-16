@@ -10,6 +10,7 @@ import CardCampaignHome from "@/components/CardCampaignHome.vue";
 import Divider from 'primevue/divider';
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import {onMounted} from "vue";
+import Comments from "@/components/Comments.vue";
 
 const campaignStore = useCampaignStore()
 
@@ -52,7 +53,7 @@ onMounted(async () => {
           </div>
         </div>
       </section>
-      <section class="home-third-section">
+      <section class="home home-third-section">
         <h2 class="home-third-section_title">Beaucoup de générosité et de solidarité !</h2>
         <p class="home-third-section_text">Grâce aux cagnottes en ligne, chaque don effectué sur la plate forme, minime
           soit-il, apaise les coeurs de
@@ -67,6 +68,10 @@ onMounted(async () => {
           />
         </div>
         <RouterLink :to="{name: 'campaigns'}" class="home-third-section_link">Voir plus de cagnottes &gt</RouterLink>
+      </section>
+      <section class="home home-fourth-section">
+        <h2 class="home-fourth-section_title">Vous nous dites ce que vous en pensez...</h2>
+        <Comments/>
       </section>
     </div>
   </Main>
@@ -83,6 +88,7 @@ onMounted(async () => {
 
 .home-first-section_image {
   max-width: 800px;
+  width: 100%;
 }
 
 .home-sub_first_section {
@@ -107,10 +113,6 @@ onMounted(async () => {
   font-size: 1.2rem;
 }
 
-.home-sub_btn:hover {
-  background-color: var(--accent);
-}
-
 .home-second-section {
   display: flex;
   flex-direction: column;
@@ -118,7 +120,6 @@ onMounted(async () => {
   gap: 1.6rem;
   background-color: var(--secondary20);
   padding-block: 40px;
-  border-radius: 10px;
 }
 
 .home-sub_second_section {
@@ -152,6 +153,10 @@ onMounted(async () => {
   padding-block: 40px;
 }
 
+.home-third-section_title {
+  text-align: center;
+}
+
 .home-third-section_text {
   max-width: 650px;
   text-align: center;
@@ -159,13 +164,26 @@ onMounted(async () => {
 
 .home-third-section_campaigns {
   display: grid;
-  grid-template-columns: repeat(3, 280px);
+  grid-template-columns: repeat(3, minmax(250px, 340px));
   justify-content: center;
   gap: 1.6rem;
+  width: 100%;
 }
 
 .home-third-section_link {
   color: #8e9297
 }
 
+.home-third-section_link:hover {
+  text-decoration: underline;
+}
+
+.home-fourth-section {
+  background-color: var(--secondary20);
+  padding-block-start: 40px;
+}
+
+.home-fourth-section_title {
+  text-align: center;
+}
 </style>

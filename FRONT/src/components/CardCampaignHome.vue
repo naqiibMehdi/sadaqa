@@ -22,7 +22,8 @@ const amountFormatted = (key: "target_amount" | "collected_amount") => computed(
   <article class="cardCampaignHome">
     <p class="cardCampaignHome_title">{{ campaign.title }}</p>
     <div class="cardCampaignHome_body">
-      <div class="cardCampaignHome_body_image" :style="{backgroundImage: `url(${campaign.url_image})`}"></div>
+      <div class="cardCampaignHome_body_image" :style="{backgroundImage: `url(${campaign.url_image})`}" role="img"
+           aria-label="image principale de la cagnotte"></div>
       <div class="cardCampaignHome_body_content">
         <p class="cardCampaignHome_body_content_price">{{ amountFormatted("collected_amount") }}</p>
         <p class="cardCampaignHome_body_total_price">récoltés sur <span>{{ amountFormatted("target_amount") }}</span>
@@ -41,20 +42,14 @@ const amountFormatted = (key: "target_amount" | "collected_amount") => computed(
   gap: 1.4rem;
 }
 
-.cardCampaignHome:hover {
-  cursor: pointer;
-}
-
-
 .cardCampaignHome_title {
   font-size: 1.125rem;
   text-align: center;
   text-transform: capitalize;
   overflow: hidden;
-  text-wrap: auto;
   text-overflow: ellipsis;
   font-weight: 900;
-  height: 44px;
+  height: 50px;
 }
 
 .cardCampaignHome_title:first-letter {

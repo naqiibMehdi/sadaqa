@@ -19,4 +19,8 @@
             width: 100% !important;
         }
     }
+
+    .home-first-section, .home-third-section {
+        padding-inline: 10px;
+    }
 }

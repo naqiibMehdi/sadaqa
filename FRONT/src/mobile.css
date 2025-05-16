@@ -180,4 +180,32 @@
             }
         }
     }
+
+    /* HOME */
+    .home {
+        padding-inline: 10px;
+    }
+
+    .home-first-section {
+        flex-direction: column;
+        padding-bottom: 40px;
+    }
+
+    .home-sub_second_section {
+        flex-direction: column;
+    }
+
+    .home-third-section_campaigns {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-around !important;
+        gap: 1.6rem !important;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        & .cardCampaignHome {
+            flex: 0 0 auto;
+            max-width: 220px;
+        }
+    }
 }
