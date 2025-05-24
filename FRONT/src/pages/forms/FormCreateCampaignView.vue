@@ -103,7 +103,12 @@ const onSubmitFormCampaign = async () => {
         </Message>
       </div>
       <div class="formConnexion-buttons-list">
-        <CustomButton label="Lancer votre cagnotte" type="submit" :loading="campaignStore.loading"/>
+        <CustomButton
+            label="Lancer votre cagnotte"
+            type="submit"
+            :loading="campaignStore.loading"
+            :disabled="campaignStore.loading"
+        />
       </div>
     </form>
   </Main>
