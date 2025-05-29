@@ -23,7 +23,7 @@ class CampaignFactory extends Factory
     return [
       "title" => $this->faker->sentence(rand(6, 12), true),
       "description" => $this->faker->paragraph(rand(1, 5), true),
-      "image" => "campaigns/default_cover_campaign.png",
+      "image" => "campaigns/default_cover_campaign.webp",
       "slug" => $this->faker->slug(),
       "target_amount" => $this->faker->randomNumber(rand(3, 6), true),
       "collected_amount" => $this->faker->randomNumber(rand(3, 4), true),
