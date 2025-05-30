@@ -27,7 +27,7 @@ onMounted(async () => {
     <div class="container">
       <section class="home home-first-section">
         <img :src="homeDonation" alt="Image illustrant des personnes faisant un don" class="home-first-section_image"
-             width="2475" height="1650">
+             width="800" height="1650" fetchpriority="high">
         <div class="home-sub_first_section">
           <h1 class="home-sub_title">Faites votre premier pas en faisant un <span
               class="home-sub_span">don</span> pour un <span

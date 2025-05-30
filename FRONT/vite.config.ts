@@ -6,19 +6,29 @@ import Icons from "unplugin-icons/vite"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(), Icons()],
-    resolve: {
-        alias: {
-            "@": fileURLToPath(new URL("./src", import.meta.url))
+  plugins: [vue(), Icons()],
+  build: {
+    minify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'stripe': ["@stripe/stripe-js"]
         }
-    },
-    server: {
-        proxy: {
-            "/api": {
-                target: "http://127.0.0.1:8000",
-                changeOrigin: true,
-                secure: false,
-            }
-        }
+      }
     }
+  },
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url))
+    }
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
 })

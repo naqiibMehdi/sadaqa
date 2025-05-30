@@ -4,7 +4,6 @@ import App from '@/App.vue'
 import router from "@/router/index"
 import {createPinia} from "pinia"
 
-import "primeicons/primeicons.css"
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from "primevue/confirmationservice"
 import PrimeVue from "primevue/config"
@@ -22,11 +21,11 @@ app
     .use(ConfirmationService)
     .directive("tooltip", Tooltip)
     .use(PrimeVue, {
-        theme: {
-            preset: Aura,
-            options: {
-                darkModeSelector: false
-            }
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: false
         }
+      }
     })
     .mount('#app')

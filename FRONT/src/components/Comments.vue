@@ -27,7 +27,7 @@ const data = ref([
       <div class="comments-section">
         <div class="comment">
           <div class="comment-avatar">
-            <img :src="slotProps.data.imageProfile" alt="Photo de profil">
+            <img :src="slotProps.data.imageProfile" alt="Photo de profil" loading="lazy">
           </div>
           <div class="comment-content">
             <div class="comment-header">
