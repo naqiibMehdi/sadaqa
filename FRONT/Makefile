@@ -22,7 +22,7 @@ push:
 	docker push $(DOCKER_HUB_USERNAME)/$(DOCKER_HUB_REPO):latest
 
 deploy:
-	$(SSH) $(ALIAS) "cd $(REMOTE_DIR) && docker-compose down && docker rmi $(DOCKER_HUB_USERNAME)/$(DOCKER_HUB_REPO) && docker pull $(DOCKER_HUB_USERNAME)/$(DOCKER_HUB_REPO):latest && docker-compose up -d"
+	$(SSH) $(ALIAS) "cd $(REMOTE_DIR) && docker stop vue && docker rm vue && docker rmi $(DOCKER_HUB_USERNAME)/$(DOCKER_HUB_REPO) && docker pull $(DOCKER_HUB_USERNAME)/$(DOCKER_HUB_REPO):latest && docker-compose up -d vuejs-app"
 
 clean:
 	@echo "Cleaning up Docker images..."
