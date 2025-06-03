@@ -3,11 +3,31 @@ import Card from "primevue/card"
 import {useRoute, RouterLink} from "vue-router";
 import type {Campaign} from "@/types/types.ts";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
+import {computed, onMounted, watch} from "vue";
+import {titleAndMetaTag} from "@/utils/functions.ts";
 
-defineProps<{ campaign: Campaign }>()
+const props = defineProps<{ campaign: Campaign }>()
 
 const route = useRoute()
 const authStore = useAuthStore()
+const title = computed(() => props.campaign.title)
+const description = computed(() => props.campaign.description)
+
+const detailPage = computed(() => {
+  return route.name === 'campaign' && route.params.slug && route.params.id
+})
+
+onMounted(() => {
+  if (detailPage.value) {
+    titleAndMetaTag(title.value.substring(0, 60), description.value.substring(0, 160))
+  }
+})
+
+watch(() => props.campaign, (newCampaign) => {
+  if (detailPage.value) {
+    titleAndMetaTag(newCampaign.title.substring(0, 60), newCampaign.description.substring(0, 160))
+  }
+}, {deep: true})
 </script>
 
 

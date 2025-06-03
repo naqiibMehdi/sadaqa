@@ -57,7 +57,7 @@ const deleteUrlBase64 = () => {
 <template>
   <div class="fileUploader-banner-upload" @click="triggerFileInput">
     <input type="file" hidden="" ref="fileInput" @change="handleFileChange">
-    <div v-if="!urlBase64" style="display: flex; flex-direction: column; align-items: center">
+    <div v-if="!urlBase64" class="emptyPicture">
       <IcBaselinePhotoCamera width="32" height="32"/>
       <p>Joindre une image principale</p>
     </div>
@@ -80,6 +80,12 @@ const deleteUrlBase64 = () => {
   gap: 0.3rem;
 }
 
+.emptyPicture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .fileUploader-banner-upload__bgImage {
   position: absolute;
   content: "";
@@ -96,20 +102,14 @@ const deleteUrlBase64 = () => {
   color: white;
   background-color: darkred;
   padding: 0.2rem;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateX(10px);
-  transition: transform .2s;
-}
-
-
-.fileUploader-banner-upload__bgImage:hover .icon-delete {
-  pointer-events: auto;
   opacity: 1;
-  transform: translateX(0);
 }
 
-.fileUploader-banner-upload:hover {
+.icon-delete:hover {
+  cursor: pointer;
+}
+
+.fileUploader-banner-upload:has(.emptyPicture):hover {
   cursor: pointer;
   background-color: var(--text5);
 }

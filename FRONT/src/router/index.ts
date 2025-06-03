@@ -1,31 +1,71 @@
 import {createRouter, createWebHistory} from "vue-router"
 import {useAuthStore} from "@/stores/useAuthStore.ts";
+import {titleAndMetaTag} from "@/utils/functions.ts";
 
 
 const routes = [
-  {path: "/", name: "home", component: () => import("@/pages/home/HomeView.vue")},
+  {
+    path: "/",
+    name: "home",
+    component: () => import("@/pages/home/HomeView.vue"),
+    meta: {
+      title: "Accueil",
+      description: "Faites votre premier pas en faisant un don pour un projet ou une association."
+    }
+  },
   {
     path: "/login",
     name: "login",
     component: () => import("@/pages/forms/FormLoginView.vue"),
-    meta: {requireAuth: false}
+    meta: {requireAuth: false, title: "Connexion", description: "Se connecter à votre compte."}
   },
   {
     path: "/register",
     name: "register",
     component: () => import("@/pages/forms/FormRegisterView.vue"),
-    meta: {requireAuth: false}
+    meta: {
+      requireAuth: false,
+      title: "Créer un compte",
+      description: "Créer votre compte afin de pouvoir créer une cagnotte."
+    }
   },
-  {path: "/forget-password", name: "password.forget", component: () => import("@/pages/forms/FormForgetPassword.vue")},
-  {path: "/reset-password", name: "password.reset", component: () => import("@/pages/forms/FormResetPassword.vue")},
-  {path: "/contact", name: "contact", component: () => import("@/pages/forms/FormContactView.vue")},
+  {
+    path: "/forget-password",
+    name: "password.forget",
+    component: () => import("@/pages/forms/FormForgetPassword.vue"),
+    meta: {
+      title: "Mot de passe oublié",
+      description: "Saisissez votre email afin de recevoir un mail de réinitialisation de mot de passe."
+    }
+  },
+  {
+    path: "/reset-password",
+    name: "password.reset",
+    component: () => import("@/pages/forms/FormResetPassword.vue"),
+    meta: {title: "Réinitialisation mot de passe", description: "Saisissez votre nouveau mot de passe."}
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    component: () => import("@/pages/forms/FormContactView.vue"),
+    meta: {title: "Contact", description: "C'est ici que vous pouvez nous contacter"}
+  },
   {
     path: "/create-campaign",
     name: "createcampaign",
     component: () => import("@/pages/forms/FormCreateCampaignView.vue"),
-    meta: {requireAuth: true}
+    meta: {
+      requireAuth: true,
+      title: "Créer une cagnotte",
+      description: "Remplissez ce formulaire afin de pouvoir créer votre cagnotte"
+    }
   },
-  {path: "/campaigns", name: "campaigns", component: () => import("@/pages/campaigns/CampaignsView.vue")},
+  {
+    path: "/campaigns",
+    name: "campaigns",
+    component: () => import("@/pages/campaigns/CampaignsView.vue"),
+    meta: {title: "Cagnottes", description: "Voici la liste de toutes les cagnottes disponibles"}
+  },
   {
     path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)",
     name: "campaign",
@@ -35,18 +75,19 @@ const routes = [
     path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)/edit",
     name: "campaign.update",
     component: () => import("@/pages/forms/FormUpdateCampaignView.vue"),
-    meta: {requireAuth: true}
+    meta: {requireAuth: true, title: "Modifier votre cagnotte", description: "Modifier votre cagnotte"}
   },
   {
     path: "/campaigns/:slug([a-zA-Z0-9-]+)-:id([0-9]+)/payment",
     name: "payment",
     component: () => import("@/pages/forms/FormPaymentView.vue"),
+    meta: {title: "Paiement", description: "Offrez votre don"}
   },
   {
     path: "/dashboard",
     name: "dashboard",
     component: () => import("@/pages/dashboard/DashBoardView.vue"),
-    meta: {requireAuth: true}
+    meta: {requireAuth: true, title: "Tableau de bord", description: "Vooici votre tableau de bord"}
   },
   {
     path: "/account",
@@ -57,17 +98,20 @@ const routes = [
       {
         path: "profil",
         name: "profil",
-        component: () => import("@/pages/user/ProfilView.vue")
+        component: () => import("@/pages/user/ProfilView.vue"),
+        meta: {title: "Profile", description: "Gérer votre profile"}
       },
       {
         path: "address",
         name: "address",
-        component: () => import("@/pages/user/AddressView.vue")
+        component: () => import("@/pages/user/AddressView.vue"),
+        meta: {title: "Adresse", description: "Gérer votre adresse"}
       },
       {
         path: "bank-account",
         name: "iban",
-        component: () => import("@/pages/user/IbanView.vue")
+        component: () => import("@/pages/user/IbanView.vue"),
+        meta: {title: "Coordonnées bancaire", description: "Gérer vos coordonnées bancaires"}
       }
     ]
   },
@@ -78,7 +122,8 @@ const routes = [
   {
     path: "/error-404",
     name: "error",
-    component: () => import("@/pages/error/ErrorView.vue")
+    component: () => import("@/pages/error/ErrorView.vue"),
+    meta: {title: "Erreur 404", description: "Page introuvable"}
   }
 ]
 
@@ -90,6 +135,7 @@ const router = createRouter({
 router.beforeEach((to, _, next) => {
   const authStore = useAuthStore()
   const hasToken = authStore.token
+  titleAndMetaTag("Saddaqa - " + to.meta.title as string, to.meta.description as string)
 
   if ("requireAuth" in to.meta) {
     if (!to.meta.requireAuth && hasToken) {
