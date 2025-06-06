@@ -46,13 +46,16 @@ const logout = async () => {
 
       <ul class="header-list" v-else>
         <li class="header-item">
-          <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
+          <RouterLink :to="{name: 'home'}">Accueil</RouterLink>
         </li>
         <li class="header-item">
           <RouterLink :to="{name: 'login'}">Connexion</RouterLink>
         </li>
         <li class="header-item">
           <RouterLink :to="{name: 'register'}">S'inscrire</RouterLink>
+        </li>
+        <li class="header-item">
+          <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
         </li>
       </ul>
     </nav>

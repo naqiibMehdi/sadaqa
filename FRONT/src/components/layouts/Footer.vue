@@ -15,8 +15,9 @@ import EntypoSocialInstagram from '~icons/entypo-social/instagram'
         consequat.
       </p>
       <div class="footer-nav">
-        <Nav title="Ressource" :links="['ressource 1', 'ressource 2']"/>
-        <Nav title="A Propos" :links="['ressource 1', 'ressource 2']"/>
+        <Nav title="Ressource" :links="[{name: 'contact', label: 'Contactez-nous'}]"/>
+        <Nav title="A Propos"
+             :links="[{name: 'contact', label: 'Contactez-nous'}, {name: 'contact', label: 'Contactez-nous'}]"/>
         <div class="footer-icons">
           <EntypoSocialFacebook class="footer-icons-fb"/>
           <EntypoSocialTwitter class="footer-icons-tw"/>

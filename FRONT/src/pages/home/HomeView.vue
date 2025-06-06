@@ -172,7 +172,7 @@ onMounted(async () => {
 }
 
 .home-third-section_link {
-  color: #8e9297
+  color: var(--text);
 }
 
 .home-third-section_link:hover {

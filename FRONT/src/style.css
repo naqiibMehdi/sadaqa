@@ -12,6 +12,8 @@
     --secondary: hsl(210, 74%, 73%);
     --secondary20: hsl(210, 74%, 73%, 20%);
     --accent: hsl(210, 87%, 61%);
+    --headerHeight: 60px;
+    --footerHeight: 230px;
 
 
     /* mise en forme personnel pour PrimeVue */
@@ -112,7 +114,7 @@ a {
 }
 
 .main {
-    min-height: calc(100svh - (60px + 222px + 32px));
+    min-height: calc(100svh - (var(--headerHeight) + var(--footerHeight) + 32px));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -120,7 +122,7 @@ a {
 }
 
 .main:not(:has(.campaigns-banner, .dashboard, .home)) {
-    min-height: calc(100svh - (60px + 222px + 64px));
+    min-height: calc(100svh - (var(--headerHeight) + var(--footerHeight) + 64px));
     justify-content: center;
     margin: 2rem 0;
 }
