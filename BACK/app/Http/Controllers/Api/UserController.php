@@ -92,7 +92,13 @@ class UserController extends Controller
     return response()->json(["message" => "Mise à jour effectuée", "data" => new UserRessource($user)]);
   }
 
-  public function deleteAccount(Request $request)
+  /**
+   * Permet à l'utilisateru de suppriemr définitivement son compte
+   *
+   * @param Request $request
+   * @return JsonResponse
+   */
+  public function deleteAccount(Request $request): JsonResponse
   {
     $user = User::with("campaign")->where("id", auth()->id())->first();
     $listCampaignsImages = $user->campaign()->get()->pluck("image");
