@@ -20,8 +20,15 @@ test('un utilisateur peut créer une campagne', function () {
     'category_id' => $category->id,
   ];
 
+  $token = $user->createToken("token")->plainTextToken;
+
   // Action
-  $response = $this->postJson('/api/campaigns', $campaignData);
+  $response = $this->postJson('/api/campaigns', $campaignData,
+    [
+      "Accept" => "application/json",
+      "Authorization" => "Bearer {$token}"
+    ]
+  );
 
   // Assertion
   $response->assertStatus(201)
@@ -78,6 +85,6 @@ test('la liste des campagnes peut être récupérée avec pagination', function 
 
   // Vérifier que nous avons les bons nombres d'éléments
   $responseData = $response->json();
-  expect(count($responseData['data']))->toBeLessThanOrEqual(10); // Supposons que la pagination est de 10 par page
-  expect($responseData['meta']['total'])->toBe(15);
+  expect(count($responseData['data']))->toBeLessThanOrEqual(10) // Supposons que la pagination est de 10 par page
+  ->and($responseData['meta']['total'])->toBe(15);
 });
