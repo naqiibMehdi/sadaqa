@@ -5,10 +5,79 @@
     <link rel="icon" type="image/svg+xml" href="/src/assets/logo-light.svg"/>
     <link rel="preload" href="src/assets/home-donation.svg" as="image">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KH8KKP6BJZ"
+            data-google="google-analytics-tag"></script>
     <title>Sadaqa</title>
 </head>
 <body>
 <div id="app"></div>
+<script>
+    window.axeptioSettings = {
+        clientId: "684974239bd5ec09fd935811",
+        cookiesVersion: "saddaqa-fr-EU",
+        googleConsentMode: {
+            default: {
+                analytics_storage: "granted",
+                ad_storage: "denied",
+                ad_user_data: "denied",
+                ad_personalization: "denied",
+                wait_for_update: 500
+            }
+        }
+    };
+
+    (function (d, s) {
+        var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
+        e.async = true;
+        e.src = "//static.axept.io/sdk.js";
+        t.parentNode.insertBefore(e, t);
+    })(document, "script");
+
+    function loadGoogleAnalyticsTag() {
+        const scriptGoogle = document.querySelector('script[data-google="google-analytics-tag"]')
+        if (scriptGoogle) return
+
+        const t = document.getElementsByTagName("script")[0];
+        const e = document.createElement("script");
+        e.async = true;
+        e.src = "https://www.googletagmanager.com/gtag/js?id=G-KH8KKP6BJZ";
+        e.setAttribute("data-google", "google-analytics-tag");
+        t.parentNode.insertBefore(e, t);
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+        gtag("config", "G-KH8KKP6BJZ"); // Remplacer XXXXX par votre ID GA4
+    }
+
+    function removeGoogleAnalyticsTag() {
+        const scriptGoogle = document.querySelector('script[data-google="google-analytics-tag"]');
+        scriptGoogle?.remove()
+        const cookies = document.cookie?.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith("_ga")) {
+                const cookieName = cookie.split("=")[0];
+                document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }
+        }
+    }
+
+    void 0 === window._axcb && (window._axcb = []);
+    window._axcb.push(function (axeptio) {
+        axeptio.on("cookies:complete", function (choices) {
+            if (choices.$$googleConsentMode.analytics_storage === "granted") {
+                loadGoogleAnalyticsTag();
+            }
+            if (choices.$$googleConsentMode.analytics_storage === "denied") {
+                removeGoogleAnalyticsTag();
+            }
+        });
+    });
+</script>
 <script type="module" src="./src/main.ts"></script>
 </body>
 </html>
