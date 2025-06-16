@@ -14,6 +14,15 @@ const routes = [
     }
   },
   {
+    path: "/privacy-policy",
+    name: "privacy",
+    component: () => import("@/pages/ressources/PolicyPrivacyView.vue"),
+    meta: {
+      title: "Politique de confidentialité",
+      description: "Bienvenue sur Saddaqa, un site de financement participatif. Nous nous engageons à protéger la confidentialité et la sécurité de vos informations personnelles"
+    }
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("@/pages/forms/FormLoginView.vue"),

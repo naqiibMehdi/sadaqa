@@ -15,9 +15,10 @@ import EntypoSocialInstagram from '~icons/entypo-social/instagram'
         consequat.
       </p>
       <div class="footer-nav">
-        <Nav title="Ressource" :links="[{name: 'contact', label: 'Contactez-nous'}]"/>
+        <Nav title="Saddaqa" :links="[{name: 'home', label: 'Accueil'}]"/>
         <Nav title="A Propos"
-             :links="[{name: 'contact', label: 'Contactez-nous'}, {name: 'contact', label: 'Contactez-nous'}]"/>
+             :links="[{name: 'contact', label: 'Contactez-nous'}, {name: 'privacy', label: 'Politique de confidentialité'}]"
+        />
         <div class="footer-icons">
           <EntypoSocialFacebook class="footer-icons-fb"/>
           <EntypoSocialTwitter class="footer-icons-tw"/>
