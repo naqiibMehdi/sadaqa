@@ -22,6 +22,9 @@ const logout = async () => {
     <nav>
       <ul class="header-list" v-if="authStore.token">
         <li class="header-item">
+          <RouterLink :to="{name: 'home'}">Accueil</RouterLink>
+        </li>
+        <li class="header-item">
           <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
         </li>
         <li class="header-item">

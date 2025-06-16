@@ -12,20 +12,16 @@ import Textarea from "primevue/textarea";
 <template>
   <Header/>
   <Main>
-    <h1>Nous contacter</h1>
-    <p class="formContact-text">Vous avez une question ? Remplissez le formulaire ci-dessous et nous vous répondrons au
-      plus vite.</p>
+    <h1>Assisstance</h1>
+    <p class="formContact-text">Si vous avez besoin d'aide, contactez-nous en utilisant le
+      formulaire ci-dessous. Nous vous répondrons dans les plus brefs délais.</p>
     <form class="form-container">
       <div class="form-inline">
-        <InputField placeholder="Nom" id="nom" title="nom"/>
-        <InputField placeholder="Prénom" id="prenom" title="prénom"/>
+        <InputField placeholder="Email" id="email" title="Votre email :"/>
       </div>
-      <div class="form-inline">
-        <InputField placeholder="Email" id="email" title="email"/>
-        <InputField placeholder="Confirmez votre email" id="emailconfirmed" title="Confirmez votre email"/>
-      </div>
+      <label>Votre message :</label>
       <Textarea rows="5" cols="30" class="formContact-message" size="large" placeholder="Votre message"/>
-      <CustomButton label="Envoyer"/>
+      <CustomButton label="Envoyer votre message" type="submit"/>
     </form>
   </Main>
   <Footer/>
@@ -35,12 +31,18 @@ import Textarea from "primevue/textarea";
 
 .formContact-text {
   margin-bottom: 2rem;
-  max-width: 440px;
+  max-width: 600px;
   text-align: center;
+  line-height: 1.25rem;
+  padding-inline: 10px;
 }
 
 .formContact-message:enabled:focus {
   border-color: var(--accent);
+}
+
+label {
+  text-transform: capitalize;
 }
 
 .buttonFilled {

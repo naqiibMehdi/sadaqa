@@ -19,15 +19,15 @@
     /* mise en forme personnel pour PrimeVue */
 
     .buttonFilled {
-        background-color: var(--primary);
-        border: var(--accent);
+        background-color: var(--accent);
         color: var(--text);
+        border: solid 2px transparent;
     }
 
 
     .buttonFilled:not(:disabled):hover {
         background-color: var(--accent);
-        border: none;
+        border: var(--primary) solid 2px;
         color: var(--text);
     }
 
