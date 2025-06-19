@@ -2,24 +2,36 @@
 import InputField from "@/components/InputField.vue";
 import MdiSearch from '~icons/mdi/search'
 import Nav from "@/components/layouts/Nav.vue";
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 import {useCategoryStore} from "@/stores/useCategoryStore.ts";
+import {useCampaignStore} from "@/stores/useCampaignStore.ts";
+import {useRouter} from "vue-router";
 
 const categoryStore = useCategoryStore()
+const campaignStore = useCampaignStore()
+const router = useRouter()
+
+const searchTerm = ref("")
 
 onMounted(() => {
   categoryStore.getCategories()
 })
+
+const searchCampaigns = async () => {
+  await campaignStore.getCampaigns(1, searchTerm.value)
+  await router.push({query: {search: searchTerm.value}})
+  searchTerm.value = ""
+}
 </script>
 
 <template>
 
   <section class="campaigns-banner container">
     <h1 class="campaigns-banner-title">Vous êtes à la recherche d'une cagnotte</h1>
-    <form class="campaigns-form" action="">
+    <form class="campaigns-form" @submit.prevent="searchCampaigns">
       <div class="campaigns-search">
         <MdiSearch width="32" height="47" class="search-icon"/>
-        <InputField placeholder="Ex: construction d'un puit" size="large" class="campaigns-input"/>
+        <InputField placeholder="Ex: construction d'un puit" size="large" class="campaigns-input" v-model="searchTerm"/>
       </div>
     </form>
     <Nav :links="categoryStore.categoriesNames" prefixClass="campaigns"/>

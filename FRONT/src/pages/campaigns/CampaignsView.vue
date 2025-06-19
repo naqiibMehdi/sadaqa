@@ -15,22 +15,30 @@ const route = useRoute()
 
 
 onMounted(async () => {
-  await campaignStore.getCampaigns(route.query.page as string || 1)
+  await campaignStore.getCampaigns(route.query.page as string || 1, route.query.search as string || "")
 })
 
 
 const onPageChange = (e: PageState) => {
   campaignStore.setPage(Number(e.page + 1))
-  router.push({query: {page: campaignStore.currentPage}})
+  let query: { page: number, search?: string } = {page: campaignStore.currentPage}
+  if (campaignStore.currentSearch) {
+    query = {...query, search: campaignStore.currentSearch}
+  }
+  router.push({query})
 }
 
-watch(() => route.query.page, (newPage) => {
-  if (!newPage) {
+watch(() => route.query, (newParams) => {
+
+  campaignStore.setSearch(newParams.search as string || "")
+
+  if (!newParams.page) {
     campaignStore.setPage(1)
     return
   }
-  campaignStore.setPage(Number(newPage))
-})
+  campaignStore.setPage(Number(newParams.page))
+
+}, {deep: true})
 
 
 </script>
@@ -40,7 +48,8 @@ watch(() => route.query.page, (newPage) => {
   <Main>
     <CampaignsBanner/>
     <section class="container campaigns-cards">
-      <CardCampaign v-for="campaign in campaignStore.campaigns.data" :key="campaign.id" :campaign="campaign"/>
+      <p v-if="campaignStore.error" class="campaigns-cards-error">{{ campaignStore.error }}</p>
+      <CardCampaign v-for="campaign in campaignStore.campaigns.data" :key="campaign.id" :campaign="campaign" v-else/>
     </section>
     <section class="pagination">
       <Paginator :first="(Number(campaignStore.currentPage) - 1) * campaignStore.itemsPerPage"
@@ -56,10 +65,16 @@ watch(() => route.query.page, (newPage) => {
   display: grid;
   grid-template-columns: repeat(3, minmax(250px, 1fr));
   grid-gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.campaigns-cards-error {
+  text-align: center;
+  grid-column: 1/-1;
 }
 
 .pagination {
-  margin-top: 2rem;
+  margin-top: auto;
 }
 
 @media (max-width: 900px) {

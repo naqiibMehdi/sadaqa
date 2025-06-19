@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCampaignRequest;
 use App\Http\Resources\CampaignRessource;
 use App\Models\Campaign;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -99,9 +100,17 @@ class CampaignController extends Controller
    *  }
    * }
    */
-  public function index(): AnonymousResourceCollection|JsonResponse
+  public function index(Request $request): AnonymousResourceCollection|JsonResponse
   {
-    $campaigns = Campaign::with(["participant", "user"])->paginate(9);
+    $query = Campaign::query()->with("participant", "user");
+
+    if ($request->has("search")) {
+      $search = $request->input("search");
+      $query->where("title", "like", "%$search%");
+    }
+
+    $campaigns = $query->paginate(9);
+
     if ($campaigns->isEmpty()) {
       return response()->json(["message" => "Aucune cagnottes disponibles"], 404);
     }

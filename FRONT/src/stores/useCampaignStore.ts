@@ -13,7 +13,8 @@ export const useCampaignStore = defineStore("campaign", {
     loading: boolean,
     error: string | null,
     errorsFormCampaign: errorsFormCampaign | null,
-    successMessage: string | null
+    successMessage: string | null,
+    currentSearch: string | null,
   } => ({
     campaigns: {data: [], links: {}, meta: {}},
     campaign: null,
@@ -23,7 +24,8 @@ export const useCampaignStore = defineStore("campaign", {
     loading: false,
     error: null,
     errorsFormCampaign: null,
-    successMessage: null
+    successMessage: null,
+    currentSearch: null,
   }),
   actions: {
     async createCampaign(dataCampaign: object) {
@@ -40,15 +42,28 @@ export const useCampaignStore = defineStore("campaign", {
       }
 
     },
-    async getCampaigns(page: number | string) {
+    async getCampaigns(page: number | string, search?: string) {
       this.loading = true
+      this.currentSearch = null
+      this.error = null
       try {
-        const response = await fetchData(`/campaigns?page=${page}`)
+        let url = `/campaigns?page=${page}`
+
+        if (search) {
+          url += `&search=${search}`
+          this.currentSearch = search
+        }
+
+        const response = await fetchData(url)
         this.campaigns = response
         this.totalItems = response.meta.total
         this.currentPage = page as number
+
       } catch (error) {
-        console.log(this.error = "Erreur lors de la récupération des cagnottes")
+        if (error instanceof AxiosError) {
+          this.error = error.response?.data?.message
+        }
+
       } finally {
         this.loading = false
       }
@@ -84,7 +99,11 @@ export const useCampaignStore = defineStore("campaign", {
     },
     async setPage(page: number) {
       this.currentPage = page
-      await this.getCampaigns(page)
+      await this.getCampaigns(page, this.currentSearch || undefined)
+    },
+
+    setSearch(search: string) {
+      this.currentSearch = search
     }
   },
   getters: {
