@@ -1,7 +1,13 @@
 <script setup lang="ts">
 type Props = {
   title?: string,
-  links?: ({ name: string, label: string })[],
+  links?: ({
+    label: string,
+    to: {
+      name: string,
+      params?: { [key: string]: string | number | undefined }
+    }
+  })[],
   prefixClass?: string
 }
 
@@ -12,8 +18,8 @@ defineProps<Props>()
   <nav :class="`nav ${prefixClass}-nav`">
     <ul :class="`nav-list ${prefixClass}-list`">
       <li class="nav-title" v-if="title"><p>{{ title }}</p></li>
-      <li v-for="link in links" :key="link.name" :class="`nav-link ${prefixClass}-link`">
-        <RouterLink :to="{name: link.name}">{{ link.label }}</RouterLink>
+      <li v-for="link in links" :key="link.to.name" :class="`nav-link ${prefixClass}-link`">
+        <RouterLink :to="link.to">{{ link.label }}</RouterLink>
       </li>
     </ul>
   </nav>

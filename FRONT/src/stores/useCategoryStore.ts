@@ -3,7 +3,7 @@ import {fetchData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
 
 interface typeState {
-  categories: { id: number, name: string }[],
+  categories: { id: number, name: string, translate_name: string }[],
   error: string
 }
 
@@ -27,8 +27,13 @@ export const useCategoryStore = defineStore("category", {
 
   },
   getters: {
-    categoriesNames(): { name: string, label: string }[] {
-      return this.categories.map(category => ({name: "campaigns", label: category.name}))
+    categoriesNames(): { name: string, label: string, to: { name: string, params: { category: string } } }[] {
+      return this.categories.map(category => ({
+            name: category.name,
+            label: category.translate_name,
+            to: {name: "campaigns", params: {category: category.name}},
+          })
+      )
     }
   }
 })

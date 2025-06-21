@@ -4,23 +4,19 @@ import MdiSearch from '~icons/mdi/search'
 import Nav from "@/components/layouts/Nav.vue";
 import {onMounted, ref} from "vue";
 import {useCategoryStore} from "@/stores/useCategoryStore.ts";
-import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import {useRouter} from "vue-router";
 
 const categoryStore = useCategoryStore()
-const campaignStore = useCampaignStore()
 const router = useRouter()
 
 const searchTerm = ref("")
 
-onMounted(() => {
-  categoryStore.getCategories()
+onMounted(async () => {
+  await categoryStore.getCategories()
 })
 
 const searchCampaigns = async () => {
-  await campaignStore.getCampaigns(1, searchTerm.value)
-  await router.push({query: {search: searchTerm.value}})
-  searchTerm.value = ""
+  await router.push({query: {search: searchTerm.value, page: 1}})
 }
 </script>
 

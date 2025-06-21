@@ -70,7 +70,7 @@ const routes = [
     }
   },
   {
-    path: "/campaigns",
+    path: "/campaigns/:category([a-z]*)?",
     name: "campaigns",
     component: () => import("@/pages/campaigns/CampaignsView.vue"),
     meta: {title: "Cagnottes", description: "Voici la liste de toutes les cagnottes disponibles"}

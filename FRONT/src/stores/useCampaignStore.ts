@@ -15,6 +15,7 @@ export const useCampaignStore = defineStore("campaign", {
     errorsFormCampaign: errorsFormCampaign | null,
     successMessage: string | null,
     currentSearch: string | null,
+    category: string | null,
   } => ({
     campaigns: {data: [], links: {}, meta: {}},
     campaign: null,
@@ -26,6 +27,7 @@ export const useCampaignStore = defineStore("campaign", {
     errorsFormCampaign: null,
     successMessage: null,
     currentSearch: null,
+    category: null
   }),
   actions: {
     async createCampaign(dataCampaign: object) {
@@ -42,12 +44,31 @@ export const useCampaignStore = defineStore("campaign", {
       }
 
     },
-    async getCampaigns(page: number | string, search?: string) {
+    async getCampaigns(page: number | string, search?: string, category?: string) {
+      if (
+          this.loading ||
+          (page.toString() === this.currentPage.toString() &&
+              search === this.currentSearch &&
+              category === this.category)
+      ) {
+        return; // Ne pas refaire la requête si les paramètres sont identiques
+      }
+      
       this.loading = true
       this.currentSearch = null
+      this.category = null
       this.error = null
+
+
       try {
-        let url = `/campaigns?page=${page}`
+        let url = `/campaigns`
+
+        if (category) {
+          url += `/${category}`
+          this.category = category
+        }
+
+        url += `?page=${page}`
 
         if (search) {
           url += `&search=${search}`
@@ -61,6 +82,7 @@ export const useCampaignStore = defineStore("campaign", {
 
       } catch (error) {
         if (error instanceof AxiosError) {
+          this.campaigns = {data: [], links: {}, meta: {}}
           this.error = error.response?.data?.message
         }
 
@@ -99,7 +121,7 @@ export const useCampaignStore = defineStore("campaign", {
     },
     async setPage(page: number) {
       this.currentPage = page
-      await this.getCampaigns(page, this.currentSearch || undefined)
+      await this.getCampaigns(page, this.currentSearch || undefined, this.category || undefined)
     },
 
     setSearch(search: string) {
