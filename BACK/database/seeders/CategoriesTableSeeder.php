@@ -14,22 +14,28 @@ class CategoriesTableSeeder extends Seeder
   {
     Category::factory()->createMany([
       [
-        "name" => "santé"
+        "name" => "health",
+        "translate_name" => "santé"
       ],
       [
-        "name" => "animaux"
+        "name" => "animals",
+        "translate_name" => "animaux"
       ],
       [
-        "name" => "sport"
+        "name" => "sport",
+        "translate_name" => "sport"
       ],
       [
-        "name" => "agriculture"
+        "name" => "farming",
+        "translate_name" => "agriculture"
       ],
       [
-        "name" => "habitation"
+        "name" => "home",
+        "translate_name" => "habitation"
       ],
       [
-        "name" => "autres"
+        "name" => "others",
+        "translate_name" => "autres"
       ]
     ]);
   }

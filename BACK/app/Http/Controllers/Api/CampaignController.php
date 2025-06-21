@@ -100,16 +100,20 @@ class CampaignController extends Controller
    *  }
    * }
    */
-  public function index(Request $request): AnonymousResourceCollection|JsonResponse
+  public function index(Request $request, string|null $categoryName = null): AnonymousResourceCollection|JsonResponse
   {
     $query = Campaign::query()->with("participant", "user");
+
+    if ($categoryName) {
+      $query->whereRelation("category", "name", $categoryName);
+    }
 
     if ($request->has("search")) {
       $search = $request->input("search");
       $query->where("title", "like", "%$search%");
     }
 
-    $campaigns = $query->paginate(9);
+    $campaigns = $query->latest()->paginate(9);
 
     if ($campaigns->isEmpty()) {
       return response()->json(["message" => "Aucune cagnottes disponibles"], 404);

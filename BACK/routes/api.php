@@ -35,7 +35,7 @@ Route::prefix("categories")->group(function () {
 
 //routes for campaigns
 Route::prefix("campaigns")->group(function () {
-  Route::get("/", [CampaignController::class, "index"]);
+  Route::get("/{categoryName?}", [CampaignController::class, "index"])->where("categoryName", "[a-z]*");
   Route::get("/{slug}-{id}", [CampaignController::class, "show"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
   Route::post("/{slug}-{id}/payment", [StripeController::class, "createCheckoutSession"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
 
