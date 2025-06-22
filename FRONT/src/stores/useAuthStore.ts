@@ -12,12 +12,14 @@ export const useAuthStore = defineStore("auth", {
     errors: ErrorsRegister | null,
     loading: boolean,
     error: string | null,
-    token: string
+    token: string,
+    tokenExpiryTimeoutId: number | null
   } => ({
     errors: null,
     loading: false,
     error: null,
-    token: ""
+    token: "",
+    tokenExpiryTimeoutId: null
   }),
   actions: {
     async createUser(userData: RegisterUser) {
@@ -44,6 +46,7 @@ export const useAuthStore = defineStore("auth", {
         const response = await postData("/auth/login", userData);
         this.error = response.message
         this.token = response.token;
+        await this.setToken(response.token)
       } catch (err) {
         if (err instanceof AxiosError) {
           this.errors = err.response?.data?.errors;
@@ -58,6 +61,7 @@ export const useAuthStore = defineStore("auth", {
       try {
         await postData("/auth/logout", userData);
         this.token = "";
+        this.removeToken()
       } catch (err) {
         if (err instanceof AxiosError) {
           this.errors = err.response?.data?.errors;
@@ -65,7 +69,59 @@ export const useAuthStore = defineStore("auth", {
       } finally {
         this.loading = false
       }
+    },
+
+    async setToken(token: string) {
+      const expiryTime = Date.now() + (60 * 60 * 1000);
+      localStorage.setItem("token", token);
+      localStorage.setItem("tokenExpiry", expiryTime.toString());
+      await this.setupTokenExpiry();
+    },
+
+    async setupTokenExpiry() {
+      // Annuler tout compteur existant
+      if (this.tokenExpiryTimeoutId !== null) {
+        clearTimeout(this.tokenExpiryTimeoutId);
+      }
+
+      const expiryTimeStr = localStorage.getItem("tokenExpiry");
+      if (!expiryTimeStr) return;
+
+      const expiryTime = parseInt(expiryTimeStr);
+      const currentTime = Date.now();
+      const timeLeft = expiryTime - currentTime;
+
+      // Si le token est déjà expiré
+      if (timeLeft <= 0) {
+        await this.logoutUser({});
+        return;
+      }
+
+      // Configurer un nouveau compteur avec le temps restant
+      this.tokenExpiryTimeoutId = setTimeout(async () => {
+        await this.logoutUser({});
+      }, timeLeft) as unknown as number;
+    },
+
+    removeToken() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenExpiry");
+      if (this.tokenExpiryTimeoutId !== null) {
+        clearTimeout(this.tokenExpiryTimeoutId);
+        this.tokenExpiryTimeoutId = null;
+      }
+    },
+
+    // Méthode à appeler lors de l'initialisation de l'application
+    async initializeAuth() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        this.token = token;
+        await this.setupTokenExpiry();
+      }
     }
+
+    ,
   },
 })
 

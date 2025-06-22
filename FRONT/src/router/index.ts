@@ -143,7 +143,7 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
   const authStore = useAuthStore()
-  const hasToken = authStore.token
+  const hasToken = authStore.token || localStorage.getItem("token")
   titleAndMetaTag("Saddaqa - " + to.meta.title as string, to.meta.description as string)
 
   if ("requireAuth" in to.meta) {

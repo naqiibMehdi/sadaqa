@@ -119,7 +119,10 @@ const confirmDeleteAccount = () => {
       <CustomButton label="Annuler" :outline="true" v-if="!disabled"
                     @click="cancelFormData" :disabled="userStore.loading"/>
     </form>
+    
     <Divider/>
+
+    <!-- formulaire pour modifier le mot de passe  -->
     <h2>Modifier mon mot de passe</h2>
     <form class="form-container profil-password">
       <InputField
@@ -141,7 +144,9 @@ const confirmDeleteAccount = () => {
         <CustomButton label="Modifier mon mot de passe" type="submit"/>
       </div>
     </form>
+
     <Divider/>
+
     <div class="profil-delete-account">
       <h2 class="profil-delete-account-title">Mon compte</h2>
       <p>Si vous supprimez votre compte, cela mènera à la perte de toutes vos informations (données personnelles,
@@ -162,7 +167,7 @@ const confirmDeleteAccount = () => {
   gap: 2rem;
 }
 
-.profil-form {
+.profil-form, .profil-password {
   width: 100%;
   max-width: none;
   padding-inline: 10px;

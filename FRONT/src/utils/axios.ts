@@ -56,7 +56,7 @@ export const deleteData = async (endpoint: string, data: object) => {
 api.interceptors.request.use(
     (config) => {
       const authStore = useAuthStore();
-      const token = authStore.token
+      const token = authStore.token || localStorage.getItem("token")
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }

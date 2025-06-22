@@ -24,7 +24,7 @@ const submitLogin = async () => {
     toast.add({severity: 'error', summary: "Message d'erreur", detail: authStore.error, life: 5000});
   }
 
-  if (authStore.token) {
+  if (authStore.token || localStorage.getItem('token')) {
     await router.push({name: 'dashboard'});
   }
 }

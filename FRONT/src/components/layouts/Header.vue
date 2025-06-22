@@ -21,6 +21,7 @@ const updateWidth = () => {
     isMenuOpen.value = false
   }
 }
+const isToken = ref(authStore.token || localStorage.getItem('token'))
 
 const animateHamburger = computed(() => isMenuOpen.value ? "open" : "")
 
@@ -50,27 +51,27 @@ watch(() => route.path, () => {
         <div class="line"></div>
       </div>
       <nav class="header-nav" v-else>
-        <ul class="header-list" v-if="authStore.token">
+        <ul class="header-list" v-if="isToken">
           <li class="header-item">
-            <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
+            <RouterLink :to="{name: 'campaigns'}" active-class="active-link">Rechercher une cagnotte</RouterLink>
           </li>
           <li class="header-item">
-            <RouterLink :to="{name: 'dashboard'}">Dashboard</RouterLink>
+            <RouterLink :to="{name: 'dashboard'}" active-class="active-link">Dashboard</RouterLink>
           </li>
           <li class="header-item">
-            <RouterLink :to="{name: 'createcampaign'}">Créer une cagnotte</RouterLink>
+            <RouterLink :to="{name: 'createcampaign'}" active-class="active-link">Créer une cagnotte</RouterLink>
           </li>
           <li class="header-item">
-            <RouterLink :to="{name: 'profil'}">Mon compte</RouterLink>
+            <RouterLink :to="{name: 'profil'}" active-class="active-link">Mon compte</RouterLink>
           </li>
         </ul>
 
         <ul class="header-list" v-else>
           <li class="header-item">
-            <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
+            <RouterLink :to="{name: 'campaigns'}" active-class="active-link">Rechercher une cagnotte</RouterLink>
           </li>
           <li class="header-item">
-            <RouterLink :to="{name: 'login'}">Connexion</RouterLink>
+            <RouterLink :to="{name: 'login'}" active-class="active-link">Connexion</RouterLink>
           </li>
           <li class="header-item">
             <RouterLink :to="{name: 'register'}" class="primary-button">S'inscrire</RouterLink>
@@ -114,10 +115,6 @@ header {
   list-style: none;
 }
 
-.header-item:last-child a:hover {
-  background-color: var(--accent);
-  cursor: pointer;
-}
 
 .hamburger {
   display: flex;
@@ -145,6 +142,10 @@ header {
 
 .hamburger.open .line:nth-child(3) {
   transform: rotate(-45deg) translate(7px, -6px);
+}
+
+.active-link {
+  color: var(--accent);
 }
 
 </style>

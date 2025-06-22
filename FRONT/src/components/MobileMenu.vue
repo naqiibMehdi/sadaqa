@@ -2,6 +2,7 @@
 import {RouterLink, useRouter} from 'vue-router';
 import {useAuthStore} from '@/stores/useAuthStore.ts';
 import {useToast} from "primevue/usetoast";
+import {ref} from "vue";
 
 defineProps({
   isMenuOpen: Boolean
@@ -10,6 +11,7 @@ defineProps({
 const authStore = useAuthStore();
 const router = useRouter()
 const toast = useToast()
+const isToken = ref(authStore.token || localStorage.getItem('token'))
 const logout = async () => {
   await authStore.logoutUser({})
   await router.push({name: "login"})
@@ -20,7 +22,7 @@ const logout = async () => {
 <template>
   <div :class="['mobile-menu', { 'menu-open': isMenuOpen }]">
     <nav>
-      <ul class="header-list" v-if="authStore.token">
+      <ul class="header-list" v-if="isToken">
         <li class="header-item">
           <RouterLink :to="{name: 'home'}">Accueil</RouterLink>
         </li>
