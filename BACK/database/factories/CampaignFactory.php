@@ -29,7 +29,8 @@ class CampaignFactory extends Factory
       "collected_amount" => $this->faker->randomNumber(rand(3, 4), true),
       "created_at" => $this->faker->datetimethismonth(),
       "limit_date" => $this->faker->datetimethismonth("+20 days"),
-      "closing_date" => $this->faker->datetimethismonth("+30 days"),
+      "closing_date" => null,
+      "is_anonymous" => $this->faker->boolean(),
     ];
   }
 }

@@ -13,6 +13,10 @@ class Campaign extends Model
 
   protected $guarded = ["id"];
 
+  protected $casts = [
+    "is_anonymous" => "boolean"
+  ];
+
   public $timestamps = false;
 
   public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
