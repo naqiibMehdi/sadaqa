@@ -232,6 +232,7 @@ class CampaignController extends Controller
   {
     $validated = $request->validated();
     $slug = Str::slug($validated["title"]);
+    $isAnonymous = $validated["isAnonymous"] ?? false;
     $imagePath = "campaigns/default_cover_campaign.png";
 
 
@@ -243,6 +244,7 @@ class CampaignController extends Controller
       ...$validated,
       "slug" => $slug,
       "image" => $imagePath,
+      "isAnonymous" => $isAnonymous,
       "user_id" => Auth::id(),
     ]);
 
@@ -290,9 +292,9 @@ class CampaignController extends Controller
    *    }
    *  }
    */
-  public function update(string $slug, string $id, StoreCampaignRequest $request): JsonResponse
+  public function update(StoreCampaignRequest $request): JsonResponse
   {
-    $campaign = Campaign::where("id", $id)->where('slug', $slug)->firstOrFail();
+    $campaign = $request->input("campaign");
     $validated = $request->validated();
 
     if ($campaign->user_id !== Auth::id()) {
@@ -340,21 +342,17 @@ class CampaignController extends Controller
    *   "message" => "Cagnotte supprimée avec succès"
    * }
    */
-  public function destroy(string $slug, string $id): JsonResponse
+  public function destroy(Request $request): JsonResponse
   {
-    $campaign = Campaign::where("id", $id)->where('slug', $slug)->firstOrFail();
+    $campaign = $request->input("campaign");
 
-
-    if ($campaign->user_id !== Auth::id()) {
-      return response()->json(["message" => "vous n'êtes pas autorisé à supprimer cet cagnotte"], 403);
+    if ($campaign->closing_date) {
+      return response()->json(["message" => "Cette cagnotte est clôturée et ne peut plus être modifiée"], 403);
     }
 
-    if ($campaign->image !== "default_cover_campaign.png") {
-      Storage::disk("public")->delete($campaign->image);
-    }
+    $campaign->closing_date = now();
+    $campaign->save();
 
-    $campaign->delete();
-
-    return response()->json(["message" => "Cagnotte supprimée avec succès"]);
+    return response()->json(["message" => "Cagnotte clôturée avec succès"]);
   }
 }

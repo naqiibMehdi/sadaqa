@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\StripeWebHookController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Middleware\CheckCampaignOwner;
 use Illuminate\Support\Facades\Route;
 
 Route::post("webhook", [StripeWebHookController::class, "webhook"]);
@@ -52,8 +53,8 @@ Route::middleware("auth:sanctum")->group(function () {
    * Campaigns route
    */
   Route::post("/campaigns", [CampaignController::class, "store"]);
-  Route::put("/campaigns/{slug}-{id}/edit", [CampaignController::class, "update"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
-  Route::delete("/campaigns/{slug}-{id}", [CampaignController::class, "destroy"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"]);
+  Route::put("/campaigns/{slug}-{id}/edit", [CampaignController::class, "update"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"])->middleware(CheckCampaignOwner::class);
+  Route::delete("/campaigns/{slug}-{id}", [CampaignController::class, "destroy"])->where(["slug" => "[a-z0-9\-]+", "id" => "[0-9]+"])->middleware(CheckCampaignOwner::class);
 
   /**
    * User route
@@ -64,6 +65,7 @@ Route::middleware("auth:sanctum")->group(function () {
       Route::get("/participants", "getAllParticipants");
       Route::get("/profile", "profile");
       Route::put("/profile/edit", "updateUserProfile");
+      Route::put("/profile/edit/password", "updatePassword");
       Route::delete("/profile", "deleteAccount");
     });
 
