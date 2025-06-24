@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateUserProfileFormRequest;
+use App\Http\Requests\UpdateUserPasswordFormRequest;
 use App\Http\Resources\CampaignRessource;
 use App\Http\Resources\UserRessource;
 use App\Models\Campaign;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -90,6 +92,23 @@ class UserController extends Controller
     $user->update($validated);
 
     return response()->json(["message" => "Mise à jour effectuée", "data" => new UserRessource($user)]);
+  }
+
+  /**
+   * Permet à un utilisateur connecté de modifier son mot de passe
+   *
+   * @param UpdateUserPasswordFormRequest $request
+   * @return JsonResponse
+   */
+  public function updatePassword(UpdateUserPasswordFormRequest $request): JsonResponse
+  {
+    $validated = $request->validated();
+    $user = User::where("id", auth()->id())->first();
+
+    $user->password = Hash::make($validated["password"]);
+    $user->save();
+
+    return response()->json(["message" => "Mise à jour du mot de passe avec succès"]);
   }
 
   /**
