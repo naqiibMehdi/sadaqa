@@ -19,6 +19,7 @@ const {user, errorUpdateUserInfos} = storeToRefs(userStore)
 const disabled = ref(true)
 const image = ref<File | string>("")
 const formUserData = ref<User>(user.value)
+const passwordData = ref({password: "", password_confirmation: ""})
 const authStore = useAuthStore()
 const router = useRouter()
 const toast = useToast()
@@ -75,6 +76,15 @@ const confirmDeleteAccount = () => {
     modalConfirmDelete.value.callConfirm()
   }
 }
+
+const updatePassword = async () => {
+  await userStore.updatePasswordUser(passwordData.value)
+
+  if (!userStore.errorPassword) {
+    passwordData.value = {password: "", password_confirmation: ""}
+    toast.add({severity: 'success', summary: "Message de succès", detail: userStore.successMessage, life: 5000})
+  }
+}
 </script>
 
 <template>
@@ -111,37 +121,47 @@ const confirmDeleteAccount = () => {
       <Message severity="error" variant="simple" size="small" v-if="errorUpdateUserInfos?.email?.[0]">
         {{ errorUpdateUserInfos.email?.[0] }}
       </Message>
-      <p>Date de naissance:
-        <strong>{{ (new Date(user.birth_date).toLocaleDateString()) }}</strong>
+      <p>
+        Date de naissance: <strong>{{ (new Date(user.birth_date).toLocaleDateString()) }}</strong>
       </p>
       <CustomButton :loading="userStore.loading" :label="disabled ? 'Modifier mon profil' : 'Enregistrer ma saisie'"
                     @click="updateUserInfo"/>
       <CustomButton label="Annuler" :outline="true" v-if="!disabled"
                     @click="cancelFormData" :disabled="userStore.loading"/>
     </form>
-    
+
     <Divider/>
 
     <!-- formulaire pour modifier le mot de passe  -->
     <h2>Modifier mon mot de passe</h2>
-    <form class="form-container profil-password">
+    <form class="form-container profil-password" @submit.prevent="updatePassword">
       <InputField
           placeholder="Mot de passe"
           id="password"
           title="Mot de passe"
           type="password"
+          :invalid="userStore.errorPassword && userStore.errorPassword?.length > 0"
+          v-model="passwordData.password"
       />
       <InputField
           placeholder="Confirmer votre mot de passe"
           id="password_confirmation"
           title="Confirmez votre mot de passe"
           type="password"
+          :invalid="userStore.errorPassword && userStore.errorPassword?.length > 0"
+          v-model="passwordData.password_confirmation"
       />
-      <Message severity="error" variant="simple" size="small">
-
+      <Message
+          severity="error"
+          variant="simple"
+          size="small"
+          v-if="userStore.errorPassword"
+          v-for="error in userStore.errorPassword"
+      >
+        {{ error }}
       </Message>
       <div class="formConnexion-buttons-list">
-        <CustomButton label="Modifier mon mot de passe" type="submit"/>
+        <CustomButton label="Modifier mon mot de passe" type="submit" :loading="userStore.loadingPassword"/>
       </div>
     </form>
 
