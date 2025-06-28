@@ -16,6 +16,7 @@ export const useCampaignStore = defineStore("campaign", {
     successMessage: string | null,
     currentSearch: string | null,
     category: string | null,
+    unauthorized: boolean,
   } => ({
     campaigns: {data: [], links: {}, meta: {}},
     campaign: null,
@@ -27,7 +28,8 @@ export const useCampaignStore = defineStore("campaign", {
     errorsFormCampaign: null,
     successMessage: null,
     currentSearch: null,
-    category: null
+    category: null,
+    unauthorized: false,
   }),
   actions: {
     async createCampaign(dataCampaign: object) {
@@ -53,7 +55,7 @@ export const useCampaignStore = defineStore("campaign", {
       ) {
         return; // Ne pas refaire la requête si les paramètres sont identiques
       }
-      
+
       this.loading = true
       this.currentSearch = null
       this.category = null
@@ -106,13 +108,19 @@ export const useCampaignStore = defineStore("campaign", {
     async UpdateOneCampaign(slug: string, id: string, dataCampaign: object) {
       this.loading = true;
       this.errorsFormCampaign = null
+      this.unauthorized = false
+
       try {
         const response = await postMultiPartData(`/campaigns/${slug}-${id}/edit?_method=PUT`, dataCampaign)
         this.campaign = response.data
         this.successMessage = response.message
       } catch (error) {
         if (error instanceof AxiosError) {
-          this.errorsFormCampaign = error.response?.data?.errors
+          if (error?.response?.status === 403) {
+            this.unauthorized = true
+          } else {
+            this.errorsFormCampaign = error.response?.data?.errors
+          }
         }
       } finally {
         this.loading = false;

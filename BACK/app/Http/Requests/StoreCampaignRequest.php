@@ -28,6 +28,7 @@ class StoreCampaignRequest extends FormRequest
       "target_amount" => "required|numeric|min:1",
       "limit_date" => "nullable|date",
       "category_id" => "required|numeric|exists:categories,id",
+      "is_anonymous" => "nullable|boolean"
     ];
   }
 

@@ -102,7 +102,9 @@ class CampaignController extends Controller
    */
   public function index(Request $request, string|null $categoryName = null): AnonymousResourceCollection|JsonResponse
   {
-    $query = Campaign::query()->with("participant", "user");
+    $query = Campaign::query()->with("participant", "user")
+      ->where("closing_date", null)
+      ->where("is_anonymous", false);
 
     if ($categoryName) {
       $query->whereRelation("category", "name", $categoryName);
@@ -232,7 +234,7 @@ class CampaignController extends Controller
   {
     $validated = $request->validated();
     $slug = Str::slug($validated["title"]);
-    $isAnonymous = $validated["isAnonymous"] ?? false;
+    $isAnonymous = $validated["is_anonymous"] ?? false;
     $imagePath = "campaigns/default_cover_campaign.png";
 
 
@@ -244,7 +246,7 @@ class CampaignController extends Controller
       ...$validated,
       "slug" => $slug,
       "image" => $imagePath,
-      "isAnonymous" => $isAnonymous,
+      "is_anonymous" => $isAnonymous,
       "user_id" => Auth::id(),
     ]);
 

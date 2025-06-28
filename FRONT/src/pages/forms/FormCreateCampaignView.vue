@@ -8,39 +8,48 @@ import Footer from "@/components/layouts/Footer.vue";
 import QuillEditor from "@/components/QuillEditor.vue"
 import Select from "primevue/select";
 import FileUploader from "@/components/FileUploader.vue";
-import {onMounted, ref} from "vue";
+import Checkbox from 'primevue/checkbox';
+import {onMounted, ref, watch} from "vue";
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import Message from "primevue/message";
 import {useRouter} from "vue-router";
 import {useCategoryStore} from "@/stores/useCategoryStore.ts";
+import InputNumber from "primevue/inputnumber";
 
 const router = useRouter()
 const campaignStore = useCampaignStore();
 const categoryStore = useCategoryStore()
 
+
 const campaignData = ref<{
   title: string,
   description: string,
   image: string,
-  target_amount: string | number | null,
-  category_id: number | string | null
+  target_amount: number,
+  category_id: number | string | null,
+  is_anonymous: number
 }>({
   title: "",
   description: "",
   image: "",
-  target_amount: null,
-  category_id: null
+  target_amount: 0,
+  category_id: null,
+  is_anonymous: 0
 });
+const isAnonymous = ref(campaignData.value.is_anonymous === 1)
 
 onMounted(() => {
   categoryStore.getCategories()
 })
 
+watch(isAnonymous, (newValue) => {
+  campaignData.value.is_anonymous = newValue ? 1 : 0
+})
+
 const onSubmitFormCampaign = async () => {
-  console.log(campaignData.value)
   const response = await campaignStore.createCampaign({
     ...campaignData.value,
-    target_amount: Number(campaignData.value.target_amount) * 100
+    target_amount: campaignData.value.target_amount * 100
   });
 
   if (!campaignStore.errorsFormCampaign) {
@@ -48,8 +57,9 @@ const onSubmitFormCampaign = async () => {
       title: "",
       description: "",
       image: "",
-      target_amount: null,
-      category_id: null
+      target_amount: 0,
+      category_id: null,
+      is_anonymous: 0
     }
 
     await router.push({name: "campaign", params: {slug: response.data.slug, id: response.data.id}});
@@ -66,20 +76,21 @@ const onSubmitFormCampaign = async () => {
       <div class="input-error">
         <InputField placeholder="Titre de la cagnotte" id="campaigntitle" title="Titre de la cagnotte"
                     v-model="campaignData.title"
-                    :invalid="campaignStore.errorsFormCampaign && campaignStore.errorsFormCampaign?.title?.[0] !== '' "/>
+                    :invalid="(campaignStore.errorsFormCampaign?.title && campaignStore.errorsFormCampaign?.title?.[0] !== '') as boolean"/>
         <Message severity="error" variant="simple" size="small" v-if="campaignStore.errorsFormCampaign?.title?.[0]">
           {{ campaignStore.errorsFormCampaign?.title?.[0] }}
         </Message>
       </div>
 
       <label for="campaignCategory">Choisissez une catégorie</label>
-      <Select placeholder="Choisissez une catégorie"
-              :options="categoryStore.categories"
-              optionLabel="name"
-              optionValue="id"
-              labelId="campaignCategory"
-              v-model="campaignData.category_id"
-              :invalid="((campaignStore.errorsFormCampaign && campaignStore.errorsFormCampaign?.category_id?.[0] !== '') as boolean)"
+      <Select
+          placeholder="Choisissez une catégorie"
+          :options="categoryStore.categories"
+          optionLabel="translate_name"
+          optionValue="id"
+          labelId="campaignCategory"
+          v-model="campaignData.category_id"
+          :invalid="((campaignStore.errorsFormCampaign?.category_id && campaignStore.errorsFormCampaign?.category_id?.[0] !== '') as boolean)"
       />
       <Message severity="error" variant="simple" size="small"
                v-if="campaignStore.errorsFormCampaign?.category_id?.[0]">
@@ -87,14 +98,35 @@ const onSubmitFormCampaign = async () => {
       </Message>
 
       <div class="input-error">
-        <InputField placeholder="Ex: 10" id="campaignamount" title="Montant de la cagnotte" type="number"
-                    v-model="campaignData.target_amount as string"
-                    :invalid="campaignStore.errorsFormCampaign && campaignStore.errorsFormCampaign?.target_amount?.[0] !== '' "/>
+        <label for="campaignAmount">Saisissez un montant</label>
+        <InputNumber
+            v-model="campaignData.target_amount"
+            id="campaignAmount"
+            inputId="currency-fr"
+            mode="currency"
+            currency="EUR"
+            locale="fr-FR"
+            :minFractionDigits="0"
+            :maxFractionDigits="0"
+            size="large"
+            :invalid="((campaignStore.errorsFormCampaign?.target_amount && campaignStore.errorsFormCampaign?.target_amount?.[0] !== '') as boolean)"
+        />
+
         <Message severity="error" variant="simple" size="small"
                  v-if="campaignStore.errorsFormCampaign?.target_amount?.[0]">
           {{ campaignStore.errorsFormCampaign?.target_amount?.[0] }}
         </Message>
       </div>
+
+      <div class="input-checkbox">
+        <Checkbox
+            v-model="isAnonymous"
+            inputId="is_anonymous"
+            binary
+        />
+        <label for="is_anonymous">Cagnotte anonyme</label>
+      </div>
+
       <div class="input-error">
         <QuillEditor v-model="campaignData.description"/>
         <Message severity="error" variant="simple" size="small"

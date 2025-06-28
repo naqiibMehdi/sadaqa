@@ -14,6 +14,8 @@ import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import Message from "primevue/message";
 import {useRoute, useRouter} from "vue-router";
 import {useCategoryStore} from "@/stores/useCategoryStore.ts";
+import InputNumber from "primevue/inputnumber";
+import Checkbox from "primevue/checkbox";
 
 const router = useRouter()
 const route = useRoute()
@@ -28,21 +30,27 @@ const campaignData = ref<{
   title: string,
   description: string | HTMLElement
   image?: string | File,
-  target_amount: string | number | null,
-  category_id: string | number | null
+  target_amount: number,
+  category_id: string | number | null,
+  is_anonymous: number
 }>({
-  title: campaignStore?.campaign?.title ?? "",
-  description: campaignStore?.campaign?.description ?? "",
+  title: "",
+  description: "",
   image: "",
-  target_amount: ((campaignStore?.campaign?.target_amount ?? 0) / 100).toString(),
-  category_id: campaignStore?.campaign?.category_id ?? null
+  target_amount: 0,
+  category_id: null,
+  is_anonymous: 0
 });
-
+const isAnonymous = ref<boolean | undefined>(campaignData.value.is_anonymous === 1)
 
 onMounted(async () => {
-  await categoryStore.getCategories()
   await campaignStore.getOneCampaign(slug as string, id as string)
+  await categoryStore.getCategories()
 
+})
+
+watch(isAnonymous, (newValue) => {
+  campaignData.value.is_anonymous = newValue ? 1 : 0
 })
 
 watch(() => campaignStore.campaign, (newCampaign) => {
@@ -51,10 +59,12 @@ watch(() => campaignStore.campaign, (newCampaign) => {
       title: newCampaign.title ?? "",
       description: newCampaign.description ?? "",
       image: "",
-      target_amount: ((newCampaign.target_amount ?? 0) / 100).toString(),
-      category_id: newCampaign.category_id ?? null
+      target_amount: (newCampaign.target_amount ?? 0) / 100,
+      category_id: newCampaign.category_id ?? null,
+      is_anonymous: newCampaign.is_anonymous ? 1 : 0
     };
   }
+  isAnonymous.value = newCampaign?.is_anonymous
 });
 
 
@@ -64,16 +74,26 @@ const onSubmitFormCampaign = async () => {
   }
   await campaignStore.UpdateOneCampaign(slug as string, id as string, {
     ...campaignData.value,
-    target_amount: Number(campaignData.value.target_amount) * 100
+    target_amount: campaignData.value.target_amount * 100
   });
+  if (campaignStore.unauthorized) {
+    toast.add({
+      severity: 'error',
+      summary: "Message d'erreur",
+      detail: "Vous n'avez pas l'autorisation de modifier cette cagnotte\n",
+      life: 5000
+    });
+    return
+  }
 
   if (!campaignStore.errorsFormCampaign) {
     campaignData.value = {
       title: "",
       description: "",
       image: "",
-      target_amount: null,
-      category_id: null
+      target_amount: 0,
+      category_id: null,
+      is_anonymous: 0
     }
     toast.add({severity: 'success', summary: "Message de succès", detail: campaignStore.successMessage, life: 5000});
     await router.push({name: "campaign", params: {slug: campaignStore.campaign?.slug, id: campaignStore.campaign?.id}});
@@ -117,14 +137,33 @@ const onSubmitFormCampaign = async () => {
       </Message>
 
       <div class="input-error">
-        <InputField placeholder="Ex: 10" id="campaignamount" title="Montant de la cagnotte" type="number"
-                    v-model="campaignData.target_amount as string"
-                    :invalid="campaignStore.errorsFormCampaign && campaignStore.errorsFormCampaign?.target_amount?.[0] !== '' "/>
+        <label for="campaignAmount">Modifier le montant total à atteindre</label>
+        <InputNumber
+            v-model="campaignData.target_amount"
+            id="campaignAmount"
+            inputId="currency-fr"
+            mode="currency"
+            currency="EUR"
+            locale="fr-FR"
+            :minFractionDigits="0"
+            :maxFractionDigits="0"
+            :invalid="((campaignStore.errorsFormCampaign?.target_amount && campaignStore.errorsFormCampaign?.target_amount?.[0] !== '') as boolean)"
+        />
         <Message severity="error" variant="simple" size="small"
                  v-if="campaignStore.errorsFormCampaign?.target_amount?.[0]">
           {{ campaignStore.errorsFormCampaign?.target_amount?.[0] }}
         </Message>
       </div>
+
+      <div class="input-checkbox">
+        <Checkbox
+            v-model="isAnonymous"
+            inputId="is_anonymous"
+            binary
+        />
+        <label for="is_anonymous">Cagnotte anonyme</label>
+      </div>
+
       <div class="input-error">
         <QuillEditor v-model="campaignData.description" :key="campaignStore?.campaign?.id"/>
         <Message severity="error" variant="simple" size="small"

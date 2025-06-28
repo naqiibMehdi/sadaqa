@@ -189,3 +189,18 @@ a {
 }
 
 /****** Carousel *******/
+
+
+/******** CHECKBOX *******/
+.input-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.p-checkbox-checked .p-checkbox-box {
+    background-color: var(--accent) !important;
+    border-color: var(--primary) !important;
+}
+
+/******** CHECKBOX *******/

@@ -30,6 +30,7 @@ class CampaignRessource extends JsonResource
       "url_image" => Str::contains(env("APP_URL"), "saddaqa") ? env("APP_URL") . "/storage/" . $this->image : asset("/storage/" . $this->image),
       "user" => new UserRessource($this->whenLoaded('user')),
       "participants" => ParticipantRessource::collection($this->whenLoaded('participant')),
+      "is_anonymous" => $this->is_anonymous,
     ];
   }
 }
