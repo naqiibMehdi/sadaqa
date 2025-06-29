@@ -16,10 +16,12 @@ import {useRoute, useRouter} from "vue-router";
 import {useCategoryStore} from "@/stores/useCategoryStore.ts";
 import InputNumber from "primevue/inputnumber";
 import Checkbox from "primevue/checkbox";
+import {useUserStore} from "@/stores/useUserStore.ts";
 
 const router = useRouter()
 const route = useRoute()
 const campaignStore = useCampaignStore();
+const userStore = useUserStore()
 const categoryStore = useCategoryStore()
 const toast = useToast()
 
@@ -43,8 +45,29 @@ const campaignData = ref<{
 });
 const isAnonymous = ref<boolean | undefined>(campaignData.value.is_anonymous === 1)
 
-onMounted(async () => {
+const checkOwnerCampaign = async () => {
   await campaignStore.getOneCampaign(slug as string, id as string)
+
+  if (campaignStore.campaign) {
+
+    if (campaignStore.campaign?.user?.id !== userStore.user?.id) {
+      toast.add({
+        severity: 'error',
+        summary: "Message d'erreur",
+        detail: "Vous n'avez pas l'autorisation de modifier cette cagnotte\n",
+        life: 5000
+      })
+
+      await router.push({
+        name: "campaign",
+        params: {slug: campaignStore.campaign?.slug, id: campaignStore.campaign?.id}
+      });
+    }
+  }
+}
+
+onMounted(async () => {
+  await checkOwnerCampaign()
   await categoryStore.getCategories()
 
 })

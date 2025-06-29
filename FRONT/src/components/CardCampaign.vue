@@ -5,17 +5,21 @@ import type {Campaign} from "@/types/types.ts";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 import {computed, onMounted, watch} from "vue";
 import {titleAndMetaTag} from "@/utils/functions.ts";
+import {useUserStore} from "@/stores/useUserStore.ts";
 
 const props = defineProps<{ campaign: Campaign }>()
 
 const route = useRoute()
 const authStore = useAuthStore()
+const userStore = useUserStore()
 const title = computed(() => props.campaign.title)
 const description = computed(() => props.campaign.description)
 
 const detailPage = computed(() => {
   return route.name === 'campaign' && route.params.slug && route.params.id
 })
+
+const isOwner = computed(() => userStore.user.id === props.campaign.user?.id)
 
 onMounted(() => {
   if (detailPage.value) {
@@ -58,7 +62,7 @@ watch(() => props.campaign, (newCampaign) => {
           <RouterLink
               :to="{name: 'campaign.update', params: {slug: campaign.slug, id: campaign.id}}"
               class="card-campaign-content-btn"
-              v-if="route.name !== 'campaigns' && authStore.token !== ''"
+              v-if="route.name !== 'campaigns' && authStore.token !== '' && isOwner"
           >
             Modifier
           </RouterLink>

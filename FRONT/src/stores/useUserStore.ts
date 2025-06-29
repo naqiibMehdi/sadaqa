@@ -67,6 +67,13 @@ export const useUserStore = defineStore("user", {
       }
     },
 
+    async initialiseUser() {
+      const token = localStorage.getItem("token")
+      if (token) {
+        await this.getInfosUser()
+      }
+    },
+
     async updateInfosUser(dataUser: {
       name: string,
       first_name: string,

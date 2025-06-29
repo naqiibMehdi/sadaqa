@@ -11,10 +11,12 @@ import {ref} from "vue";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 import {useRouter} from "vue-router";
 import Message from "primevue/message";
+import {useUserStore} from "@/stores/useUserStore.ts";
 
 const router = useRouter()
 const toast = useToast();
 const authStore = useAuthStore()
+const userStore = useUserStore()
 
 const userData = ref({email: "", password: ""})
 
@@ -25,6 +27,7 @@ const submitLogin = async () => {
   }
 
   if (authStore.token || localStorage.getItem('token')) {
+    await userStore.getInfosUser()
     await router.push({name: 'dashboard'});
   }
 }
