@@ -131,6 +131,16 @@ export const useUserStore = defineStore("user", {
       }
     },
 
+    async updateCampaignClosingDate(campaignId: string | number) {
+      const id = campaignId.toString()
+      const campaignIndex = this.campaignsUser.findIndex(campaign => campaign.id.toString() === id)
+
+      if (campaignIndex !== -1) {
+        this.campaignsUser[campaignIndex].closing_date = new Date().toISOString()
+      }
+    }
+
+
   },
   getters: {}
 })

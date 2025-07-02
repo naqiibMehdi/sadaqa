@@ -18,7 +18,7 @@ export interface Campaign {
   collected_amount: number;
   created_at: Date;
   limit_date: Date;
-  closing_date: Date;
+  closing_date: Date | string;
   category_id: number;
   is_anonymous: boolean;
   user?: User;

@@ -8,10 +8,40 @@ import MdiEdit from "~icons/mdi/edit"
 import MdiLock from "~icons/mdi/lock"
 import ParticipantBanner from "@/components/ParticipantBanner.vue";
 import {useUserStore} from "@/stores/useUserStore.ts";
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
+import ModalConfirm from "@/components/ModalConfirm.vue";
+import {useCampaignStore} from "@/stores/useCampaignStore.ts";
+
+// Définir une interface pour les méthodes exposées par ModalConfirm
+interface ModalConfirmExpose {
+  callConfirm: () => void
+}
+
+interface ModalRefs {
+  [key: string]: ModalConfirmExpose | null
+}
+
 
 const userStore = useUserStore()
+const campaignStore = useCampaignStore()
+const modalConfirmRefs = ref<ModalRefs>({})
+
+const confirmCloseCampaign = (campaignId: string | number) => {
+
+  const id = String(campaignId)
+  if (modalConfirmRefs.value[id]) {
+    modalConfirmRefs.value[id]?.callConfirm()
+  }
+}
+
+const closeCampaign = async (slug: string, id: string) => {
+  const result = await campaignStore.closeCampaign(slug, id, {})
+
+  if (result.success) {
+    await userStore.updateCampaignClosingDate(id)
+  }
+}
 
 onMounted(() => {
   userStore.getCampaignsOfUSer()
@@ -25,7 +55,7 @@ onMounted(() => {
     <section class="container dashboard">
       <h1 class="dashboard-title">Votre Dashboard</h1>
       <div class="dashboard-list-campaigns">
-        <article class="dashboard-campaign" v-for="campaign in userStore.campaignsUser">
+        <article class="dashboard-campaign" v-for="campaign in userStore.campaignsUser" :key="campaign.id">
           <div class="dashboard-campaign-img">
             <img :src="campaign?.url_image" alt="image principale de la cagnotte"/>
           </div>
@@ -36,11 +66,24 @@ onMounted(() => {
               <p>{{ campaign.participants?.length }}
                 participant{{ campaign.participants?.length && campaign.participants?.length > 1 ? 's' : '' }}</p>
             </div>
-            <div class="dashboard-campaign-list-btn">
+            <div class="dashboard-campaign-list-btn" v-if="!campaign.closing_date">
               <RouterLink :to="{name: 'campaign.update', params: {slug: campaign.slug, id: campaign.id}}">
                 <CustomButton label="modifier" :customComponent="MdiEdit"/>
               </RouterLink>
-              <CustomButton label="clôturer" :customComponent="MdiLock"/>
+              <ModalConfirm
+                  :ref="el => {if (el) modalConfirmRefs[campaign.id] = el as unknown as ModalConfirmExpose}"
+                  :group="`closeCampaign-${campaign.id.toString()}`"
+                  header="Clôture de la cagnotte"
+                  message="Etes-vous de vouloir clôturer cette cagnotte ?"
+                  :loading="campaignStore.loading"
+                  :accept-fn="() => closeCampaign(campaign.slug, campaign.id as string)"
+              >
+                <CustomButton label="clôturer" :customComponent="MdiLock"
+                              @click="() => confirmCloseCampaign(campaign.id)"/>
+              </ModalConfirm>
+            </div>
+            <div class="dashboard-campaign-btn-refund" v-else>
+              <CustomButton label="Faire un virement" :customComponent="MdiEdit"/>
             </div>
           </div>
         </article>
@@ -109,7 +152,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 2.8rem;
 }
 
 .dashboard-campaign-subinfos p {
@@ -123,6 +166,15 @@ onMounted(() => {
   display: flex;
   justify-content: space-around;
   gap: 1rem;
+}
+
+.dashboard-campaign-btn-refund {
+  width: 100%;
+}
+
+.dashboard-campaign-btn-refund button {
+  width: 100%;
+  font-size: 1.125rem;
 }
 
 .dashboard-campaign-list-btn a button:first-child {

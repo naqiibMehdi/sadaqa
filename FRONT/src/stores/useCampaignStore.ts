@@ -127,6 +127,32 @@ export const useCampaignStore = defineStore("campaign", {
       }
 
     },
+    async closeCampaign(slug: string, id: string, dataCampaign: object) {
+      this.loading = true;
+      this.error = null
+      this.unauthorized = false
+
+      try {
+        const response = await postMultiPartData(`/campaigns/${slug}-${id}?_method=DELETE`, dataCampaign)
+        console.log(response)
+        return {success: true, message: response.message}
+
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          if (error?.response?.status === 403) {
+            this.unauthorized = true
+          } else {
+            this.error = error.response?.data?.errors
+          }
+        }
+
+        return {success: false, message: this.error}
+      } finally {
+        this.loading = false;
+      }
+
+    },
+
     async setPage(page: number) {
       this.currentPage = page
       await this.getCampaigns(page, this.currentSearch || undefined, this.category || undefined)

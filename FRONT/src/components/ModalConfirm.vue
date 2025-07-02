@@ -6,12 +6,14 @@ type Props = {
   acceptFn?: (() => void) | undefined,
   message?: string,
   header?: string,
+  loading?: boolean,
   group: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   message: `Etes-vous sûr de vouloir vous supprimer votre compte ?`,
-  header: 'Suppression'
+  header: 'Suppression',
+  loading: false,
 })
 
 const confirm = useConfirm()
@@ -28,7 +30,8 @@ const callConfirm = () => {
     acceptClass: "buttonFilled",
     rejectClass: "buttonOutlined",
     acceptProps: {
-      label: 'Confirmer'
+      label: 'Confirmer',
+      loading: props.loading,
     },
     accept: props.acceptFn,
     reject: () => {
