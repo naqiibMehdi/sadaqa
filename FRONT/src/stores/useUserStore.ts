@@ -6,6 +6,7 @@ import type {Campaign, Participant, User} from "@/types/types.ts";
 interface propState {
   campaignsUser: Campaign[],
   participants: Participant[],
+  dialogCampaign: { id: string | number, title: string, collected_amount: number } | null,
   user: User,
   error: string
   errorUpdateUserInfos: { name?: string[], first_name?: string[], email?: string[], image?: string[] } | null,
@@ -19,6 +20,7 @@ export const useUserStore = defineStore("user", {
   state: (): propState => ({
     campaignsUser: [],
     participants: [],
+    dialogCampaign: null,
     user: {name: "", first_name: "", email: "", image_profile: "", birth_date: new Date()},
     errorPassword: null,
     error: "",
@@ -142,7 +144,20 @@ export const useUserStore = defineStore("user", {
 
 
   },
-  getters: {}
+  getters: {
+    getDialogCampaign(state) {
+      return (idCampaign: number): void => {
+        const campaign = state.campaignsUser.find(campaign => campaign.id === idCampaign)
+        if (campaign) {
+          const {id, title, collected_amount} = campaign
+          state.dialogCampaign = {id, title, collected_amount}
+
+        } else {
+          state.dialogCampaign = null
+        }
+      }
+    }
+  }
 })
 
 if (import.meta.hot) {

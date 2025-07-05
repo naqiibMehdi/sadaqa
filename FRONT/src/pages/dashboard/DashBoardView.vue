@@ -12,6 +12,7 @@ import {onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
 import ModalConfirm from "@/components/ModalConfirm.vue";
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
+import RecoveryForm from "@/components/RecoveryForm.vue";
 
 // Définir une interface pour les méthodes exposées par ModalConfirm
 interface ModalConfirmExpose {
@@ -26,7 +27,13 @@ interface ModalRefs {
 const userStore = useUserStore()
 const campaignStore = useCampaignStore()
 const modalConfirmRefs = ref<ModalRefs>({})
+const dialogRef = ref<{ show: () => void } | null>(null)
 
+const showDialog = () => {
+  if (dialogRef.value) {
+    dialogRef.value.show()
+  }
+}
 const confirmCloseCampaign = (campaignId: string | number) => {
 
   const id = String(campaignId)
@@ -78,12 +85,22 @@ onMounted(() => {
                   :loading="campaignStore.loading"
                   :accept-fn="() => closeCampaign(campaign.slug, campaign.id as string)"
               >
-                <CustomButton label="clôturer" :customComponent="MdiLock"
-                              @click="() => confirmCloseCampaign(campaign.id)"/>
+                <CustomButton
+                    label="clôturer"
+                    :customComponent="MdiLock"
+                    @click="() => confirmCloseCampaign(campaign.id)"
+                />
               </ModalConfirm>
             </div>
             <div class="dashboard-campaign-btn-refund" v-else>
-              <CustomButton label="Faire un virement" :customComponent="MdiEdit"/>
+              <CustomButton
+                  :customComponent="MdiEdit"
+                  label="Faire un virement"
+                  @click="() => {
+                    userStore.getDialogCampaign(campaign.id as number)
+                    showDialog()
+                  }"
+              />
             </div>
           </div>
         </article>
@@ -96,6 +113,14 @@ onMounted(() => {
     </section>
   </Main>
   <Footer/>
+  <RecoveryForm
+      ref="dialogRef"
+      :campaign="{
+        id: userStore.dialogCampaign?.id as number,
+        title: userStore.dialogCampaign?.title as string,
+        collected_amount: userStore.dialogCampaign?.collected_amount as number
+      }"
+  />
 </template>
 
 <style scoped>
