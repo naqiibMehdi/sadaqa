@@ -9,7 +9,7 @@ const userStore = useUserStore()
 
 onMounted(() => {
   authStore.initializeAuth()
-  userStore.getInfosUser()
+  userStore.initialiseUser()
 })
 </script>
 
