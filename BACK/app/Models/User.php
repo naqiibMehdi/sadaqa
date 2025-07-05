@@ -36,4 +36,9 @@ class User extends Authenticatable
   {
     return $this->hasOne(Iban::class);
   }
+
+  public function recoveries(): HasMany
+  {
+    return $this->hasMany(CampaignRecovery::class);
+  }
 }

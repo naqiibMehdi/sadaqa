@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\CampaignRecoveryController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\IbanController;
 use App\Http\Controllers\Api\ImageController;
@@ -50,6 +51,11 @@ Route::middleware("auth:sanctum")->group(function () {
   Route::post("auth/logout", [AuthController::class, "logout"]);
 
   /**
+   * CampaignRecovery route
+   */
+  Route::post("recovery/{id}", [CampaignRecoveryController::class, "requestTransfer"])->where("id", "[0-9]+");
+
+  /**
    * Campaigns route
    */
   Route::post("/campaigns", [CampaignController::class, "store"]);
@@ -85,6 +91,3 @@ Route::middleware("auth:sanctum")->group(function () {
 
 });
 
-//Route::get('/user', function (Request $request) {
-//    return $request->user();
-//})->middleware('auth:sanctum');
