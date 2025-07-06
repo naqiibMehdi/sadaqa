@@ -22,7 +22,19 @@ export interface Campaign {
   category_id: number;
   is_anonymous: boolean;
   user?: User;
-  participants?: Participant[] | []
+  participants?: Participant[] | [],
+  recovery?: CampaignRecovery | null,
+}
+
+export interface CampaignRecovery {
+  id: number;
+  campaign_id: number;
+  user_id: number;
+  amount: number;
+  status: 'pending' | 'processed' | 'failed';
+  created_at: Date;
+  iban: string;
+  campaign?: Campaign;
 }
 
 export interface Participant {

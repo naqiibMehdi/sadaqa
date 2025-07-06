@@ -3,23 +3,34 @@ import {ref} from 'vue';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import {useRecoveryStore} from "@/stores/useRecoveryStore.ts";
+import {useToast} from "primevue/usetoast";
+import {useIbanStore} from "@/stores/useIbanStore.ts";
 
-defineProps<{
+const props = defineProps<{
   campaign: {
     id: number | string;
     title: string;
     collected_amount: number;
-  }
+  } | null
 }>();
 
 
+const recoveryStore = useRecoveryStore()
+const ibanStore = useIbanStore()
+
 const emit = defineEmits(['submitted']);
-const loading = ref(false);
-const iban = ref('');
+
+const iban = ref(ibanStore.iban || '');
 const visible = ref(false);
+const toast = useToast()
 
 
-const show = () => {
+const show = async () => {
+  if (!ibanStore.iban) {
+    await ibanStore.getIban()
+  }
+  iban.value = ibanStore.iban || '';
   visible.value = true;
 }
 
@@ -28,29 +39,39 @@ const formatCurrency = (amount: number) => {
 };
 
 const submitTransferRequest = async () => {
-  loading.value = true;
+  await recoveryStore.registerRecovery(props.campaign?.id as number, {iban: iban.value})
 
-  // Ici, vous implémenteriez l'appel API pour soumettre la demande de virement
-  // Par exemple:
-  // const result = await campaignStore.requestTransfer({
-  //   campaignId: props.campaign.id,
-  //   method: transferMethod.value.id,
-  //   iban: iban.value,
-  //   paypalEmail: paypalEmail.value,
-  //   note: transferNote.value
-  // });
+  if (recoveryStore.errors) {
+    toast.add({severity: 'error', summary: "Erreur", detail: recoveryStore.errors.join("\n")});
+    return
+  } else if (recoveryStore.errorMessage) {
+    toast.add({severity: 'error', summary: "Erreur", detail: recoveryStore.errorMessage});
+    return
+  } else {
+    if (!iban.value || !ibanStore.iban) {
+      await ibanStore.registerIban({iban: iban.value})
+    }
+    toast.add({
+      severity: 'success',
+      summary: "Succès",
+      detail: "Votre demande de virement a été enregistrée avec succès !"
+    });
 
-  // Simulation pour l'exemple
-  await new Promise(resolve => setTimeout(resolve, 1500));
+  }
 
-  loading.value = false;
   visible.value = false;
+  iban.value = '';
 
   emit('submitted', {
     success: true,
     message: "Votre demande de virement a été soumise avec succès"
   });
 };
+
+const cancelTransferRequest = () => {
+  visible.value = false;
+  recoveryStore.errors = null
+}
 
 defineExpose({
   show
@@ -62,16 +83,24 @@ defineExpose({
   <div class="transfer-request-dialog">
     <Dialog v-model:visible="visible" modal header="Demande de virement" :style="{ width: '28rem', maxWidth: '800px' }">
       <div class="transfer-info">
-        <h3>Informations de virement pour la cagnotte: "{{ campaign.title }}"</h3>
-        <p class="amount">Montant disponible : <strong>{{ formatCurrency(campaign.collected_amount / 100) }}</strong>
+        <h3>Informations de virement pour la cagnotte: "{{ campaign?.title }}"</h3>
+        <p class="amount">Montant disponible : <strong>{{
+            formatCurrency((campaign?.collected_amount as number) / 100)
+          }}</strong>
         </p>
 
         <div class="transfer-form">
 
           <div class="form-group">
             <label for="iban">IBAN</label>
-            <InputText id="iban" v-model="iban" placeholder="FR76 XXXX XXXX XXXX XXXX XXXX XXX"/>
-            <small>Vérifiez que votre IBAN est correct</small>
+            <InputText
+                id="iban"
+                v-model="iban"
+                placeholder="FR76XXXXXXXXXXXXXXXXXXXXXXX"
+                :invalid="recoveryStore.errors && recoveryStore.errors.length > 0"
+                :disabled="ibanStore.iban !== null"
+            />
+            <small>Vérifiez que votre IBAN est correct. Seul les IBAN français sont acceptés</small>
           </div>
 
 
@@ -85,12 +114,11 @@ defineExpose({
         </div>
       </div>
       <template #footer>
-        <Button label="Annuler" icon="pi pi-times" @click="visible = false" class="p-button-text"/>
+        <Button label="Annuler" @click="cancelTransferRequest" class="p-button-text"/>
         <Button
             label="Confirmer la demande"
-            icon="pi pi-check"
             @click="submitTransferRequest"
-            :loading="loading"
+            :loading="recoveryStore.loading"
             class="p-button-success"
         />
       </template>

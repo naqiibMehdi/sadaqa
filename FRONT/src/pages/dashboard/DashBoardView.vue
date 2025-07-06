@@ -81,7 +81,7 @@ onMounted(() => {
                   :ref="el => {if (el) modalConfirmRefs[campaign.id] = el as unknown as ModalConfirmExpose}"
                   :group="`closeCampaign-${campaign.id.toString()}`"
                   header="Clôture de la cagnotte"
-                  message="Etes-vous de vouloir clôturer cette cagnotte ?"
+                  message="Etes-vous sûr de vouloir clôturer cette cagnotte ? Cette action est irréversible"
                   :loading="campaignStore.loading"
                   :accept-fn="() => closeCampaign(campaign.slug, campaign.id as string)"
               >
@@ -96,6 +96,7 @@ onMounted(() => {
               <CustomButton
                   :customComponent="MdiEdit"
                   label="Faire un virement"
+                  :disabled="campaign.recovery !== null"
                   @click="() => {
                     userStore.getDialogCampaign(campaign.id as number)
                     showDialog()
@@ -115,11 +116,7 @@ onMounted(() => {
   <Footer/>
   <RecoveryForm
       ref="dialogRef"
-      :campaign="{
-        id: userStore.dialogCampaign?.id as number,
-        title: userStore.dialogCampaign?.title as string,
-        collected_amount: userStore.dialogCampaign?.collected_amount as number
-      }"
+      :campaign="userStore.dialogCampaign"
   />
 </template>
 
