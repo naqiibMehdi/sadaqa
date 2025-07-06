@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCampaignRecoveryFormRequest;
+use App\Http\Resources\CampaignRecoveryRessource;
 use App\Models\Campaign;
 use App\Models\CampaignRecovery;
 use Illuminate\Support\Facades\Crypt;
@@ -17,15 +18,15 @@ class CampaignRecoveryController extends Controller
     $campaign = Campaign::where("id", $id)->first();
 
     if (!$campaign) {
-      return response()->json(["message" => "Cette cagnotte n'existe pas"]);
+      return response()->json(["message" => "Cette cagnotte n'existe pas"], 404);
     }
 
     if (!$campaign->closing_date) {
-      return response()->json(["message" => "Vous ne pouvez pas demander un virement pour une cagnotte non clôturée"]);
+      return response()->json(["message" => "Vous ne pouvez pas demander un virement pour une cagnotte non clôturée"], 403);
     }
 
     if ($recovery) {
-      return response()->json(["message" => "Une demande de virement a déjà été effectuée"]);
+      return response()->json(["message" => "Une demande de virement a déjà été effectuée"], 403);
     }
 
 
@@ -36,6 +37,6 @@ class CampaignRecoveryController extends Controller
       "iban" => Crypt::encrypt($validated["iban"]),
     ]);
 
-    return response()->json(["message" => "Votre demande de virement a été enregistrée avec succès", "data" => $newRecovery]);
+    return response()->json(["message" => "Votre demande de virement a été enregistrée avec succès", "data" => new CampaignRecoveryRessource($newRecovery)]);
   }
 }

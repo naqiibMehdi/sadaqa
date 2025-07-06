@@ -27,7 +27,7 @@ class UserController extends Controller
    */
   public function dashboard(): JsonResponse|AnonymousResourceCollection
   {
-    $getCampaignsFromUser = Campaign::with("participant")->where("user_id", Auth::id())->get();
+    $getCampaignsFromUser = Campaign::with(["recovery", "participant"])->where("user_id", Auth::id())->get();
 
     if ($getCampaignsFromUser->isEmpty()) {
       return response()->json(["message" => "aucune cagnotte trouvée pour cet utilisateur"], 404);
