@@ -11,7 +11,7 @@
   "require": {
     "php": "^8.2",
     "knuckleswtf/scribe": "^5.2",
-    "laravel/framework": "^v11.45.1.1",
+    "laravel/framework": "^v11.45.1",
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.10",
     "spatie/laravel-sitemap": "^7.3",
