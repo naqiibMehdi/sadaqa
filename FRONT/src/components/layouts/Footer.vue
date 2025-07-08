@@ -9,11 +9,7 @@ import EntypoSocialInstagram from '~icons/entypo-social/instagram'
 <template>
   <footer class="footer">
     <div class="container">
-      <p class="footer-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat.
-      </p>
+      <p class="footer-text">Rejoignez notre communauté et soutenez des projets innovants qui transforment des idées en réalité. Ensemble, nous pouvons créer un impact positif et durable. Votre contribution, aussi petite soit-elle, fait une différence. Ensemble, nous pouvons inspirer le changement et construire un monde meilleur. Rejoignez-nous dès aujourd'hui et devenez un acteur du changement.</p>
       <div class="footer-nav">
         <Nav title="Saddaqa" :links="[{label: 'Accueil', to: {name: 'home'}}]"/>
         <Nav title="A Propos"

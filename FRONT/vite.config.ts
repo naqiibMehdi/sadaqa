@@ -12,7 +12,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'stripe': ["@stripe/stripe-js"]
+          'stripe': ["@stripe/stripe-js"],
+          'vue-core': ['vue', 'vue-router', 'pinia'],
+          'primevue': ['primevue', '@primevue/themes'],
+          'editor': ['quill'],
+          'icons': ['unplugin-icons', '@iconify/json']
         }
       }
     }

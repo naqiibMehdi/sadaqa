@@ -3,7 +3,8 @@
 import Header from "@/components/layouts/Header.vue";
 import Footer from "@/components/layouts/Footer.vue";
 import Main from "@/components/layouts/Main.vue";
-import homeDonation from "@/assets/home-donation.svg"
+import homeDonation from "@/assets/home-donation.webp"
+import homeDonationMobile from "@/assets/home-donation-mobile.webp"
 import hand from "@/assets/hand.svg"
 import gift from "@/assets/gift.svg"
 import CardCampaignHome from "@/components/CardCampaignHome.vue";
@@ -26,8 +27,14 @@ onMounted(async () => {
   <Main>
     <div class="container">
       <section class="home home-first-section">
-        <img :src="homeDonation" alt="Image illustrant des personnes faisant un don" class="home-first-section_image"
-             width="800" height="1650" fetchpriority="high">
+        <img :src="homeDonation"
+             :srcset="`${homeDonationMobile} 400w, ${homeDonation} 900w`"
+             sizes="(max-width: 768px) 400px, 900px"
+             alt="Image illustrant des personnes faisant un don"
+             class="home-first-section_image"
+             width="900"
+             fetchpriority="high">
+
         <div class="home-sub_first_section">
           <h1 class="home-sub_title">Faites votre premier pas en faisant un <span
               class="home-sub_span">don</span> pour un <span

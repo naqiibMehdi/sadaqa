@@ -6,17 +6,17 @@ const data = ref([
   {
     username: 'Charlotte',
     imageProfile: 'https://randomuser.me/api/portraits/women/70.jpg',
-    comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam amet autem beatae blanditiis cupiditate delectus dignissimos doloribus earum exercitationem id ipsum maiores nemo officiis recusandae saepe ullam veniam, voluptas?"
+    comment: "Un très bon site partageant des bonnes valeurs !"
   },
   {
     username: 'Kingston',
     imageProfile: 'https://randomuser.me/api/portraits/men/70.jpg',
-    comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam amet autem beatae blanditiis cupiditate delectus dignissimos doloribus earum exercitationem id ipsum maiores nemo officiis recusandae saepe ullam veniam, voluptas?"
+    comment: "J'ai créé ma cagnotte et le site de Sadaqa m'a aidé à la mettre en avant."
   },
   {
     username: 'Peter',
     imageProfile: 'https://randomuser.me/api/portraits/men/10.jpg',
-    comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam amet autem beatae blanditiis cupiditate delectus dignissimos doloribus earum exercitationem id ipsum maiores nemo officiis recusandae saepe ullam veniam, voluptas?"
+    comment: "Très simple d'utilisation, facilite la recherche de cagnotte et très simple pour effectuer une donation."
   }
 ])
 </script>

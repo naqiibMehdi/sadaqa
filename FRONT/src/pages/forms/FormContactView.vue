@@ -12,7 +12,7 @@ import Textarea from "primevue/textarea";
 <template>
   <Header/>
   <Main>
-    <h1>Assisstance</h1>
+    <h1>Assistance</h1>
     <p class="formContact-text">Si vous avez besoin d'aide, contactez-nous en utilisant le
       formulaire ci-dessous. Nous vous répondrons dans les plus brefs délais.</p>
     <form class="form-container">
