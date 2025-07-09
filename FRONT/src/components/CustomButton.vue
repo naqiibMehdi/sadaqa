@@ -2,7 +2,7 @@
 import Button from "primevue/button"
 
 type Props = {
-  label: string,
+  label?: string,
   outline?: boolean,
   customComponent?: object,
   type?: "button" | "submit" | "reset",

@@ -10,6 +10,7 @@ import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import {onMounted} from "vue";
 import {useRoute} from "vue-router";
 import {useToast} from "primevue/usetoast";
+import ShareButtons from "@/components/ShareButtons.vue";
 
 const toast = useToast()
 const route = useRoute()
@@ -56,6 +57,12 @@ onMounted(async () => {
             :title="campaignStore.campaign.title"
             v-else
         />
+      </div>
+      <Divider/>
+      <div class="campaign-share-buttons">
+        <h2 style="text-align: center">N'hésitez pas à partager cette cagnotte afin d'attirer un maximum de
+          personnes</h2>
+        <ShareButtons :title="campaignStore.campaign.title" :description="campaignStore.campaign.description"/>
       </div>
     </section>
   </Main>
@@ -107,7 +114,7 @@ onMounted(async () => {
   object-fit: contain;
 }
 
-.campaign-footer {
+.campaign-footer, .campaign-share-buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
