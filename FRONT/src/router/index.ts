@@ -23,6 +23,18 @@ const routes = [
       description: "Bienvenue sur Saddaqa, un site de financement participatif. Nous nous engageons à protéger la confidentialité et la sécurité de vos informations personnelles"
     }
   },
+
+  {
+    path: "/about",
+    name: "about",
+    component: () => import("@/pages/ressources/AboutView.vue"),
+    meta: {
+      title: "A propos de nous",
+      description: "Sadaqa, qui signifie \"charité\" ou \"aumône\" en arabe, est une jeune association à but non lucratif\n" +
+          "dédiée à faciliter les dons et à créer des ponts entre les donateurs et les projets qui ont besoin\n" +
+          "de soutien."
+    }
+  },
   {
     path: "/login",
     name: "login",

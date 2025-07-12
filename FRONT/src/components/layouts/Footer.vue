@@ -9,11 +9,27 @@ import EntypoSocialInstagram from '~icons/entypo-social/instagram'
 <template>
   <footer class="footer">
     <div class="container">
-      <p class="footer-text">Rejoignez notre communauté et soutenez des projets innovants qui transforment des idées en réalité. Ensemble, nous pouvons créer un impact positif et durable. Votre contribution, aussi petite soit-elle, fait une différence. Ensemble, nous pouvons inspirer le changement et construire un monde meilleur. Rejoignez-nous dès aujourd'hui et devenez un acteur du changement.</p>
+      <p class="footer-text">Rejoignez notre communauté et soutenez des projets innovants qui transforment des idées en
+        réalité. Ensemble, nous pouvons créer un impact positif et durable. Votre contribution, aussi petite soit-elle,
+        fait une différence. Ensemble, nous pouvons inspirer le changement et construire un monde meilleur.
+        Rejoignez-nous dès aujourd'hui et devenez un acteur du changement.</p>
       <div class="footer-nav">
         <Nav title="Saddaqa" :links="[{label: 'Accueil', to: {name: 'home'}}]"/>
         <Nav title="A Propos"
-             :links="[{label: 'Contactez-nous', to: {name: 'contact'}}, {label: 'Politique de confidentialité', to: {name: 'privacy'}}]"
+             :links="[
+                   {
+                     label: 'Contactez-nous',
+                     to: {name: 'contact'}
+                   },
+                   {
+                     label: 'Politique de confidentialité',
+                     to: {name: 'privacy'}
+                   },
+                   {
+                     label: 'A propos de nous',
+                     to: {name: 'about'}
+                   }
+                 ]"
         />
         <div class="footer-icons">
           <EntypoSocialFacebook class="footer-icons-fb"/>
@@ -35,7 +51,8 @@ footer {
 }
 
 .footer-text {
-  margin-bottom: 2rem
+  margin-bottom: 2rem;
+  line-height: 1.4rem;
 }
 
 .footer-nav {

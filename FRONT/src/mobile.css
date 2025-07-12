@@ -214,4 +214,31 @@
             max-width: 220px;
         }
     }
+
+    /* ABOUT PAGE */
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .title-main {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.125rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
 }
