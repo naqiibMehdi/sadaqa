@@ -6,6 +6,7 @@ import {useAuthStore} from "@/stores/useAuthStore.ts";
 import {computed, onMounted, watch} from "vue";
 import {titleAndMetaTag} from "@/utils/functions.ts";
 import {useUserStore} from "@/stores/useUserStore.ts";
+import {setMeta} from "@/utils/meta.ts";
 
 const props = defineProps<{ campaign: Campaign }>()
 
@@ -24,12 +25,22 @@ const isOwner = computed(() => userStore.user.id === props.campaign.user?.id)
 onMounted(() => {
   if (detailPage.value) {
     titleAndMetaTag(title.value.substring(0, 60), description.value.substring(0, 160))
+    setMeta({
+      title: props.campaign.title,
+      description: props.campaign.description,
+      image: props.campaign.url_image,
+    })
   }
 })
 
 watch(() => props.campaign, (newCampaign) => {
   if (detailPage.value) {
     titleAndMetaTag(newCampaign.title.substring(0, 60), newCampaign.description.substring(0, 160))
+    setMeta({
+      title: newCampaign.title,
+      description: newCampaign.description,
+      image: newCampaign.url_image,
+    })
   }
 }, {deep: true})
 </script>

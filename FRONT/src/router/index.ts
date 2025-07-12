@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router"
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 import {titleAndMetaTag} from "@/utils/functions.ts";
+import {setDefaultMeta} from "@/utils/meta.ts";
 
 
 const routes = [
@@ -145,6 +146,7 @@ router.beforeEach((to, _, next) => {
   const authStore = useAuthStore()
   const hasToken = authStore.token || localStorage.getItem("token")
   titleAndMetaTag("Saddaqa - " + to.meta.title as string, to.meta.description as string)
+  setDefaultMeta()
 
   if ("requireAuth" in to.meta) {
     if (!to.meta.requireAuth && hasToken) {
