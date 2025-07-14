@@ -11,6 +11,7 @@ import {usePaymentStore} from "@/stores/usePaymentStore.ts";
 import {useRoute, useRouter} from "vue-router";
 import Message from "primevue/message";
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
+import MdiInformationVariantCircle from '~icons/mdi/information-variant-circle';
 
 const route = useRoute()
 const router = useRouter()
@@ -37,7 +38,7 @@ const sendPayment = async () => {
       <div class="form-inputLabel form-inputLabel_inline">
         <label for="currency-fr" class="font-bold block mb-2">Montant de votre donation</label>
         <InputNumber v-model="formPayment.amount" inputId="currency-fr" mode="currency" currency="EUR" locale="fr-FR"
-                     minFractionDigits="0" maxFractionDigits="0" size="large"/>
+                     :minFractionDigits="0" :maxFractionDigits="0" size="large"/>
         <Message severity="error" variant="simple" size="small" v-if="paymentStore.errors?.amount">
           {{ paymentStore.errors?.amount }}
         </Message>
@@ -52,6 +53,13 @@ const sendPayment = async () => {
       </Message>
 
       <CustomButton label="Payer" type="submit" :loading="paymentStore.loading"/>
+      <Message severity="info">
+        <template #icon>
+          <MdiInformationVariantCircle width="2rem" height="2rem"/>
+        </template>
+        Une commission solidaire de 2,5 % est prélevée sur chaque don pour couvrir les frais techniques et de
+        fonctionnement de l’association.<br> Pour un don de 100 €, 2,50 € seront reversés à l'association.
+      </Message>
     </form>
   </Main>
   <Footer/>

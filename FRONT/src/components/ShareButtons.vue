@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue';
-import CustomButton from "@/components/CustomButton.vue";
 import MdiFacebook from '~icons/mdi/facebook';
 import MdiWhatsapp from '~icons/mdi/whatsapp';
 import MdiTwitter from '~icons/mdi/twitter';
@@ -38,22 +37,26 @@ const copyToClipboard = () => {
       });
 };
 
-const shareOnFacebook = () => {
+const shareOnFacebook = (e: MouseEvent) => {
+  e.preventDefault();
   const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl.value)}`;
   window.open(url, '_blank', 'width=600,height=400');
 };
 
-const shareOnWhatsApp = () => {
+const shareOnWhatsApp = (e: MouseEvent) => {
+  e.preventDefault()
   const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(props.title + ' ' + currentUrl.value)}`;
-  window.open(url, '_blank');
+  window.open(url, '_blank', 'width=600,height=400');
 };
 
-const shareOnTwitter = () => {
+const shareOnTwitter = (e: MouseEvent) => {
+  e.preventDefault()
   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(props.title)}&url=${encodeURIComponent(currentUrl.value)}`;
-  window.open(url, '_blank', 'width=600,height=300');
+  window.open(url, '_blank', 'width=600,height=400');
 };
 
-const shareByEmail = () => {
+const shareByEmail = (e: MouseEvent) => {
+  e.preventDefault();
   const subject = encodeURIComponent(props.title);
   const body = encodeURIComponent(`${props.description}\n\n${currentUrl.value}`);
   window.location.href = `mailto:?subject=${subject}&body=${body}`;
@@ -82,30 +85,40 @@ const shareByEmail = () => {
     </div>
 
     <div class="share-buttons">
-      <CustomButton
-          label="Facebook"
-          :custom-component="MdiFacebook"
-          @click="shareOnFacebook"
-          class="share-button facebook"
-      />
-      <CustomButton
-          label="What's App"
-          :custom-component="MdiWhatsapp"
-          @click="shareOnWhatsApp"
-          class="share-button whatsapp"
-      />
-      <CustomButton
-          label="Twitter"
-          :custom-component="MdiTwitter"
-          @click="shareOnTwitter"
-          class="share-button twitter"
-      />
-      <CustomButton
-          label="Email"
-          :custom-component="MdiEmail"
-          @click="shareByEmail"
-          class="share-button email"
-      />
+      <a :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`"
+         target="_blank"
+         @click="shareOnFacebook"
+         class="share-button facebook"
+         rel="noopener noreferrer"
+      >
+        <MdiFacebook/>
+        Facebook
+      </a>
+      <a :href="`https://api.whatsapp.com/send?text=${encodeURIComponent(props.title + ' ' + currentUrl)}`"
+         target="_blank"
+         @click="shareOnWhatsApp"
+         class="share-button whatsapp"
+         rel="noopener noreferrer"
+      >
+        <MdiWhatsapp/>
+        What's App
+      </a>
+      <a :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(props.title)}&url=${encodeURIComponent(currentUrl)}`"
+         target="_blank"
+         @click="shareOnTwitter"
+         class="share-button twitter"
+         rel="noopener noreferrer"
+      >
+        <MdiTwitter/>
+        Twitter
+      </a>
+      <a :href="`mailto:?subject=${encodeURIComponent(props.title)}&body=${encodeURIComponent(props.description + '\n\n' + currentUrl)}`"
+         @click="shareByEmail"
+         class="share-button email"
+      >
+        <MdiEmail/>
+        Email
+      </a>
     </div>
   </div>
 </template>
@@ -168,6 +181,10 @@ const shareByEmail = () => {
   color: white;
   cursor: pointer;
   transition: opacity 0.3s;
+}
+
+.share-button:hover {
+  opacity: 0.8;
 }
 
 :deep(.buttonFilled.share-button:hover) {

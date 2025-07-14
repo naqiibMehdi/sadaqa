@@ -10,8 +10,8 @@ const routes = [
     name: "home",
     component: () => import("@/pages/home/HomeView.vue"),
     meta: {
-      title: "Accueil",
-      description: "Faites votre premier pas en faisant un don pour un projet ou une association."
+      title: "Faites votre premier pas en faisant un don pour un projet ou une association.",
+      description: "Sadaqa est une association à but non lucratif dédiée à faciliter les dons et à créer des ponts entre les donateurs et les projets qui ont besoin de soutien"
     }
   },
   {
@@ -33,6 +33,15 @@ const routes = [
       description: "Sadaqa, qui signifie \"charité\" ou \"aumône\" en arabe, est une jeune association à but non lucratif\n" +
           "dédiée à faciliter les dons et à créer des ponts entre les donateurs et les projets qui ont besoin\n" +
           "de soutien."
+    }
+  },
+  {
+    path: "/rgpd",
+    name: "rgpd",
+    component: () => import("@/pages/ressources/RGPDView.vue"),
+    meta: {
+      title: "RGPD - Protection des données - Sadaqa",
+      description: "Le Règlement Général sur la Protection des Données (RGPD) est un texte réglementaire européen qui encadre le traitement des données personnelles sur le territoire de l'Union européenne. "
     }
   },
   {
