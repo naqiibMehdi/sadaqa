@@ -150,7 +150,7 @@ watch(() => props.campaign, (newCampaign) => {
   font-size: 1.125rem;
   margin-top: 1rem;
   padding: 0.5em 2em;
-  background-color: var(--primary);
+  background-color: var(--accent);
   border-radius: .5rem;
   text-align: center;
 }

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 import Nav from "@/components/layouts/Nav.vue";
-import EntypoSocialTwitter from '~icons/entypo-social/twitter'
-import EntypoSocialFacebook from '~icons/entypo-social/facebook'
-import EntypoSocialInstagram from '~icons/entypo-social/instagram'
+import EntypoSocialFacebookWithCircle from '~icons/entypo-social/facebook-with-circle';
+import EntypoSocialTwitterWithCircle from '~icons/entypo-social/twitter-with-circle';
+import EntypoSocialInstagramWithCircle from '~icons/entypo-social/instagram-with-circle';
 </script>
 
 <template>
@@ -26,15 +26,23 @@ import EntypoSocialInstagram from '~icons/entypo-social/instagram'
                      to: {name: 'privacy'}
                    },
                    {
+                     label: 'RGPD',
+                     to: {name: 'rgpd'}
+                   },
+                   {
                      label: 'A propos de nous',
                      to: {name: 'about'}
                    }
                  ]"
         />
         <div class="footer-icons">
-          <EntypoSocialFacebook class="footer-icons-fb"/>
-          <EntypoSocialTwitter class="footer-icons-tw"/>
-          <EntypoSocialInstagram class="footer-icons-inst"/>
+          <EntypoSocialFacebookWithCircle class="footer-icons-fb"/>
+          <a href="https://x.com/Saddaqa_assoc" target="_blank" rel="noreferrer">
+            <EntypoSocialTwitterWithCircle class="footer-icons-tw"/>
+          </a>
+          <a href="https://www.instagram.com/assoc_sadaqa/">
+            <EntypoSocialInstagramWithCircle class="footer-icons-inst"/>
+          </a>
         </div>
       </div>
     </div>
@@ -72,16 +80,7 @@ footer {
   height: 2rem;
 }
 
-.footer-icons-fb * {
-  fill: #1877F2;
-
-}
-
-.footer-icons-tw * {
-  fill: #1DA1F2;
-}
-
-.footer-icons-inst * {
-  fill: #bc8a6a;
+.footer-icons * {
+  fill: var(--accent);
 }
 </style>

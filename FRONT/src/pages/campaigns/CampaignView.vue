@@ -96,7 +96,7 @@ onMounted(async () => {
 }
 
 .campaign-card-description {
-  place-self: center;
+  place-self: start center;
 }
 
 .campaign-card-description-title {
