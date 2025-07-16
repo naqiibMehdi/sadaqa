@@ -113,15 +113,26 @@ onMounted(() => yearsOptions.value = generateYears())
           errors?.email?.[0]
         }}
       </Message>
-      <InputField placeholder="Mot de passe" id="password" title="mot de passe" v-model="userData.password"
-                  :invalid="errors?.password && errors?.password?.[0] !== '' "/>
+      <InputField
+          placeholder="Mot de passe"
+          id="password"
+          title="mot de passe"
+          v-model="userData.password"
+          type="password"
+          :invalid="errors?.password && errors?.password?.[0] !== '' "
+      />
       <Message severity="error" variant="simple" size="small" v-if="errors?.password?.[0]">{{
           errors?.password?.[0]
         }}
       </Message>
-      <InputField placeholder="Mot de passe" id="confirmation_password" title="Confirmez votre mot de passe"
-                  v-model="userData.password_confirmation"
-                  :invalid="errors?.password && errors?.password?.[0] !== '' "/>
+      <InputField
+          placeholder="Mot de passe"
+          id="confirmation_password"
+          title="Confirmez votre mot de passe"
+          type="password"
+          v-model="userData.password_confirmation"
+          :invalid="errors?.password && errors?.password?.[0] !== '' "
+      />
       <Message severity="error" variant="simple" size="small" v-if="errors?.password?.[0]">{{
           errors?.password?.[0]
         }}
