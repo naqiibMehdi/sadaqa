@@ -7,11 +7,17 @@ use App\Http\Requests\CreateCampaignRecoveryFormRequest;
 use App\Http\Resources\CampaignRecoveryRessource;
 use App\Models\Campaign;
 use App\Models\CampaignRecovery;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Crypt;
 
 class CampaignRecoveryController extends Controller
 {
-  public function requestTransfer(string $id, CreateCampaignRecoveryFormRequest $request)
+  /**
+   * @param string $id
+   * @param CreateCampaignRecoveryFormRequest $request
+   * @return JsonResponse
+   */
+  public function requestTransfer(string $id, CreateCampaignRecoveryFormRequest $request): JsonResponse
   {
     $validated = $request->validated();
     $recovery = CampaignRecovery::where("campaign_id", $id)->where("user_id", auth()->id())->first();
@@ -38,5 +44,17 @@ class CampaignRecoveryController extends Controller
     ]);
 
     return response()->json(["message" => "Votre demande de virement a été enregistrée avec succès", "data" => new CampaignRecoveryRessource($newRecovery)]);
+  }
+
+  /**
+   * @return JsonResponse
+   */
+  public function getRecoveriesFromUser(): JsonResponse
+  {
+    $recoveries = CampaignRecovery::with('campaign')->where("user_id", auth()->id())->get();
+    if ($recoveries->isEmpty()) {
+      return response()->json(["success" => false, "message" => "Vous n'avez aucune demande de virement en cours"]);
+    }
+    return response()->json(["data" => CampaignRecoveryRessource::collection($recoveries)]);
   }
 }

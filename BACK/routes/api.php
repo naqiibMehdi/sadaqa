@@ -54,6 +54,7 @@ Route::middleware("auth:sanctum")->group(function () {
    * CampaignRecovery route
    */
   Route::post("recovery/{id}", [CampaignRecoveryController::class, "requestTransfer"])->where("id", "[0-9]+");
+  Route::get("recoveries", [CampaignRecoveryController::class, "getRecoveriesFromUser"]);
 
   /**
    * Campaigns route

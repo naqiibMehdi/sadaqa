@@ -23,7 +23,7 @@ class CheckCampaignOwner
 
 
     if ($campaign->user_id !== Auth::id()) {
-      return response()->json(["message" => "vous n'êtes pas autorisé à modifier cet cagnotte"], 403);
+      return response()->json(["message" => "vous n'êtes pas autorisé à modifier cette cagnotte"], 403);
     }
 
     $request->merge(["campaign" => $campaign]);
