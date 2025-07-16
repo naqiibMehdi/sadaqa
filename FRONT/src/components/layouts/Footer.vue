@@ -15,6 +15,10 @@ import EntypoSocialInstagramWithCircle from '~icons/entypo-social/instagram-with
         Rejoignez-nous dès aujourd'hui et devenez un acteur du changement.</p>
       <div class="footer-nav">
         <Nav title="Saddaqa" :links="[{label: 'Accueil', to: {name: 'home'}}]"/>
+        <Nav
+            title="Nos partenaires"
+            :links="[{label: 'Hello Asso', a: 'https://www.helloasso.com/associations/saddaqa', to: {name: 'home'}}]"
+        />
         <Nav title="A Propos"
              :links="[
                    {
@@ -36,11 +40,13 @@ import EntypoSocialInstagramWithCircle from '~icons/entypo-social/instagram-with
                  ]"
         />
         <div class="footer-icons">
-          <EntypoSocialFacebookWithCircle class="footer-icons-fb"/>
+          <a href="https://www.facebook.com/profile.php?id=61578027825786" target="_blank" rel="noreferrer">
+            <EntypoSocialFacebookWithCircle class="footer-icons-fb"/>
+          </a>
           <a href="https://x.com/Saddaqa_assoc" target="_blank" rel="noreferrer">
             <EntypoSocialTwitterWithCircle class="footer-icons-tw"/>
           </a>
-          <a href="https://www.instagram.com/assoc_sadaqa/">
+          <a href="https://www.instagram.com/assoc_sadaqa/" target="_blank" rel="noreferrer">
             <EntypoSocialInstagramWithCircle class="footer-icons-inst"/>
           </a>
         </div>

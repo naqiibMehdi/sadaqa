@@ -10,8 +10,8 @@ const routes = [
     name: "home",
     component: () => import("@/pages/home/HomeView.vue"),
     meta: {
-      title: "Faites votre premier pas en faisant un don pour un projet ou une association.",
-      description: "Sadaqa est une association à but non lucratif dédiée à faciliter les dons et à créer des ponts entre les donateurs et les projets qui ont besoin de soutien"
+      title: "Faites votre premier pas en faisant un don pour un projet.",
+      description: "Sadaqa est une association à but non lucratif dédiée à faciliter les dons et à créer des ponts entre les donateurs et les projets qui ont besoin de soutien."
     }
   },
   {
