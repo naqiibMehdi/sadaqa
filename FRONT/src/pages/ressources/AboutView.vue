@@ -96,10 +96,12 @@
       </div>
     </main>
   </div>
+  <Footer/>
 </template>
 
 <script setup lang="ts">
 
+import Footer from "@/components/layouts/Footer.vue";
 </script>
 
 <style scoped>

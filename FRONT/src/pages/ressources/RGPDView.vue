@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {onMounted} from 'vue'
+import Footer from "@/components/layouts/Footer.vue";
 
 onMounted(() => {
   document.title = 'RGPD - Protection des données - Sadaqa'
@@ -212,6 +213,7 @@ onMounted(() => {
       </div>
     </main>
   </div>
+  <Footer/>
 </template>
 
 <style scoped>
