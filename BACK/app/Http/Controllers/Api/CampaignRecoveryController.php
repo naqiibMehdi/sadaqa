@@ -53,7 +53,7 @@ class CampaignRecoveryController extends Controller
   {
     $recoveries = CampaignRecovery::with('campaign')->where("user_id", auth()->id())->get();
     if ($recoveries->isEmpty()) {
-      return response()->json(["success" => false, "message" => "Vous n'avez aucune demande de virement en cours"]);
+      return response()->json(["success" => false, "message" => "Vous n'avez aucune demande de virement en cours"], 401);
     }
     return response()->json(["data" => CampaignRecoveryRessource::collection($recoveries)]);
   }

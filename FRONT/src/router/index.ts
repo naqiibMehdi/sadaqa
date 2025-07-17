@@ -118,7 +118,7 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     component: () => import("@/pages/dashboard/DashBoardView.vue"),
-    meta: {requireAuth: true, title: "Tableau de bord", description: "Vooici votre tableau de bord"}
+    meta: {requireAuth: true, title: "Tableau de bord", description: "Voici votre tableau de bord"}
   },
   {
     path: "/account",
@@ -143,6 +143,12 @@ const routes = [
         name: "iban",
         component: () => import("@/pages/user/IbanView.vue"),
         meta: {title: "Coordonnées bancaire", description: "Gérer vos coordonnées bancaires"}
+      },
+      {
+        path: "recovery",
+        name: "recovery",
+        component: () => import("@/pages/user/RecoveryView.vue"),
+        meta: {title: "Mes Virements", description: "Gérer vos demandes de virement"}
       }
     ]
   },

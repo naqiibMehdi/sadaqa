@@ -23,6 +23,9 @@ const updateRouteInfo = () => {
     case "/account/bank-account":
       title.value = "Mes coordonnées bancaires"
       break
+    case "/account/recovery":
+      title.value = "Mes demandes de virements"
+      break
   }
 }
 

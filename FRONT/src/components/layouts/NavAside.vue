@@ -28,6 +28,9 @@ const logout = async () => {
         <RouterLink :to="{name: 'iban'}" active-class="active-link">Coordonnée bancaire</RouterLink>
       </li>
       <li class="nav-aside-link">
+        <RouterLink :to="{name: 'recovery'}" active-class="active-link">Mes virements</RouterLink>
+      </li>
+      <li class="nav-aside-link">
         <RouterLink to="" role="button" @click="logout" label="test">Se déconnecter</RouterLink>
       </li>
     </ul>

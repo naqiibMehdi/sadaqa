@@ -1,8 +1,10 @@
 import {acceptHMRUpdate, defineStore} from "pinia";
-import {postData} from "@/utils/axios.ts";
+import {fetchData, postData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
+import {CampaignRecovery} from "@/types/types.ts";
 
 interface propState {
+  recoveries: { title: string, created_at: string, amount: number, status: string }[] | null,
   loading: boolean,
   errors: [] | null,
   errorMessage: string | null,
@@ -10,6 +12,7 @@ interface propState {
 
 export const useRecoveryStore = defineStore("recovery", {
   state: (): propState => ({
+    recoveries: null,
     loading: false,
     errors: null,
     errorMessage: null,
@@ -20,10 +23,9 @@ export const useRecoveryStore = defineStore("recovery", {
       this.loading = true
       this.errors = null
       this.errorMessage = null
-      
+
       try {
-        const response = await postData(`recovery/${idCampaign}`, dataRecovery);
-        console.log(response)
+        await postData(`recovery/${idCampaign}`, dataRecovery);
       } catch (err) {
         if (err instanceof AxiosError) {
           if ([404, 403].includes(err.response?.status as number)) {
@@ -31,6 +33,24 @@ export const useRecoveryStore = defineStore("recovery", {
           } else {
             this.errors = err.response?.data?.errors?.iban
           }
+          console.log(err.response)
+        }
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async getRecoveries() {
+      this.loading = true
+      this.recoveries = []
+      try {
+        const response = await fetchData("recoveries");
+        response.data.forEach((recovery: CampaignRecovery) => {
+          const {campaign, created_at, amount, status} = recovery
+          this.recoveries?.push({title: campaign?.title as string, created_at, amount, status})
+        })
+      } catch (err) {
+        if (err instanceof AxiosError) {
           console.log(err.response)
         }
       } finally {
