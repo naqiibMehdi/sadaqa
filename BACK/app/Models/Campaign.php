@@ -17,7 +17,8 @@ class Campaign extends Model
   protected $guarded = ["id"];
 
   protected $casts = [
-    "is_anonymous" => "boolean"
+    "is_anonymous" => "boolean",
+    "created_at" => "datetime",
   ];
 
   public $timestamps = false;

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\StripeWebHookController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\PdfController;
 use App\Http\Middleware\CheckCampaignOwner;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,12 @@ Route::middleware("auth:sanctum")->group(function () {
    * Auth route
    */
   Route::post("auth/logout", [AuthController::class, "logout"]);
+
+  /**
+   * route to manage PDF File
+   */
+
+  Route::get("pdf/{id}", [PdfController::class, "generatePdf"])->where("id", "[0-9]+");
 
   /**
    * CampaignRecovery route
