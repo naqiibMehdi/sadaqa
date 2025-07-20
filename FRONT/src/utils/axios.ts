@@ -10,9 +10,9 @@ const api = axios.create({
   }
 })
 
-export const fetchData = async (endpoint: string) => {
+export const fetchData = async (endpoint: string, config: {} = {}) => {
   try {
-    const response = await api.get(endpoint)
+    const response = await api.get(endpoint, config)
     return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
