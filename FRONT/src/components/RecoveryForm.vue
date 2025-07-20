@@ -6,6 +6,7 @@ import InputText from 'primevue/inputtext';
 import {useRecoveryStore} from "@/stores/useRecoveryStore.ts";
 import {useToast} from "primevue/usetoast";
 import {useIbanStore} from "@/stores/useIbanStore.ts";
+import {useRouter} from "vue-router";
 
 const props = defineProps<{
   campaign: {
@@ -18,6 +19,7 @@ const props = defineProps<{
 
 const recoveryStore = useRecoveryStore()
 const ibanStore = useIbanStore()
+const router = useRouter()
 
 const emit = defineEmits(['submitted']);
 
@@ -54,8 +56,13 @@ const submitTransferRequest = async () => {
     toast.add({
       severity: 'success',
       summary: "Succès",
-      detail: "Votre demande de virement a été enregistrée avec succès !"
+      detail: "Votre demande de virement a été enregistrée avec succès ! redirection vers vos demandes...",
+      life: 3000
     });
+
+    setTimeout(() => {
+      router.push({name: 'recovery'})
+    }, 3000)
 
   }
 

@@ -134,13 +134,16 @@ export const useCampaignStore = defineStore("campaign", {
 
       try {
         const response = await postMultiPartData(`/campaigns/${slug}-${id}?_method=DELETE`, dataCampaign)
-        console.log(response)
         return {success: true, message: response.message}
 
       } catch (error) {
         if (error instanceof AxiosError) {
+          console.log(error.response)
           if (error?.response?.status === 403) {
             this.unauthorized = true
+          } else if (error?.response?.status === 401) {
+            this.unauthorized = true
+            this.error = error.response?.data?.message
           } else {
             this.error = error.response?.data?.errors
           }

@@ -33,7 +33,6 @@ export interface CampaignRecovery {
   amount: number;
   status: 'pending' | 'processed' | 'failed';
   created_at: string;
-  iban: string;
   campaign?: Campaign;
 }
 

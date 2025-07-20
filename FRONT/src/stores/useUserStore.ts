@@ -140,6 +140,22 @@ export const useUserStore = defineStore("user", {
       if (campaignIndex !== -1) {
         this.campaignsUser[campaignIndex].closing_date = new Date().toISOString()
       }
+    },
+
+    async updateRecoveryCampaign(campaignId: string | number) {
+      const id = campaignId.toString()
+      const campaignIndex = this.campaignsUser.findIndex(campaign => campaign.id.toString() === id)
+
+      if (campaignIndex !== -1) {
+        this.campaignsUser[campaignIndex].recovery = {
+          amount: 0,
+          campaign_id: 0,
+          created_at: "",
+          id: 0,
+          status: "pending",
+          user_id: 0,
+        }
+      }
     }
 
 

@@ -13,6 +13,7 @@ import {RouterLink} from "vue-router";
 import ModalConfirm from "@/components/ModalConfirm.vue";
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import RecoveryForm from "@/components/RecoveryForm.vue";
+import {useToast} from "primevue/usetoast";
 
 // Définir une interface pour les méthodes exposées par ModalConfirm
 interface ModalConfirmExpose {
@@ -23,7 +24,7 @@ interface ModalRefs {
   [key: string]: ModalConfirmExpose | null
 }
 
-
+const toast = useToast()
 const userStore = useUserStore()
 const campaignStore = useCampaignStore()
 const modalConfirmRefs = ref<ModalRefs>({})
@@ -45,8 +46,22 @@ const confirmCloseCampaign = (campaignId: string | number) => {
 const closeCampaign = async (slug: string, id: string) => {
   const result = await campaignStore.closeCampaign(slug, id, {})
 
+  if (!result.success) {
+    toast.add({
+      severity: 'error',
+      summary: "Erreur",
+      detail: result.message,
+    })
+    return
+  }
+
   if (result.success) {
     await userStore.updateCampaignClosingDate(id)
+    toast.add({
+      severity: 'success',
+      summary: "Succès",
+      detail: "Votre cagnotte a été clôturée avec succès !"
+    })
   }
 }
 
