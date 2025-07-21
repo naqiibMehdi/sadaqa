@@ -17,6 +17,7 @@ import {useCategoryStore} from "@/stores/useCategoryStore.ts";
 import InputNumber from "primevue/inputnumber";
 import Checkbox from "primevue/checkbox";
 import {useUserStore} from "@/stores/useUserStore.ts";
+import Loader from "@/components/Loader.vue";
 
 const router = useRouter()
 const route = useRoute()
@@ -95,10 +96,12 @@ const onSubmitFormCampaign = async () => {
   if (campaignData.value.image === "") {
     delete campaignData.value.image
   }
+
   await campaignStore.UpdateOneCampaign(slug as string, id as string, {
     ...campaignData.value,
     target_amount: campaignData.value.target_amount * 100
   });
+
   if (campaignStore.unauthorized) {
     toast.add({
       severity: 'error',
@@ -122,9 +125,23 @@ const onSubmitFormCampaign = async () => {
     await router.push({name: "campaign", params: {slug: campaignStore.campaign?.slug, id: campaignStore.campaign?.id}});
   }
 }
+
+const cancelCampaign = async () => {
+  campaignData.value = {
+    title: "",
+    description: "",
+    image: "",
+    target_amount: 0,
+    category_id: null,
+    is_anonymous: 0
+  }
+
+  await router.push({name: "dashboard"});
+}
 </script>
 
 <template>
+  <Loader v-if="campaignStore.loading"/>
   <Header/>
   <Main>
     <h1>Mettez à jour votre cagnotte</h1>
@@ -148,7 +165,7 @@ const onSubmitFormCampaign = async () => {
       <label for="campaignCategory">Choisissez une catégorie</label>
       <Select placeholder="Choisissez une catégorie"
               :options="categoryStore.categories"
-              optionLabel="name"
+              optionLabel="translate_name"
               optionValue="id"
               labelId="campaignCategory"
               v-model="campaignData.category_id"
@@ -196,6 +213,7 @@ const onSubmitFormCampaign = async () => {
       </div>
       <div class="formConnexion-buttons-list">
         <CustomButton label="Modifier votre cagnotte" type="submit" :loading="campaignStore.loading"/>
+        <CustomButton label="Annuler" :outline="true" :disabled="campaignStore.loading" @click="cancelCampaign"/>
       </div>
     </form>
   </Main>

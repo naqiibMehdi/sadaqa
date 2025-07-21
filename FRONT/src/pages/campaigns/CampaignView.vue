@@ -11,6 +11,7 @@ import {onMounted} from "vue";
 import {useRoute} from "vue-router";
 import {useToast} from "primevue/usetoast";
 import ShareButtons from "@/components/ShareButtons.vue";
+import Loader from "@/components/Loader.vue";
 
 const toast = useToast()
 const route = useRoute()
@@ -34,6 +35,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <Loader v-if="campaignStore.loading"/>
   <Header/>
   <Main>
     <section class="campaign container" v-if="!campaignStore.loading && campaignStore.campaign">

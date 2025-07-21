@@ -32,6 +32,7 @@ export const useUserStore = defineStore("user", {
   actions: {
     async getCampaignsOfUSer() {
       this.error = ""
+      this.loading = true
       this.campaignsUser = []
 
       try {
@@ -41,24 +42,13 @@ export const useUserStore = defineStore("user", {
         if (err instanceof AxiosError) {
           this.error = "Erreur de chargement des cagnottes"
         }
+      } finally {
+        this.loading = false
       }
     },
-    async getParticipantsOfUser() {
-      this.error = ""
-      this.participants = []
-
-      try {
-        this.participants = await fetchData("user/participants")
-      } catch (err) {
-        if (err instanceof AxiosError) {
-          this.error = "Erreur de chargement des participants"
-        }
-      }
-    },
-
     async getInfosUser() {
       this.error = ""
-
+      this.loading = true
       try {
         const response = await fetchData("user/profile")
         this.user = response.data
@@ -66,6 +56,8 @@ export const useUserStore = defineStore("user", {
         if (err instanceof AxiosError) {
           this.error = "Erreur de chargement des données de l'utilisateur"
         }
+      } finally {
+        this.loading = false
       }
     },
 

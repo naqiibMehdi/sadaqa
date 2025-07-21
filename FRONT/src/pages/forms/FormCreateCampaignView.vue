@@ -65,6 +65,19 @@ const onSubmitFormCampaign = async () => {
     await router.push({name: "campaign", params: {slug: response.data.slug, id: response.data.id}});
   }
 }
+
+const onCancelFormCampaign = async () => {
+  campaignData.value = {
+    title: "",
+    description: "",
+    image: "",
+    target_amount: 0,
+    category_id: null,
+    is_anonymous: 0
+  }
+
+  await router.push({name: "dashboard"});
+}
 </script>
 
 <template>
@@ -98,7 +111,7 @@ const onSubmitFormCampaign = async () => {
       </Message>
 
       <div class="input-error">
-        <label for="campaignAmount">Saisissez un montant</label>
+        <label for="campaignAmount">Saisissez un montant total à atteindre</label>
         <InputNumber
             v-model="campaignData.target_amount"
             id="campaignAmount"
@@ -140,6 +153,12 @@ const onSubmitFormCampaign = async () => {
             type="submit"
             :loading="campaignStore.loading"
             :disabled="campaignStore.loading"
+        />
+        <CustomButton
+            label="Annuler"
+            :outline="true"
+            :disabled="campaignStore.loading"
+            @click="onCancelFormCampaign"
         />
       </div>
     </form>

@@ -93,6 +93,7 @@ export const useCampaignStore = defineStore("campaign", {
       }
     },
     async getOneCampaign(slug: string, id: string) {
+      this.loading = true
       try {
         const response = await fetchData(`/campaigns/${slug}-${id}`)
         if (response) {

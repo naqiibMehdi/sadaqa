@@ -6,7 +6,6 @@ import Footer from "@/components/layouts/Footer.vue";
 import CustomButton from "@/components/CustomButton.vue";
 import MdiEdit from "~icons/mdi/edit"
 import MdiLock from "~icons/mdi/lock"
-import ParticipantBanner from "@/components/ParticipantBanner.vue";
 import {useUserStore} from "@/stores/useUserStore.ts";
 import {onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
@@ -14,6 +13,7 @@ import ModalConfirm from "@/components/ModalConfirm.vue";
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 import RecoveryForm from "@/components/RecoveryForm.vue";
 import {useToast} from "primevue/usetoast";
+import Loader from "@/components/Loader.vue";
 
 // Définir une interface pour les méthodes exposées par ModalConfirm
 interface ModalConfirmExpose {
@@ -67,11 +67,11 @@ const closeCampaign = async (slug: string, id: string) => {
 
 onMounted(() => {
   userStore.getCampaignsOfUSer()
-  userStore.getParticipantsOfUser()
 })
 </script>
 
 <template>
+  <Loader v-if="userStore.loading"/>
   <Header/>
   <Main>
     <section class="container dashboard">
@@ -122,11 +122,6 @@ onMounted(() => {
         </article>
       </div>
     </section>
-    <section class="container participants">
-      <h2 class="dashboard-second-title">Donateurs récents:</h2>
-      <p v-if="userStore.participants?.length === 0">Il n'y a aucun participants pour les cagnottes actuelles</p>
-      <ParticipantBanner :participants="userStore.participants" v-else/>
-    </section>
   </Main>
   <Footer/>
   <RecoveryForm
@@ -157,13 +152,9 @@ onMounted(() => {
   background-color: var(--secondary20);
 }
 
-.dashboard-title, .dashboard-second-title {
+.dashboard-title {
   text-align: center;
   margin-top: 1.5rem;
-}
-
-.dashboard-second-title {
-  margin-bottom: 3.5rem;
 }
 
 .participants p {

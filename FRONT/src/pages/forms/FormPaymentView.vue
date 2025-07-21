@@ -20,7 +20,7 @@ const campaignStore = useCampaignStore()
 const formPayment = ref({name: "", email: "", amount: 0})
 
 onMounted(() => {
-  if (!campaignStore.campaign) {
+  if (!campaignStore.campaign || campaignStore.campaign.closing_date !== null) {
     router.push({name: "campaigns"})
   }
 })

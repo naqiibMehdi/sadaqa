@@ -31,6 +31,10 @@ const submitLogin = async () => {
     await router.push({name: 'dashboard'});
   }
 }
+
+const registerLogin = async () => {
+  await router.push({name: 'register'})
+}
 </script>
 
 <template>
@@ -53,7 +57,7 @@ const submitLogin = async () => {
       <RouterLink :to="{name: 'password.forget'}" class="formConnexion-text">Mot de passe oublié ?</RouterLink>
       <div class="formConnexion-buttons-list">
         <CustomButton label="Connexion" type="submit" :loading="authStore.loading"/>
-        <CustomButton label="S'inscrire" :outline="true" :disabled="authStore.loading"/>
+        <CustomButton label="S'inscrire" :outline="true" :disabled="authStore.loading" @click="registerLogin"/>
       </div>
     </form>
   </Main>

@@ -67,16 +67,22 @@ watch(() => props.campaign, (newCampaign) => {
           <p class="card-campaign-content-price">{{ campaign.collected_amount / 100 }} €</p>
           <p class="card-campaign-content-participant">récoltés avec <span>{{ campaign.participants?.length }}</span>
             participants</p>
-          <RouterLink :to="{name: 'payment'}" class="card-campaign-content-btn" v-if="route.name !== 'campaigns'">
+          <RouterLink :to="{name: 'payment'}" class="card-campaign-content-btn"
+                      v-if="route.name !== 'campaigns' && campaign.closing_date === null">
             Participez
           </RouterLink>
           <RouterLink
               :to="{name: 'campaign.update', params: {slug: campaign.slug, id: campaign.id}}"
               class="card-campaign-content-btn"
-              v-if="route.name !== 'campaigns' && authStore.token !== '' && isOwner"
+              v-if="route.name !== 'campaigns' && authStore.token !== '' && isOwner && campaign.closing_date === null"
           >
             Modifier
           </RouterLink>
+          <button
+              class="card-campaign-content-btn_closed"
+              disabled
+              v-if="route.name !== 'campaigns' && campaign.closing_date !== null">Cagnotte clôturée
+          </button>
         </div>
       </template>
     </Card>
@@ -153,6 +159,21 @@ watch(() => props.campaign, (newCampaign) => {
   background-color: var(--accent);
   border-radius: .5rem;
   text-align: center;
+}
+
+.card-campaign-content-btn_closed {
+  width: 100%;
+  font-size: 1.125rem;
+  margin-top: 1rem;
+  padding: 0.5em 2em;
+  background-color: lightgrey;
+  border-radius: .5rem;
+  border: transparent;
+  text-align: center;
+}
+
+.card-campaign-content-btn_closed:hover {
+  cursor: default;
 }
 
 .card-campaign-content-price {
