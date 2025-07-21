@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Campaign;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,9 +22,25 @@ class CampaignFactory extends Factory
    */
   public function definition(): array
   {
+    $datas = [
+      "title" => [
+        "Construisons un puit",
+        "Achat d'un jardin",
+        "Réhabilitation d'une maison",
+        "SOS animaux en détresse"
+      ],
+
+      "description" => [
+        "<p>Nous avons d'aide pour construire un puit.</p>",
+        "<p>Nous avons d'aide pour construire et/ou louer un jardin afin de faire découvrir cette univers</p>",
+        "<p>Des retraités ont besoin de rénover leur maison</p>",
+        "<p>Tous les jours, des animaux sont abandonnés.</p><p>Il faut les aider</p>",
+      ]
+    ];
+
     return [
-      "title" => $this->faker->sentence(rand(6, 12), true),
-      "description" => $this->faker->paragraph(rand(1, 5), true),
+      "title" => $datas["title"][rand(0, 3)],
+      "description" => $datas["description"][rand(0, 3)],
       "image" => "campaigns/default_cover_campaign.webp",
       "slug" => $this->faker->slug(),
       "target_amount" => $this->faker->randomNumber(rand(3, 6), true),
