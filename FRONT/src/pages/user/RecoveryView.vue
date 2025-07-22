@@ -88,8 +88,8 @@ const getStatusSeverity = (recovery: {
 
     <div v-else>
       <h2 v-if="recoveryStore.recoveries === null">Vous n'avez aucune demande de virements</h2>
-      <DataTable :value="recoveryStore.recoveries" stripedRows tableStyle="min-width: 50rem" v-else>
-        <Column field="title" header="Titre" style="width: 30%"></Column>
+      <DataTable :value="recoveryStore.recoveries" stripedRows tableStyle="min-width: 250px" v-else>
+        <Column field="title" header="Titre" style="min-width: 25%"></Column>
         <Column header="Demandé le">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.created_at) }}
@@ -111,6 +111,7 @@ const getStatusSeverity = (recovery: {
         <Column header="Facture">
           <template #body="slotProps">
             <CustomButton
+                style="width: 100%"
                 label="Télécharger"
                 size="small"
                 :disabled="pdfStore.hasAnyLoading && !pdfStore.isLoading(slotProps.data.id)"

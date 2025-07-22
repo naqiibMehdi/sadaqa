@@ -108,7 +108,7 @@
 
     /* ACCOUNT */
     .account {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: minmax(250px, 1fr) !important;
 
         & .account-nav-aside {
             display: none;

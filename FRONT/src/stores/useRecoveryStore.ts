@@ -39,7 +39,6 @@ export const useRecoveryStore = defineStore("recovery", {
           } else {
             this.errors = err.response?.data?.errors?.iban
           }
-          console.log(err.response)
         }
       } finally {
         this.loading = false
