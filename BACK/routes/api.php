@@ -8,10 +8,10 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\IbanController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\PasswordResetController;
+use App\Http\Controllers\Api\PdfController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\StripeWebHookController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\PdfController;
 use App\Http\Middleware\CheckCampaignOwner;
 use Illuminate\Support\Facades\Route;
 

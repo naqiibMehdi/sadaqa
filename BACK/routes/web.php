@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\Api\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
