@@ -9,6 +9,7 @@ use App\Models\Campaign;
 use App\Models\Participant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Stripe\Event;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
@@ -36,8 +37,17 @@ class StripeWebHookController extends Controller
       return response()->json(['error' => 'Echec de vérification de la signature Webhook'], 400);
     }
 
+
+    if ($event->type === "charge.failed") {
+      $this->createPaymentIntent($event);
+    }
+
+    if ($event->type === "charge.succeeded") {
+      $this->createPaymentIntent($event, "completed");
+    }
+
     if ($event->type === "checkout.session.completed") {
-      $this->createParticipant($event);
+      $this->handleCheckoutCompleted($event);
       SendEmailJob::dispatch($event->data->object->customer_email, new StripeEmail($this->emailData($event)))->delay(now()->addSeconds(10));
     }
 
@@ -50,20 +60,23 @@ class StripeWebHookController extends Controller
    * @param Event $event
    * @return void
    */
-  private function createParticipant(Event $event): void
+  private function handleCheckoutCompleted(Event $event): void
   {
-    $campaign = Campaign::where('id', $event->data->object->metadata->campaign_id)->first();
+    $participant = Participant::where('payment_id', $event->data->object->payment_intent)->first();
 
-    if ($campaign) {
-      $campaign->collected_amount += $event->data->object->amount_total;
-      $campaign->save();
+    if ($participant) {
+      $participant->campaign->collected_amount += $event->data->object->amount_total;
+      $participant->campaign->save();
+    }
+  }
 
-      Participant::create([
-        "name" => $event->data->object->metadata->names,
-        "email" => $event->data->object->customer_email,
-        "amount" => $event->data->object->amount_total,
-        "campaign_id" => $campaign->id
-      ]);
+  private function createPaymentIntent(Event $event, string $status = "failed"): void
+  {
+    $participant = Participant::where('email', $event->data->object->billing_details->email)->latest('participation_date')->first();
+    if ($participant) {
+      $participant->payment_id = $event->data->object->payment_intent;
+      $participant->payment_status = $status;
+      $participant->save();
     }
   }
 

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\Participant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -51,6 +53,10 @@ class StripeController extends Controller
       return response()->json(["message" => "Cette Cagnotte est inexistante"], 404);
     }
 
+    if ($campaign->closing_date) {
+      return response()->json(["message" => "Impossible de faire un don pour une cagnotte clôturée."], 404);
+    }
+
     $checkoutSession = Session::create([
       "line_items" => [
         [
@@ -65,13 +71,21 @@ class StripeController extends Controller
         ]
       ],
       "payment_method_types" => ["card"],
-      "customer_email" => $request->email,
+      "customer_email" => Str::lower($request->email),
       "mode" => "payment",
       "metadata" => ["campaign_id" => $campaign->id, "names" => $request->name, "title_campaign" => $campaign->title],
       "success_url" => env("APP_FRONT") . "/campaigns/{$slug}-{$id}/?success=1",
       "cancel_url" => env("APP_FRONT") . "/campaigns/{$slug}-{$id}/?cancel=1",
 
     ]);
+
+    Participant::create([
+      "name" => $request->name,
+      "email" => Str::lower($request->email),
+      "amount" => $request->amount * 100,
+      "campaign_id" => $campaign->id,
+    ]);
+
     return response()->json(["session_checkout_id" => $checkoutSession->id]);
 
   }
