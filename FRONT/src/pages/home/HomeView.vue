@@ -10,14 +10,23 @@ import gift from "@/assets/gift.svg"
 import CardCampaignHome from "@/components/CardCampaignHome.vue";
 import Divider from 'primevue/divider';
 import {useCampaignStore} from "@/stores/useCampaignStore.ts";
-import {onMounted} from "vue";
+import {onBeforeUnmount, onMounted, ref} from "vue";
 import Comments from "@/components/Comments.vue";
 
 const campaignStore = useCampaignStore()
+const timeOutId = ref<number | null>(null)
 
 
 onMounted(async () => {
-  await campaignStore.getCampaigns(1)
+  timeOutId.value = setTimeout(async () => {
+    await campaignStore.getCampaigns(1)
+  }, 2500)
+})
+
+onBeforeUnmount(() => {
+  if (timeOutId.value) {
+    clearTimeout(timeOutId.value)
+  }
 })
 
 </script>
