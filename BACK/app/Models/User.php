@@ -20,6 +20,11 @@ class User extends Authenticatable
 
   protected $hidden = ["password"];
 
+  protected $casts = [
+    "subscribe_date" => "datetime",
+    "birth_date" => "datetime",
+  ];
+
   public $timestamps = false;
 
   public function address(): HasOne
