@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -70,22 +72,42 @@ class UserController extends Controller
 
   public function update(Request $request, User $user)
   {
-    $request->validate([
+    $validated = $request->validate([
       'name' => 'required|string|max:255',
       'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
       'password' => 'nullable|string|min:8|confirmed',
+      'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+      'remove_image' => 'boolean'
+
     ]);
 
-    $data = [
-      'name' => $request->name,
-      'email' => $request->email,
-    ];
+    if ($request->hasFile('image') && $request->file('image')->isValid()) {
+      // Supprimer l'ancienne image si elle existe et n'est pas une URL externe
+      if ($user->img_profile && !Str::startsWith($user->img_profile, 'http')) {
+        Storage::disk('public')->delete($user->img_profile);
+      }
+
+      // Stocker la nouvelle image
+      $imagePath = $request->file('image')->store('profile', 'public');
+      $user->img_profile = $imagePath;
+    } elseif ($request->has('remove_image') && $request->remove_image) {
+      // Supprimer l'image actuelle
+      if ($user->img_profile && !Str::startsWith($user->img_profile, 'http')) {
+        Storage::disk('public')->delete($user->img_profile);
+      }
+      $user->img_profile = null;
+    }
+
+
+    $user->name = $validated['name'];
+    $user->email = $validated['email'];
+
 
     if ($request->filled('password')) {
       $data['password'] = Hash::make($request->password);
     }
 
-    $user->update($data);
+    $user->save();
 
     return redirect()->route('admin.users.index')
       ->with('success', 'Utilisateur mis à jour avec succès.');

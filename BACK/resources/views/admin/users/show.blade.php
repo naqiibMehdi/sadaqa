@@ -35,7 +35,9 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="col-start-1 col-span-2 flex flex-col items-center">
               <label class="block text-sm font-medium text-gray-700 mb-2">Photo de profile</label>
-              <img class="rounded-[50%] w-24 h-24 object-cover" src="{{$user->img_profile}}" alt="photo de profile">
+              <img class="rounded-[50%] w-24 h-24 object-cover"
+                   src="{{Str::startsWith($user->img_profile, 'http') ? $user->img_profile : Storage::url($user->img_profile)}}"
+                   alt="photo de profile">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Nom</label>

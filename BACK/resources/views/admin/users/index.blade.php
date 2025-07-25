@@ -46,7 +46,9 @@
               <div class="flex items-center">
                 <div class="h-10 w-10 bg-gray-300 rounded-full flex items-center justify-center">
                   {{--                  <i class="fas fa-user text-gray-600"></i>--}}
-                  <img class="rounded-[50%]" src="{{$user->img_profile}}" alt="image de profile">
+                  <img class="rounded-[50%] w-full h-full object-cover"
+                       src="{{Str::startsWith($user->img_profile, 'http') ? $user->img_profile : Storage::url($user->img_profile)}}"
+                       alt="image de profile">
                 </div>
                 <div class="ml-4">
                   <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>

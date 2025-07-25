@@ -2,6 +2,29 @@
 
 @section('title', 'Modifier l\'utilisateur')
 
+@section('scripts')
+  <!-- Script pour l'aperçu de l'image -->
+  <script>
+    document.getElementById('image').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('profile-preview');
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          if (preview.tagName === 'IMG') {
+            preview.src = e.target.result;
+          } else {
+            preview.innerHTML = `<img src="${e.target.result}" alt="Aperçu" class="w-full h-full object-cover">`;
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+
+@endsection
+
 @section('content')
   <div class="mb-6">
     <div class="flex justify-between items-center">
@@ -24,9 +47,64 @@
         </h2>
       </div>
 
-      <form method="POST" action="{{ route('admin.users.update', $user) }}" class="p-6">
+      <form method="POST" action="{{ route('admin.users.update', $user) }}" enctype="multipart/form-data" class="p-6">
         @csrf
         @method('PUT')
+
+
+        <!-- Section Image de profil -->
+        <div class="mb-8">
+          <h3 class="text-lg font-medium text-gray-800 mb-4">
+            <i class="fas fa-camera mr-2"></i>Image de profil
+          </h3>
+
+          <div class="flex items-start space-x-6">
+            <!-- Aperçu actuel -->
+            <div class="flex-shrink-0">
+              <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-200">
+                @if($user->img_profile)
+                  @if(Str::startsWith($user->img_profile, 'http'))
+                    <img id="profile-preview" src="{{ $user->img_profile }}" alt="Photo de profil"
+                         class="w-full h-full object-cover">
+                  @else
+                    <img id="profile-preview" src="{{ Storage::url($user->img_profile) }}" alt="Photo de profil"
+                         class="w-full h-full object-cover">
+                  @endif
+                @else
+                  <div id="profile-preview" class="w-full h-full bg-gray-300 flex items-center justify-center">
+                    <i class="fas fa-user text-gray-500 text-2xl"></i>
+                  </div>
+                @endif
+              </div>
+            </div>
+
+            <!-- Upload -->
+            <div class="flex-1">
+              <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
+                Nouvelle image de profil
+              </label>
+              <input type="file"
+                     id="image"
+                     name="image"
+                     accept="image/*"
+                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('image') border-red-500 @enderror">
+              @error('image')
+              <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+              @enderror
+              <p class="text-sm text-gray-500 mt-1">Formats acceptés : JPG, PNG, GIF. Taille max : 2MB</p>
+
+              <!-- Option pour supprimer l'image -->
+              @if($user->img_profile)
+                <label class="flex items-center mt-3">
+                  <input type="checkbox" name="remove_image" value="1"
+                         class="rounded border-gray-300 text-red-600 shadow-sm focus:ring-red-500">
+                  <span class="ml-2 text-sm text-red-600">Supprimer l'image actuelle</span>
+                </label>
+              @endif
+            </div>
+          </div>
+        </div>
+
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Nom -->

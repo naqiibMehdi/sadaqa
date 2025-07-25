@@ -47,13 +47,13 @@
             Utilisateurs
           </a>
         </li>
-        {{--        <li>--}}
-        {{--          <a href="{{ route('admin.donations.index') }}"--}}
-        {{--             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">--}}
-        {{--            <i class="fas fa-heart mr-3"></i>--}}
-        {{--            Dons--}}
-        {{--          </a>--}}
-        {{--        </li>--}}
+        <li>
+          <a href="{{ route('admin.campaigns.index') }}"
+             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+            <i class="fas fa-bullhorn mr-3"></i>
+            Cagnottes
+          </a>
+        </li>
         {{--        <li>--}}
         {{--          <a href="{{ route('admin.campaigns.index') }}"--}}
         {{--             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">--}}
@@ -88,5 +88,8 @@
     @yield('content')
   </main>
 </div>
+
+@yield("scripts")
+
 </body>
 </html>
