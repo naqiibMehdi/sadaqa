@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CampaignController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\SitemapController;
@@ -34,8 +35,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
 
     // Autres routes admin à ajouter selon vos besoins
-    // Route::resource('donations', DonationController::class);
-    // Route::resource('campaigns', CampaignController::class);
+    Route::resource('campaigns', CampaignController::class);
   });
 });
 
