@@ -6,6 +6,7 @@
   <title>@yield('title', 'Administration - Sadaqa')</title>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  @yield('script_quill')
 </head>
 <body class="bg-gray-50">
 <!-- Navigation -->

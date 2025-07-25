@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\Category;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -40,17 +41,18 @@ class CampaignController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(string $id)
+  public function show(Campaign $campaign): View|Application|Factory
   {
-    //
+    return view("admin.campaigns.show", compact("campaign"));
   }
 
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(string $id)
+  public function edit(Campaign $campaign): View|Application|Factory
   {
-    //
+    $categories = Category::all();
+    return view("admin.campaigns.edit", compact("campaign"))->with("categories", $categories);
   }
 
   /**
