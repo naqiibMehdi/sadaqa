@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CampaignController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ParticipantController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\SitemapController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Autres routes admin à ajouter selon vos besoins
     Route::resource('campaigns', CampaignController::class);
+    Route::resource('participants', ParticipantController::class);
   });
 });
 

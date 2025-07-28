@@ -55,6 +55,13 @@
             Cagnottes
           </a>
         </li>
+        <li>
+          <a href="{{ route('admin.participants.index') }}"
+             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+            <i class="fas fa-bullhorn mr-3"></i>
+            Participants
+          </a>
+        </li>
         {{--        <li>--}}
         {{--          <a href="{{ route('admin.campaigns.index') }}"--}}
         {{--             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">--}}
