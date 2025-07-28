@@ -12,7 +12,7 @@ const amountFormatted = (key: "target_amount" | "collected_amount") => computed(
     style: "currency",
     currency: "EUR",
     minimumFractionDigits: 0
-  }).format(props.campaign[key])
+  }).format(props.campaign[key] / 100)
 })
 
 </script>
