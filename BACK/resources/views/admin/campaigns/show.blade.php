@@ -14,7 +14,7 @@
            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
           <i class="fas fa-edit mr-2"></i>Modifier
         </a>
-        <a href="{{ route('admin.users.index') }}"
+        <a href="{{ route('admin.campaigns.index') }}"
            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
           <i class="fas fa-arrow-left mr-2"></i>Retour
         </a>
@@ -35,7 +35,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="col-start-1 col-span-2 flex flex-col items-center">
               <label class="block text-sm font-medium text-gray-700 mb-2">Image principale</label>
-              <img class="rounded-[10px] w-1/3 h-1/3"
+              <img class="rounded-[10px] w-[200px] h-[150px] object-cover"
                    src="{{Storage::url($campaign->image)}}"
                    alt="photo de profile">
             </div>
@@ -54,13 +54,13 @@
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Montant objectif</label>
               <div class="p-3 bg-gray-50 rounded-lg">
-                <p class="text-gray-800">{{ $campaign->target_amount }}</p>
+                <p class="text-gray-800">{{ $campaign->target_amount / 100 }}€</p>
               </div>
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Montant collecté</label>
               <div class="p-3 bg-gray-50 rounded-lg">
-                <p class="text-gray-800">{{ $campaign->collected_amount }}</p>
+                <p class="text-gray-800">{{ $campaign->collected_amount / 100 }}€</p>
               </div>
             </div>
             <div>
@@ -143,15 +143,12 @@
           </h3>
         </div>
         <div class="p-6 space-y-4">
-          {{--          <div class="flex justify-between items-center">--}}
-          {{--            <span class="text-gray-600">Nombre de dons</span>--}}
-          {{--            <span class="font-bold text-blue-600">{{ $user->donations()->count() ?? 0 }}</span>--}}
-          {{--          </div>--}}
-          {{--          <div class="flex justify-between items-center">--}}
-          {{--            <span class="text-gray-600">Total des dons</span>--}}
-          {{--            <span--}}
-          {{--              class="font-bold text-green-600">{{ number_format($user->donations()->sum('amount') ?? 0, 2) }} €</span>--}}
-          {{--          </div>--}}
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Crée par:</span>
+            <span
+              class="font-bold text-purple-600"><a
+                href="{{route("admin.users.show", $campaign->user)}}">{{ str($campaign->user->name)->upper() }} {{ $campaign->user->first_name }}</a></span>
+          </div>
           <div class="flex justify-between items-center">
             <span class="text-gray-600">Nombre de participants</span>
             <span class="font-bold text-purple-600">{{ $campaign->participant()->count() ?? 0 }}</span>

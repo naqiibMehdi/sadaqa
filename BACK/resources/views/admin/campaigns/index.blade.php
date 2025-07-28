@@ -8,9 +8,10 @@
       <h1 class="text-3xl font-bold text-gray-800">Cagnottes</h1>
       <p class="text-gray-600">Gérez les cagnottes de votre plateforme</p>
     </div>
-    <a href="{{ route('admin.users.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-      <i class="fas fa-plus mr-2"></i>Nouvel cagnotte
-    </a>
+    {{--    <a href="{{ route('admin.campaigns.create') }}"--}}
+    {{--       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">--}}
+    {{--      <i class="fas fa-plus mr-2"></i>Nouvelle cagnotte--}}
+    {{--    </a>--}}
   </div>
 
   <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -36,6 +37,7 @@
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant collecté
           </th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Anonyme</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de Création
           </th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -59,10 +61,16 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $campaign->collected_amount }}</td>
             <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ !$campaign->closing_date ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                {{ $campaign->closing_date ? 'Clôturée' : 'non clôturé' }}
-                            </span>
+                <span
+                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ !$campaign->closing_date ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                    {{ $campaign->closing_date ? 'Clôturée' : 'non clôturé' }}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ !$campaign->is_anonymous ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                    {{ $campaign->is_anonymous ? 'Anonyme' : 'Publique' }}
+                </span>
             </td>
             <td
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $campaign->created_at->format('d/m/Y') }}</td>

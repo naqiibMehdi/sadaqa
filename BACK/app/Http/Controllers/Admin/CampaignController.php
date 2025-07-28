@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCampaignRequest;
 use App\Models\Campaign;
 use App\Models\Category;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CampaignController extends Controller
 {
@@ -17,7 +21,7 @@ class CampaignController extends Controller
    */
   public function index(): View|Application|Factory
   {
-    $campaigns = Campaign::query()->orderBy("created_at", "desc")->paginate(10);
+    $campaigns = Campaign::with("user")->orderBy("created_at", "desc")->paginate(10);
 
     return view("admin.campaigns.index", compact("campaigns"));
   }
@@ -58,9 +62,26 @@ class CampaignController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(StoreCampaignRequest $request, Campaign $campaign): RedirectResponse
   {
-    //
+    $validated = $request->validated();
+
+    if ($request->hasFile('image') && $request->file('image')->isValid()) {
+      // Supprimer l'ancienne image si elle existe et n'est pas une URL externe
+      if ($campaign->image && !Str::startsWith($campaign->image, 'campaigns/default')) {
+        Storage::disk('public')->delete($campaign->image);
+      }
+
+      // Stocker la nouvelle image
+      $imagePath = $request->file('image')->store('campaigns', 'public');
+      $validated["image"] = $imagePath;
+
+    }
+
+    $campaign->slug = Str::slug($request->title);
+
+    $campaign->update($validated);
+    return redirect()->route("admin.campaigns.index");
   }
 
   /**

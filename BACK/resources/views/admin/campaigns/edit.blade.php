@@ -30,7 +30,6 @@
           <i class="fas fa-user-edit mr-2"></i>Informations de la cagnotte
         </h2>
       </div>
-
       <form method="POST" action="{{ route('admin.campaigns.update', $campaign) }}" enctype="multipart/form-data"
             class="p-6">
         @csrf
@@ -67,15 +66,6 @@
               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
               @enderror
               <p class="text-sm text-gray-500 mt-1">Formats acceptés : JPG, PNG, WEBP. Taille max : 2MB</p>
-
-              <!-- Option pour supprimer l'image -->
-              @if($campaign->image)
-                <label class="flex items-center mt-3">
-                  <input type="checkbox" name="remove_image" value="1"
-                         class="rounded border-gray-300 text-red-600 shadow-sm focus:ring-red-500">
-                  <span class="ml-2 text-sm text-red-600">Supprimer l'image actuelle</span>
-                </label>
-              @endif
             </div>
           </div>
         </div>
@@ -91,7 +81,7 @@
                    id="title"
                    name="title"
                    value="{{ old('title', $campaign->title) }}"
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('name') border-red-500 @enderror"
+                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('title') border-red-500 @enderror"
                    required>
             @error('title')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -121,7 +111,7 @@
             <select name="category_id" id="category_id"
                     class="mt-1 block w-full ps-2 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
               @foreach($categories as $category)
-                <option value="{{$category->id}}"
+                <option value="{{old("category_id", $category->id)}}"
                         {{ $category->id === $campaign->category_id ? 'selected' : ''  }}
                         class="py-1 px-4 bg-white text-gray-700 hover:bg-indigo-500 hover:text-white">{{Str::ucfirst($category->translate_name)}}
                 </option>
@@ -132,17 +122,6 @@
             @enderror
           </div>
 
-          {{--          <!-- Confirmation mot de passe -->--}}
-          {{--          <div>--}}
-          {{--            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">--}}
-          {{--              Confirmer le mot de passe--}}
-          {{--            </label>--}}
-          {{--            <input type="password"--}}
-          {{--                   id="password_confirmation"--}}
-          {{--                   name="password_confirmation"--}}
-          {{--                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">--}}
-          {{--            <p class="text-sm text-gray-500 mt-1">Seulement si vous changez le mot de passe</p>--}}
-          {{--          </div>--}}
         </div>
 
         <!-- Statut -->
@@ -151,7 +130,7 @@
             <input type="checkbox"
                    name="is_anonymous"
                    value="1"
-                   {{ old('is_anonymous', $campaign->is_anonymous ?? true) ? 'checked' : '' }}
+                   {{ old('is_anonymous', $campaign->is_anonymous) ? 'checked' : '' }}
                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
             <span class="ml-2 text-sm font-medium text-gray-700">Cagnotte Anonyme</span>
           </label>
@@ -162,22 +141,12 @@
             Description
           </label>
           <div id="quill-editor"></div>
-          <input type="hidden" name="@description" id="hidden-description">
+          @error('description')
+          <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+          @enderror
+          <input type="hidden" name="description" id="hidden-description"
+                 value="{{old('description', $campaign->description)}}">
         </div>
-
-        {{--        <!-- Informations de modification -->--}}
-        {{--        <div class="mt-6 p-4 bg-gray-50 rounded-lg">--}}
-        {{--          <h3 class="text-sm font-medium text-gray-800 mb-2">Informations</h3>--}}
-        {{--          <div class="text-sm text-gray-600 space-y-1">--}}
-        {{--            <p><strong>Compte créé le :</strong> {{ $user->subscribe_date->format('d/m/Y') }}</p>--}}
-        {{--            --}}{{--            <p><strong>Dernière modification :</strong> {{ $user->updated_at->format('d/m/Y à H:i') }}</p>--}}
-        {{--            --}}{{--            @if($user->email_verified_at)--}}
-        {{--            --}}{{--              <p><strong>Email vérifié :</strong> {{ $user->email_verified_at->format('d/m/Y à H:i') }}</p>--}}
-        {{--            --}}{{--            @else--}}
-        {{--            --}}{{--              <p class="text-yellow-600"><strong>Email non vérifié</strong></p>--}}
-        {{--            --}}{{--            @endif--}}
-        {{--          </div>--}}
-        {{--        </div>--}}
 
         <!-- Boutons -->
         <div class="mt-8 flex justify-end space-x-4">
@@ -199,6 +168,23 @@
 @section('scripts')
   <!-- Script pour l'aperçu de l'image -->
   <script>
+    document.getElementById('image').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('profile-preview');
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          if (preview.tagName === 'IMG') {
+            preview.src = e.target.result;
+          } else {
+            preview.innerHTML = `<img src="${e.target.result}" alt="Aperçu" class="w-full h-full object-cover">`;
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
     const quill = new Quill('#quill-editor', {
       modules: {
         toolbar: {
@@ -212,12 +198,30 @@
     });
 
     let campaignDescription = `{!! $campaign->description !!}`
+    let url = ""
 
     quill.root.innerHTML = campaignDescription;
+    quill.root.addEventListener('click', handleImageSelection)
+    quill.root.addEventListener('keydown', handleImageDeleted)
 
     quill.on('text-change', function () {
       document.getElementById('hidden-description').value = quill.root.innerHTML;
     })
+
+    function handleImageDeleted(event) {
+      if (url && (event.key === 'Backspace' || event.key === 'Delete')) {
+        deleteImage(url)
+        url = ""
+      }
+    }
+
+    function handleImageSelection(event) {
+      if (event.target.tagName === "IMG") {
+        url = event.target.src
+      } else {
+        url = ""
+      }
+    }
 
     function upload() {
       const range = this.quill.getSelection();
@@ -225,50 +229,67 @@
       input.type = "file";
       input.accept = "image/png, image/jpeg, image/webp";
       input.click()
+
+      input.onchange = function () {
+        let file = input.files[0];
+        if (/^image\//.test(file.type)) {
+          uploadImage(file, range);
+        } else {
+          console.warn('You could only upload images.');
+        }
+      }
     }
 
-    // // Gérer l'insertion d'images
-    // var toolbar = quill.getModule('toolbar');
-    // toolbar.addHandler('image', function() {
-    //   var range = this.quill.getSelection();
-    //   var input = document.createElement('input');
-    //   input.setAttribute('type', 'file');
-    //   input.setAttribute('accept', 'image/*');
-    //   input.click();
-    //
-    //   input.onchange = function() {
-    //     var file = input.files[0];
-    //     if (/^image\//.test(file.type)) {
-    //       uploadImage(file, range);
-    //     } else {
-    //       console.warn('You could only upload images.');
-    //     }
-    //   };
-    // });
-    //
-    // function uploadImage(file, range) {
-    //   var formData = new FormData();
-    //   formData.append('image', file);
-    //
-    //   fetch('/upload-image', {
-    //     method: 'POST',
-    //     body: formData,
-    //     headers: {
-    //       'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    //     }
-    //   })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       if (data.success) {
-    //         var url = data.url;
-    //         quill.insertEmbed(range.index, 'image', url);
-    //       } else {
-    //         console.error('Error uploading image');
-    //       }
-    //     })
-    //     .catch(error => {
-    //       console.error('Error:', error);
-    //     });
+    function uploadImage(file, range) {
+      let formData = new FormData();
+      formData.append('image', file);
+
+      fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRF-TOKEN': `{{ csrf_token() }}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            let url = data.url;
+            quill.insertEmbed(range.index, 'image', url);
+            quill.setSelection(range.index + 1, 0);
+          } else {
+            console.error('Error uploading image');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        })
+    }
+
+    function deleteImage(url) {
+      let formData = new FormData();
+      formData.append('url', url);
+
+      fetch('/api/delete-image', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRF-TOKEN': `{{ csrf_token() }}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            console.log(data)
+          } else {
+            console.error('Error delete  image');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        })
+    }
+
   </script>
 
 @endsection

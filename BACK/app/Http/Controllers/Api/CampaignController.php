@@ -235,7 +235,7 @@ class CampaignController extends Controller
     $validated = $request->validated();
     $slug = Str::slug($validated["title"]);
     $isAnonymous = $validated["is_anonymous"] ?? false;
-    $imagePath = "campaigns/default_cover_campaign.png";
+    $imagePath = "campaigns/default_cover_campaign.webp";
 
 
     if ($request->hasFile("image") && $request->file("image")->isValid()) {
