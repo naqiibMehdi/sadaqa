@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CampaignController;
+use App\Http\Controllers\Admin\CampaignRecoveryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ParticipantController;
 use App\Http\Controllers\Admin\UserController;
@@ -38,6 +39,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Autres routes admin à ajouter selon vos besoins
     Route::resource('campaigns', CampaignController::class);
     Route::resource('participants', ParticipantController::class);
+    Route::resource('campaign_recoveries', CampaignRecoveryController::class);
   });
 });
 
