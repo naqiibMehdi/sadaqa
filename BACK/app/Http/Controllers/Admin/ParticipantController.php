@@ -39,9 +39,9 @@ class ParticipantController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(string $id)
+  public function show(Participant $participant): View|Application|Factory
   {
-    //
+    return view("admin.participants.show", compact("participant"));
   }
 
   /**

@@ -3,6 +3,7 @@
 @section('title', 'Gestion des participants')
 
 @section('content')
+
   <div class="flex justify-between items-center mb-6">
     <div>
       <h1 class="text-3xl font-bold text-gray-800">Participants</h1>
@@ -34,8 +35,12 @@
         <thead class="bg-gray-50">
         <tr>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom - Prénom</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date
+            Participation
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status
           </th>
           {{--          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>--}}
           {{--          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Anonyme</th>--}}
@@ -50,12 +55,19 @@
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
                 <div class="ml-4">
-                  <div class="text-sm font-medium text-gray-900">{{ $participant->name }}</div>
+                  <div
+                    class="text-sm font-medium text-gray-900">{{ Str::ucfirst(str($participant->name)->explode(" ")[0]) }} {{ Str::ucfirst(str($participant->name)->explode(" ")[1]) }}</div>
                 </div>
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $participant->email }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $participant->amount / 100 }}€</td>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $participant->participation_date->timezone("Europe/Paris")->format("d/m/Y à H:i") }}</td>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              <x-payment-status :status="$participant->payment_status"/>
+            </td>
             {{--            <td class="px-6 py-4 whitespace-nowrap">--}}
             {{--                          <span--}}
             {{--                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ !$campaign->closing_date ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">--}}

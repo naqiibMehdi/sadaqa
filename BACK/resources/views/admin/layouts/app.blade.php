@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title', 'Administration - Sadaqa')</title>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
   @yield('script_quill')
 </head>
 <body class="bg-gray-50">
@@ -58,8 +58,15 @@
         <li>
           <a href="{{ route('admin.participants.index') }}"
              class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
-            <i class="fas fa-bullhorn mr-3"></i>
+            <i class="fas fa-light fa-hand-holding-heart mr-3"></i>
             Participants
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('admin.campaign_recoveries.index') }}"
+             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+            <i class="fas fa-light fa-money-bill-transfer mr-3"></i>
+            Virements
           </a>
         </li>
         {{--        <li>--}}
