@@ -73,7 +73,7 @@
     </tr>
     </tbody>
   </table>
-  <p>Ce montant sera viré sur votre compte dans un démais de 4 à 5 jours ouvrés.</p>
+  <p>Ce montant sera viré sur votre compte dans un délais de 4 à 5 jours ouvrés.</p>
 </div>
 </body>
 </html>

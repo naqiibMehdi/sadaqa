@@ -17,6 +17,7 @@ class PdfController extends Controller
 {
   /**
    * @param string $id
+   * @param Request $request
    * @return ResponseFactory|Application|JsonResponse|Response
    */
   public function generatePdf(string $id, Request $request): ResponseFactory|Application|JsonResponse|Response

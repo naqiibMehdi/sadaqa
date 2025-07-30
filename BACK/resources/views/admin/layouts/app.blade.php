@@ -63,10 +63,17 @@
           </a>
         </li>
         <li>
-          <a href="{{ route('admin.campaign_recoveries.index') }}"
+          <a href="{{ route('admin.recoveries.index') }}"
              class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
             <i class="fas fa-light fa-money-bill-transfer mr-3"></i>
             Virements
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('admin.pdf.index') }}"
+             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+            <i class="fas fa-light fa-file-invoice mr-3"></i>
+            Factures Téléchargées
           </a>
         </li>
         {{--        <li>--}}
