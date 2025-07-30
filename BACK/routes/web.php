@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CampaignController;
 use App\Http\Controllers\Admin\CampaignRecoveryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ParticipantController;
+use App\Http\Controllers\Admin\PdfController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\SitemapController;
 use Illuminate\Support\Facades\Route;
@@ -39,7 +40,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Autres routes admin à ajouter selon vos besoins
     Route::resource('campaigns', CampaignController::class);
     Route::resource('participants', ParticipantController::class);
-    Route::resource('campaign_recoveries', CampaignRecoveryController::class);
+    Route::resource('recoveries', CampaignRecoveryController::class);
+
+    Route::name('pdf.')->group(function () {
+      Route::get('pdf/', [PdfController::class, "index"])->name("index");
+      Route::get('pdf/{pdf}', [PdfController::class, "show"])->name("show");
+      Route::get('pdf/{campaignRecovery:campaign_id}/download', [PdfController::class, "downloadInvoice"])->name("download");
+    });
   });
 });
 
