@@ -21,10 +21,10 @@ class CampaignRecoveryController extends Controller
   {
     $validated = $request->validated();
     $recovery = CampaignRecovery::where("campaign_id", $id)->where("user_id", auth()->id())->first();
-    $campaign = Campaign::where("id", $id)->first();
+    $campaign = Campaign::where("id", $id)->where("user_id", auth()->id())->first();
 
     if (!$campaign) {
-      return response()->json(["message" => "Cette cagnotte n'existe pas"], 404);
+      return response()->json(["message" => "Cette cagnotte n'existe pas ou ne vous appartient pas"], 404);
     }
 
     if (!$campaign->closing_date) {
