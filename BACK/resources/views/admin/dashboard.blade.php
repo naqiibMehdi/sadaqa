@@ -29,7 +29,8 @@
         </div>
         <div class="ml-4">
           <h3 class="text-lg font-semibold text-gray-800">Dons totaux</h3>
-          <p class="text-2xl font-bold text-green-600">{{ number_format($stats['total_donations'] ?? 0, 0, ',', ' ') }}
+          <p
+            class="text-2xl font-bold text-green-600">{{ number_format($stats['total_donations'] / 100 ?? 0, 0, ',', ' ') }}
             €</p>
         </div>
       </div>
@@ -55,7 +56,7 @@
         <div class="ml-4">
           <h3 class="text-lg font-semibold text-gray-800">Ce mois</h3>
           <p
-            class="text-2xl font-bold text-purple-600">{{ number_format($stats['monthly_donations'] ?? 0, 0, ',', ' ') }}
+            class="text-2xl font-bold text-purple-600">{{ number_format($stats['monthly_donations'] / 100 ?? 0, 0, ',', ' ') }}
             €</p>
         </div>
       </div>
@@ -74,12 +75,13 @@
             @foreach($recent_donations as $donation)
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="font-medium text-gray-800">{{ $donation->user->name ?? 'Anonyme' }}</p>
+                  <p
+                    class="font-medium text-gray-800 capitalize">{{ $donation->name  ?? 'Anonyme' }}</p>
                   <p class="text-sm text-gray-600">{{ $donation->campaign->title ?? 'Don général' }}</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-bold text-green-600">{{ number_format($donation->amount, 2) }} €</p>
-                  <p class="text-xs text-gray-500">{{ $donation->created_at->diffForHumans() }}</p>
+                  <p class="font-bold text-green-600">{{ number_format($donation->amount / 100, 2) }} €</p>
+                  <p class="text-xs text-gray-500">{{ $donation->participation_date->diffForHumans() }}</p>
                 </div>
               </div>
             @endforeach
@@ -101,15 +103,17 @@
               <div class="flex items-center justify-between">
                 <div>
                   <p class="font-medium text-gray-800">{{ $campaign->title }}</p>
-                  <p class="text-sm text-gray-600">Objectif: {{ number_format($campaign->goal, 2) }} €</p>
+                  <p class="text-sm text-gray-600">
+                    Objectif: {{ number_format($campaign->target_amount / 100, 2, ".", " ") }}
+                    €</p>
                 </div>
                 <div class="text-right">
                   <div class="w-16 bg-gray-200 rounded-full h-2">
                     <div class="bg-blue-600 h-2 rounded-full"
-                         style="width: {{ min(($campaign->raised / $campaign->goal) * 100, 100) }}%"></div>
+                         style="width: {{ min(($campaign->collected_amount / $campaign->target_amount) * 100, 100) }}%"></div>
                   </div>
                   <p
-                    class="text-xs text-gray-500 mt-1">{{ number_format(($campaign->raised / $campaign->goal) * 100, 1) }}
+                    class="text-xs text-gray-500 mt-1">{{ number_format(min(($campaign->collected_amount / $campaign->target_amount) * 100, 100), 1) }}
                     %</p>
                 </div>
               </div>

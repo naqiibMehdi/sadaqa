@@ -91,7 +91,7 @@
               @error('image')
               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
               @enderror
-              <p class="text-sm text-gray-500 mt-1">Formats acceptés : JPG, PNG, GIF. Taille max : 2MB</p>
+              <p class="text-sm text-gray-500 mt-1">Formats acceptés : JPG, PNG, WEBP. Taille max : 2MB</p>
 
               <!-- Option pour supprimer l'image -->
               @if($user->img_profile)
@@ -168,30 +168,11 @@
           </div>
         </div>
 
-        <!-- Statut -->
-        <div class="mt-6">
-          <label class="flex items-center">
-            <input type="checkbox"
-                   name="is_active"
-                   value="1"
-                   {{ old('is_active', $user->is_active ?? true) ? 'checked' : '' }}
-                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
-            <span class="ml-2 text-sm font-medium text-gray-700">Compte actif</span>
-          </label>
-          <p class="text-sm text-gray-500 mt-1">Si décoché, l'utilisateur ne pourra pas se connecter</p>
-        </div>
-
         <!-- Informations de modification -->
         <div class="mt-6 p-4 bg-gray-50 rounded-lg">
           <h3 class="text-sm font-medium text-gray-800 mb-2">Informations</h3>
           <div class="text-sm text-gray-600 space-y-1">
             <p><strong>Compte créé le :</strong> {{ $user->subscribe_date->format('d/m/Y') }}</p>
-            {{--            <p><strong>Dernière modification :</strong> {{ $user->updated_at->format('d/m/Y à H:i') }}</p>--}}
-            {{--            @if($user->email_verified_at)--}}
-            {{--              <p><strong>Email vérifié :</strong> {{ $user->email_verified_at->format('d/m/Y à H:i') }}</p>--}}
-            {{--            @else--}}
-            {{--              <p class="text-yellow-600"><strong>Email non vérifié</strong></p>--}}
-            {{--            @endif--}}
           </div>
         </div>
 

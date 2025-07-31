@@ -31,7 +31,7 @@
 
 <div class="flex">
   <!-- Sidebar -->
-  <aside class="w-64 bg-gray-800 min-h-screen">
+  <aside class="w-64 bg-gray-800 min-h-[calc(100vh-64px)]">
     <div class="p-4">
       <ul class="space-y-2">
         <li>
@@ -76,19 +76,6 @@
             Factures Téléchargées
           </a>
         </li>
-        {{--        <li>--}}
-        {{--          <a href="{{ route('admin.campaigns.index') }}"--}}
-        {{--             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">--}}
-        {{--            <i class="fas fa-bullhorn mr-3"></i>--}}
-        {{--            Campagnes--}}
-        {{--          </a>--}}
-        {{--        </li>--}}
-        {{--        <li>--}}
-        {{--          <a href="{{ route('admin.settings') }}" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">--}}
-        {{--            <i class="fas fa-cog mr-3"></i>--}}
-        {{--            Paramètres--}}
-        {{--          </a>--}}
-        {{--        </li>--}}
       </ul>
     </div>
   </aside>

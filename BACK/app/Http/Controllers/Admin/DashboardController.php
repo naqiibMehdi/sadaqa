@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\Participant;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-  public function index()
+  public function index(): Factory|Application|View
   {
     // Statistiques pour le dashboard
     $stats = [
@@ -31,7 +35,7 @@ class DashboardController extends Controller
   {
     // Ajustez selon votre structure de base de données
     try {
-      return DB::table('donations')->sum('amount') ?? 0;
+      return Participant::sum("amount") ?? 0;
     } catch (\Exception $e) {
       return 0;
     }
@@ -40,8 +44,7 @@ class DashboardController extends Controller
   private function getActiveCampaigns()
   {
     try {
-      return Campaign::whereNull('closing_date')
-        ->count();
+      return Campaign::whereNull('closing_date')->count();
     } catch (\Exception $e) {
       return 0;
     }
@@ -50,46 +53,28 @@ class DashboardController extends Controller
   private function getMonthlyDonations()
   {
     try {
-      return DB::table('donations')
-        ->whereMonth('created_at', now()->month)
-        ->whereYear('created_at', now()->year)
+      return Participant::query()
+        ->whereMonth('participation_date', now()->month)
+        ->whereYear('participation_date', now()->year)
         ->sum('amount') ?? 0;
     } catch (\Exception $e) {
       return 0;
     }
   }
 
-  private function getRecentDonations()
+  private function getRecentDonations(): Collection|\Illuminate\Support\Collection
   {
     try {
-      return DB::table('donations')
-        ->join('users', 'donations.user_id', '=', 'users.id')
-        ->leftJoin('campaigns', 'donations.campaign_id', '=', 'campaigns.id')
-        ->select('donations.*', 'users.name as user_name', 'campaigns.title as campaign_title')
-        ->orderBy('donations.created_at', 'desc')
-        ->limit(5)
-        ->get()
-        ->map(function ($donation) {
-          $donation->user = (object)['name' => $donation->user_name];
-          $donation->campaign = (object)['title' => $donation->campaign_title];
-          $donation->created_at = now()->parse($donation->created_at);
-          return $donation;
-        });
+      return Participant::with("campaign")->orderBy("participation_date", "desc")->limit(5)->get();
     } catch (\Exception $e) {
       return collect();
     }
   }
 
-  private function getRecentCampaigns()
+  private function getRecentCampaigns(): Collection|\Illuminate\Support\Collection
   {
     try {
-      return DB::table('campaigns')
-        ->select('campaigns.*', DB::raw('COALESCE(SUM(donations.amount), 0) as raised'))
-        ->leftJoin('donations', 'campaigns.id', '=', 'donations.campaign_id')
-        ->groupBy('campaigns.id')
-        ->orderBy('campaigns.created_at', 'desc')
-        ->limit(5)
-        ->get();
+      return Campaign::query()->orderBy("created_at", "desc")->limit(5)->get();
     } catch (\Exception $e) {
       return collect();
     }
