@@ -141,7 +141,8 @@
         padding-inline: 10px;
 
         & .campaign-body {
-            grid-template-columns: minmax(250px, 1fr) !important;
+            min-width: 100%;
+            grid-template-columns: 1fr !important;
             gap: 1.6rem
         }
     }

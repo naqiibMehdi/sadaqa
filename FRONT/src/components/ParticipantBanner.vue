@@ -1,25 +1,17 @@
 <script setup lang="ts">
 
-import {useRoute} from "vue-router";
-import {computed} from "vue";
 import type {Participant} from "@/types/types.ts";
 
 defineProps<{ participants: Participant[] | [] | undefined, title?: string }>()
 
-const route = useRoute()
-
-const participantBannerDashboard = computed(() => {
-  return route.name === "dashboard" ? "participant-banner-participant-dashboard" : "participant-banner-participant"
-})
 </script>
 
 <template>
   <div class="participant-banner-infos" v-for="participant in participants" :key="participant.id">
-    <div class="participant-banner-amount" v-if="route.name !== 'dashboard'">
+    <div class="participant-banner-amount">
       {{ participant.amount / 100 }} €
     </div>
-    <div :class="participantBannerDashboard">
-      <span v-if="route.name === 'dashboard'" class="participant-title">{{ participant.title || title }}</span>
+    <div class="participant-banner-participant">
       <span class="participant-name">{{ participant.name }}</span>
       <span class="participant-date"> a participé le {{
           (new Date(participant.participation_date)?.toLocaleDateString("fr-FR"))
@@ -54,17 +46,7 @@ const participantBannerDashboard = computed(() => {
   border-radius: 5px;
 }
 
-.participant-banner-participant-dashboard {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  background-color: var(--secondary20);
-  padding: 8px 10px;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-}
-
-.participant-title, .participant-name {
+.participant-name {
   font-weight: 600;
 }
 

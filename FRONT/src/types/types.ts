@@ -42,6 +42,7 @@ export interface Participant {
   name: string;
   amount: number;
   participation_date: Date | string;
+  status: 'pending' | 'completed' | 'cancelled' | "refunded" | "failed";
 }
 
 export interface User {

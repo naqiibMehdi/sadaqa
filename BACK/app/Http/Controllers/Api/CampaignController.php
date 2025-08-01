@@ -169,7 +169,7 @@ class CampaignController extends Controller
    */
   public function show(string $slug, string $id): CampaignRessource|JsonResponse
   {
-    $campaign = Campaign::with("participant", "user")->where("id", $id)->where('slug', $slug)->first();
+    $campaign = Campaign::with(["participant" => fn($query) => $query->where("payment_status", "completed"), "user"])->where("id", $id)->where('slug', $slug)->first();
     if (!$campaign) {
       return response()->json(["message" => "Cette cagnotte n'existe pas"], 404);
     }

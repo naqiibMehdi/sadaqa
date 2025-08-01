@@ -65,8 +65,7 @@ watch(() => props.campaign, (newCampaign) => {
       <template #content>
         <div class="card-campaign-content">
           <p class="card-campaign-content-price">{{ campaign.collected_amount / 100 }} €</p>
-          <p class="card-campaign-content-participant">récoltés avec <span>{{ campaign.participants?.length }}</span>
-            participants</p>
+          <p class="card-campaign-content-participant">récoltés sur <span>{{ campaign.target_amount / 100 }}€</span></p>
           <RouterLink :to="{name: 'payment'}" class="card-campaign-content-btn"
                       v-if="route.name !== 'campaigns' && campaign.closing_date === null">
             Participez

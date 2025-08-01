@@ -20,6 +20,7 @@ class ParticipantRessource extends JsonResource
       "name" => $this->name,
       "amount" => $this->amount,
       "participation_date" => Carbon::parse($this->participation_date),
+      "status" => $this->payment_status
     ];
   }
 }
