@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegisterUserRequest;
+use App\Jobs\SendEmailJob;
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -75,6 +77,8 @@ class AuthController extends Controller
       "subscribe_date" => now(),
       "img_profile" => "https://ui-avatars.com/api/?name={$request->input("first_name")}+{$request->input("name")}&background=3078c0",
     ]);
+
+    SendEmailJob::dispatch($request->email, new WelcomeEmail())->delay(now()->addSeconds(10));
 
 
     return response()->json(["message" => "votre compte a été crée avec succès"], 201);

@@ -24,6 +24,12 @@ class SendEmailJob implements ShouldQueue
    */
   public function handle(): void
   {
-    Mail::to($this->customerEmail)->send($this->event);
+    $mail = Mail::to($this->customerEmail);
+
+    if (env("ADMIN_BCC_EMAIL")) {
+      $mail->bcc(env("ADMIN_BCC_EMAIL"));
+    }
+
+    $mail->send($this->event);
   }
 }
