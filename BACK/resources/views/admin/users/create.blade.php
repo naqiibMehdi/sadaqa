@@ -9,7 +9,8 @@
         <h1 class="text-3xl font-bold text-gray-800">Créer un nouvel utilisateur</h1>
         <p class="text-gray-600">Ajout d'un nouvel utilisateur à la plateforme Sadaqa</p>
       </div>
-      <a href="{{ route('admin.users.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+      <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users") }}"
+         class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
         <i class="fas fa-arrow-left mr-2"></i>Retour à la liste
       </a>
     </div>
@@ -23,7 +24,7 @@
         </h2>
       </div>
 
-      <form method="POST" action="{{ route('admin.users.store') }}" class="p-6">
+      <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/users") }}" class="p-6">
         @csrf
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -153,7 +154,7 @@
 
         <!-- Boutons -->
         <div class="mt-8 flex justify-end space-x-4">
-          <a href="{{ route('admin.users.index') }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users") }}"
              class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
             Annuler
           </a>

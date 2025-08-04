@@ -18,7 +18,7 @@
       </div>
       <div class="flex items-center space-x-4">
         <span class="text-gray-600">Bonjour, {{ Auth::guard('admin')->user()->name }}</span>
-        <form method="POST" action="{{ route('admin.logout') }}">
+        <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/logout") }}">
           @csrf
           <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
             <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
@@ -35,42 +35,42 @@
     <div class="p-4">
       <ul class="space-y-2">
         <li>
-          <a href="{{ route('admin.dashboard') }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/dashboard") }}"
              class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
             <i class="fas fa-tachometer-alt mr-3"></i>
             Tableau de bord
           </a>
         </li>
         <li>
-          <a href="{{ route('admin.users.index') }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users") }}"
              class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
             <i class="fas fa-users mr-3"></i>
             Utilisateurs
           </a>
         </li>
         <li>
-          <a href="{{ route('admin.campaigns.index') }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns") }}"
              class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
             <i class="fas fa-bullhorn mr-3"></i>
             Cagnottes
           </a>
         </li>
         <li>
-          <a href="{{ route('admin.participants.index') }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/participants") }}"
              class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
             <i class="fas fa-light fa-hand-holding-heart mr-3"></i>
             Participants
           </a>
         </li>
         <li>
-          <a href="{{ route('admin.recoveries.index') }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries") }}"
              class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
             <i class="fas fa-light fa-money-bill-transfer mr-3"></i>
             Virements
           </a>
         </li>
         <li>
-          <a href="{{ route('admin.pdf.index') }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/pdf") }}"
              class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
             <i class="fas fa-light fa-file-invoice mr-3"></i>
             Factures Téléchargées

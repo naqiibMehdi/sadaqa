@@ -8,7 +8,8 @@
       <h1 class="text-3xl font-bold text-gray-800">Utilisateurs</h1>
       <p class="text-gray-600">Gérez les utilisateurs de votre plateforme</p>
     </div>
-    <a href="{{ route('admin.users.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+    <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/create") }}"
+       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
       <i class="fas fa-plus mr-2"></i>Nouvel utilisateur
     </a>
   </div>
@@ -58,9 +59,11 @@
             <td
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->subscribe_date->format('d/m/Y') }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <a href="{{ route('admin.users.show', $user) }}" class="text-blue-600 hover:text-blue-900 mr-3">Voir</a>
-              <a href="{{ route('admin.users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Modifier</a>
-              <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="inline">
+              <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/$user") }}"
+                 class="text-blue-600 hover:text-blue-900 mr-3">Voir</a>
+              <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/$user/edit") }}"
+                 class="text-indigo-600 hover:text-indigo-900 mr-3">Modifier</a>
+              <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/$user") }}" class="inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="text-red-600 hover:text-red-900"

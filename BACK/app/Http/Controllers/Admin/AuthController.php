@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\UrlHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class AuthController extends Controller
   {
     // Si déjà connecté, rediriger vers le dashboard
     if (Auth::guard('admin')->check()) {
-      return redirect()->route('admin.dashboard');
+      return redirect(UrlHelper::assetUrl("admin/dashboard"));
     }
 
     return view('admin.auth.login');
@@ -37,7 +38,7 @@ class AuthController extends Controller
     if (Auth::guard('admin')->attempt($credentials, $remember)) {
       $request->session()->regenerate();
 
-      return redirect()->intended(route('admin.dashboard'))
+      return redirect()->intended(UrlHelper::assetUrl("admin/dashboard"))
         ->with('success', 'Connexion réussie ! Bienvenue dans votre espace d\'administration.');
     }
 
@@ -53,7 +54,7 @@ class AuthController extends Controller
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect()->route('admin.login')
+    return redirect(UrlHelper::assetUrl('admin/login'))
       ->with('success', 'Vous avez été déconnecté avec succès.');
   }
 }

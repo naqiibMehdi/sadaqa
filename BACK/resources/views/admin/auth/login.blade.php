@@ -13,7 +13,7 @@
     <p class="text-gray-600">Connectez-vous à votre espace administrateur</p>
   </div>
 
-  <form method="POST" action="{{ route('admin.login') }}">
+  <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/login") }}">
     @csrf
 
     <!-- Email -->

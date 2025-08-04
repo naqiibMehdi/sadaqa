@@ -10,11 +10,11 @@
         <p class="text-gray-600">Informations complètes sur la cagnotte: {{ $campaign->title }}</p>
       </div>
       <div class="flex space-x-3">
-        <a href="{{ route('admin.campaigns.edit', $campaign) }}"
+        <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns/$campaign/edit") }}"
            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
           <i class="fas fa-edit mr-2"></i>Modifier
         </a>
-        <a href="{{ route('admin.campaigns.index') }}"
+        <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns") }}"
            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
           <i class="fas fa-arrow-left mr-2"></i>Retour
         </a>
@@ -118,12 +118,12 @@
           </h3>
         </div>
         <div class="p-6 space-y-3">
-          <a href="{{ route('admin.campaigns.edit', $campaign) }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns/$campaign/edit") }}"
              class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center">
             <i class="fas fa-edit mr-2"></i>Modifier la cagnotte
           </a>
 
-          <form method="POST" action="{{ route('admin.campaigns.destroy', $campaign) }}"
+          <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns/$campaign") }}"
                 onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette cagnotte ? Cette action est irréversible.')"
                 class="w-full">
             @csrf
@@ -147,7 +147,7 @@
             <span class="text-gray-600">Crée par:</span>
             <span
               class="font-bold text-purple-600"><a
-                href="{{route("admin.users.show", $campaign->user)}}">{{ str($campaign->user->name)->upper() }} {{ $campaign->user->first_name }}</a></span>
+                href="{{\App\Helpers\UrlHelper::assetUrl("admin/users/{$campaign->user}")}}">{{ str($campaign->user->name)->upper() }} {{ $campaign->user->first_name }}</a></span>
           </div>
           <div class="flex justify-between items-center">
             <span class="text-gray-600">Nombre de participants</span>

@@ -19,6 +19,11 @@ RUN apt-get update && apt-get install -y \
     nano \
     default-mysql-client
 
+# Installer Node.js et npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
+
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip curl intl
@@ -34,6 +39,14 @@ COPY . .
 
 # Installer les dépendances PHP
 RUN composer install --no-interaction --optimize-autoloader
+
+# Installer les dépendances npm et compiler les assets
+RUN npm install
+RUN npm run build
+
+# Supprimer les dépendances npm après compilation (optionnel, pour réduire la taille de l'image)
+RUN npm prune --production
+RUN rm -rf node_modules
 
 # Copier le fichier de configuration Apache personnalisé
 COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf

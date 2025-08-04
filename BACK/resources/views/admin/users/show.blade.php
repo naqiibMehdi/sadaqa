@@ -122,7 +122,7 @@
           </h3>
         </div>
         <div class="p-6 space-y-3">
-          <a href="{{ route('admin.users.edit', $user) }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/$user/edit") }}"
              class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center">
             <i class="fas fa-edit mr-2"></i>Modifier l'utilisateur
           </a>
@@ -141,7 +141,7 @@
           {{--            @endif--}}
           {{--          </form>--}}
 
-          <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
+          <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/$user") }}"
                 onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.')"
                 class="w-full">
             @csrf

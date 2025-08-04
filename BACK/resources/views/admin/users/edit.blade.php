@@ -32,7 +32,7 @@
         <h1 class="text-3xl font-bold text-gray-800">Modifier l'utilisateur</h1>
         <p class="text-gray-600">Modification des informations de {{ $user->name }}</p>
       </div>
-      <a href="{{ route('admin.users.show', $user) }}"
+      <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/$user") }}"
          class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
         <i class="fas fa-arrow-left mr-2"></i>Retour
       </a>
@@ -47,7 +47,8 @@
         </h2>
       </div>
 
-      <form method="POST" action="{{ route('admin.users.update', $user) }}" enctype="multipart/form-data" class="p-6">
+      <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/$user") }}"
+            enctype="multipart/form-data" class="p-6">
         @csrf
         @method('PUT')
 
@@ -178,7 +179,7 @@
 
         <!-- Boutons -->
         <div class="mt-8 flex justify-end space-x-4">
-          <a href="{{ route('admin.users.show', $user) }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/users/$user") }}"
              class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
             Annuler
           </a>
