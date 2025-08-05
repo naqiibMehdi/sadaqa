@@ -1,11 +1,29 @@
-<!DOCTYPE html>
+@php
+  $manifestPath = public_path('build' . DIRECTORY_SEPARATOR . 'manifest.json');
+  $cssFile = null;
+  $jsFile = null;
+
+  if(file_exists($manifestPath)){
+    $manifest = json_decode(file_get_contents($manifestPath), true);
+    $cssFile = $manifest["resources/css/app.css"]["file"] ?? null;
+    $jsFile = $manifest["resources/js/app.js"]["file"] ?? null;
+    }
+@endphp
+  <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title', 'Administration - Sadaqa')</title>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  @if(env('USE_FRONTEND_URL') && $cssFile && $jsFile)
+    <link rel="preload" as="style" href="{{ env("FRONTEND_URL") }}/build/{{$cssFile}}">
+    <link rel="stylesheet" href="{{ env("FRONTEND_URL") }}/build/{{$cssFile}}">
+    <link rel="modulepreload" href="{{ env("FRONTEND_URL") }}/build/{{$jsFile}}">
+    <script src="{{ env("FRONTEND_URL") }}/build/{{$jsFile}}" defer type="module"></script>
+  @else
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @endif
   @yield('script_quill')
 </head>
 <body class="bg-gray-50">

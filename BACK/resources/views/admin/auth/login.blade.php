@@ -1,10 +1,28 @@
-<!DOCTYPE html>
+@php
+  $manifestPath = public_path('build' . DIRECTORY_SEPARATOR . 'manifest.json');
+  $cssFile = null;
+  $jsFile = null;
+
+  if(file_exists($manifestPath)){
+    $manifest = json_decode(file_get_contents($manifestPath), true);
+    $cssFile = $manifest["resources/css/app.css"]["file"] ?? null;
+    $jsFile = $manifest["resources/js/app.js"]["file"] ?? null;
+    }
+@endphp
+  <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connexion Administrateur - Sadaqa</title>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @if(env('USE_FRONTEND_URL') && $cssFile && $jsFile)
+    <link rel="preload" as="style" href="{{ env("FRONTEND_URL") }}/build/{{$cssFile}}">
+    <link rel="stylesheet" href="{{ env("FRONTEND_URL") }}/build/{{$cssFile}}">
+    <link rel="modulepreload" href="{{ env("FRONTEND_URL") }}/build/{{$jsFile}}">
+    <script src="{{ env("FRONTEND_URL") }}/build/{{$jsFile}}" defer type="module"></script>
+  @else
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @endif
 </head>
 <body class="bg-gradient-to-br from-blue-500 to-purple-600 min-h-screen flex items-center justify-center">
 <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">

@@ -10,11 +10,11 @@
         <p class="text-gray-600">Informations complètes du virement</p>
       </div>
       <div class="flex space-x-3">
-        <a href="{{ route('admin.recoveries.edit', $recovery) }}"
+        <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}/edit") }}"
            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
           <i class="fas fa-edit mr-2"></i>Modifier
         </a>
-        <a href="{{ route('admin.recoveries.index') }}"
+        <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries") }}"
            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
           <i class="fas fa-arrow-left mr-2"></i>Retour
         </a>
@@ -90,13 +90,13 @@
           </h3>
         </div>
         <div class="p-6 space-y-3">
-          <a href="{{ route('admin.recoveries.edit', $recovery) }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}/edit") }}"
              class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center">
             <i class="fas fa-edit mr-2"></i>Modifier la demande de virement
           </a>
 
 
-          <form method="POST" action="{{ route('admin.recoveries.destroy',$recovery) }}"
+          <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}") }}"
                 onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette demande de virement ? Cette action est irréversible.')"
                 class="w-full">
             @csrf

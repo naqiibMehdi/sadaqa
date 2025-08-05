@@ -59,12 +59,13 @@
                 </div>
               </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $campaign->collected_amount }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $campaign->collected_amount / 100 }}€</td>
             <td class="px-6 py-4 whitespace-nowrap">
                 <span
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ !$campaign->closing_date ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                    {{ $campaign->closing_date ? 'Clôturée' : 'non clôturé' }}
-                </span>
+                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ !$campaign->closing_date ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}
+              ">
+              {{ $campaign->closing_date ? 'Clôturée' : 'non clôturé' }}
+              </span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
                 <span
@@ -75,17 +76,17 @@
             <td
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $campaign->created_at->format('d/m/Y') }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <a href="{{ route('admin.campaigns.show', $campaign) }}"
+              <a href="{{ App\Helpers\UrlHelper::assetUrl("admin/campaigns/{$campaign->id}") }}"
                  class="text-blue-600 hover:text-blue-900 mr-3">Voir</a>
-              <a href="{{ route('admin.campaigns.edit', $campaign) }}"
+              <a href="{{ App\Helpers\UrlHelper::assetUrl("admin/campaigns/{$campaign->id}/edit") }}"
                  class="text-indigo-600 hover:text-indigo-900 mr-3">Modifier</a>
-              <form method="POST" action="{{ route('admin.campaigns.destroy', $campaign) }}" class="inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="text-red-600 hover:text-red-900"
-                        onclick="return confirm('Êtes-vous sûr ?')">Supprimer
-                </button>
-              </form>
+              {{--              <form method="POST" action="{{ route('admin.campaigns.destroy', $campaign) }}" class="inline">--}}
+              {{--                @csrf--}}
+              {{--                @method('DELETE')--}}
+              {{--                <button type="submit" class="text-red-600 hover:text-red-900"--}}
+              {{--                        onclick="return confirm('Êtes-vous sûr ?')">Supprimer--}}
+              {{--                </button>--}}
+              {{--              </form>--}}
             </td>
           </tr>
         @empty

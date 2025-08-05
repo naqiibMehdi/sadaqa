@@ -10,7 +10,7 @@
         <p class="text-gray-600">Modification des informations du virement concernant la
           cagnotte: {{$recovery->campaign->title}}</p>
       </div>
-      <a href="{{ route('admin.recoveries.show', $recovery) }}"
+      <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}") }}"
          class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
         <i class="fas fa-arrow-left mr-2"></i>Retour
       </a>
@@ -24,7 +24,7 @@
           <i class="fas fa-edit mr-2"></i>Informations du virement
         </h2>
       </div>
-      <form method="POST" action="{{ route('admin.recoveries.update', $recovery) }}"
+      <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}") }}"
             class="p-6">
         @csrf
         @method('PUT')

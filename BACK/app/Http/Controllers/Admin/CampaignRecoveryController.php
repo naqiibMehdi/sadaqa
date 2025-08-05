@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\UrlHelper;
 use App\Http\Controllers\Controller;
 use App\Models\CampaignRecovery;
 use Illuminate\Contracts\View\Factory;
@@ -72,7 +73,7 @@ class CampaignRecoveryController extends Controller
 
     $recovery->update($validated);
 
-    return redirect()->route("admin.recoveries.index")->with("success", "Status du virement mis à jour");
+    return redirect(UrlHelper::assetUrl('admin/recoveries'))->with("success", "Status du virement mis à jour");
 
   }
 

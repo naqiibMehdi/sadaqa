@@ -49,7 +49,7 @@
             <td
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $download->downloaded_at->timezone("Europe/Paris")->format("d/m/Y à H:i") }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <a href="{{ route('admin.pdf.show', $download) }}"
+              <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/pdf/{$download->id}") }}"
                  class="text-blue-600 hover:text-blue-900 mr-3">Voir</a>
             </td>
           </tr>

@@ -16,7 +16,7 @@
         <h1 class="text-3xl font-bold text-gray-800">Modifier la cagnotte</h1>
         <p class="text-gray-600">Modification des informations de la cagnotte: {{ $campaign->title }}</p>
       </div>
-      <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns/$campaign") }}"
+      <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns/{$campaign->id}") }}"
          class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
         <i class="fas fa-arrow-left mr-2"></i>Retour
       </a>
@@ -30,7 +30,7 @@
           <i class="fas fa-user-edit mr-2"></i>Informations de la cagnotte
         </h2>
       </div>
-      <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns/$campaign") }}"
+      <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns/{$campaign->id}") }}"
             enctype="multipart/form-data"
             class="p-6">
         @csrf
@@ -151,7 +151,7 @@
 
         <!-- Boutons -->
         <div class="mt-8 flex justify-end space-x-4">
-          <a href="{{ route('admin.campaigns.show', $campaign) }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/campaigns/{$campaign->id}") }}"
              class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
             Annuler
           </a>

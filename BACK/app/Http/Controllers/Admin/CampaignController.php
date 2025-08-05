@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\UrlHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCampaignRequest;
 use App\Models\Campaign;
@@ -81,7 +82,7 @@ class CampaignController extends Controller
     $campaign->slug = Str::slug($request->title);
 
     $campaign->update($validated);
-    return redirect()->route("admin.campaigns.index");
+    return redirect(UrlHelper::assetUrl("admin/campaigns/{$campaign->id}"));
   }
 
   /**

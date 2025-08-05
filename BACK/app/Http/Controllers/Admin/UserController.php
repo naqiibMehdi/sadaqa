@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\UrlHelper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -61,7 +62,7 @@ class UserController extends Controller
       'password' => Hash::make($request->password),
     ]);
 
-    return redirect()->route('admin.users.index')
+    return redirect(UrlHelper::assetUrl('admin/users'))
       ->with('success', 'Utilisateur créé avec succès.');
   }
 
@@ -109,7 +110,7 @@ class UserController extends Controller
 
     $user->save();
 
-    return redirect()->route('admin.users.index')
+    return redirect(UrlHelper::assetUrl('admin/users'))
       ->with('success', 'Utilisateur mis à jour avec succès.');
   }
 
@@ -117,7 +118,7 @@ class UserController extends Controller
   {
     $user->delete();
 
-    return redirect()->route('admin.users.index')
+    return redirect(UrlHelper::assetUrl('admin/users'))
       ->with('success', 'Utilisateur supprimé avec succès.');
   }
 

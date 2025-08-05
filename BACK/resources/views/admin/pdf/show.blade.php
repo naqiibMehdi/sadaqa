@@ -14,7 +14,7 @@
         {{--           class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">--}}
         {{--          <i class="fas fa-edit mr-2"></i>Modifier--}}
         {{--        </a>--}}
-        <a href="{{ route('admin.pdf.index') }}"
+        <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/pdf") }}"
            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
           <i class="fas fa-arrow-left mr-2"></i>Retour
         </a>
@@ -79,7 +79,7 @@
           </h3>
         </div>
         <div class="p-6 space-y-3">
-          <a href="{{ route('admin.pdf.download', $pdf->campaign->id) }}"
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/pdf/{$pdf->campaign->id}/download") }}"
              target="_blank"
              class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg inline-block text-center transition-colors">
             <i class="fas fa-file-arrow-down mr-2"></i>Télécharger la facture

@@ -55,7 +55,8 @@
                  class="text-blue-600 hover:text-blue-900 mr-3">Voir</a>
               <a href="{{ route('admin.recoveries.edit', $recovery) }}"
                  class="text-indigo-600 hover:text-indigo-900 mr-3">Modifier</a>
-              <form method="POST" action="{{ route('admin.recoveries.destroy', $recovery) }}" class="inline">
+              <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}") }}"
+                    class="inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="text-red-600 hover:text-red-900"

@@ -8,10 +8,4 @@ export default defineConfig({
       refresh: true,
     }),
   ],
-  server: {
-    host: process.env.FRONTEND_URL || 'localhost',
-    hmr: {
-      host: process.env.FRONTEND_URL || 'localhost',
-    },
-  },
 });
