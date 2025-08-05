@@ -31,7 +31,7 @@ class UserController extends Controller
       $query->where('is_active', $request->status === 'active');
     }
 
-    $users = $query->orderBy('subscribe_date', 'desc')->paginate(15);
+    $users = $query->orderBy('subscribe_date', 'desc')->paginate(15)->withPath(UrlHelper::assetUrl('admin/users'));
 
     return view('admin.users.index', compact('users'));
   }

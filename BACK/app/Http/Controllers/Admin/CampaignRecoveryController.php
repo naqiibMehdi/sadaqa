@@ -23,6 +23,8 @@ class CampaignRecoveryController extends Controller
       "campaign" => fn($query) => $query->select("id", "title")
     ])->orderBy("created_at", "desc")->paginate(10);
 
+    $recoveries->withPath(UrlHelper::assetUrl("admin/recoveries"));
+
     return view("admin.recoveries.index", compact("recoveries"));
   }
 

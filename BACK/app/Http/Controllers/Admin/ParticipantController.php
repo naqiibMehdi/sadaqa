@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\UrlHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use Illuminate\Contracts\View\Factory;
@@ -17,6 +18,7 @@ class ParticipantController extends Controller
   public function index(): View|Application|Factory
   {
     $participants = Participant::query()->orderBy("participation_date", "desc")->paginate(10);
+    $participants->withPath(UrlHelper::assetUrl("admin/participants"));
     return view("admin.participants.index", compact("participants"));
   }
 

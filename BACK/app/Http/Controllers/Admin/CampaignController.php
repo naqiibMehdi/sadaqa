@@ -24,6 +24,8 @@ class CampaignController extends Controller
   {
     $campaigns = Campaign::with("user")->orderBy("created_at", "desc")->paginate(10);
 
+    $campaigns->withPath(UrlHelper::assetUrl("admin/campaigns"));
+
     return view("admin.campaigns.index", compact("campaigns"));
   }
 
@@ -79,9 +81,11 @@ class CampaignController extends Controller
 
     }
 
-    $campaign->slug = Str::slug($request->title);
-
-    $campaign->update($validated);
+    $campaign->update([
+      ...$validated,
+      "slug" => Str::slug($validated["title"]),
+      "is_anonymous" => $validated["is_anonymous"] ?? false,
+    ]);
     return redirect(UrlHelper::assetUrl("admin/campaigns/{$campaign->id}"));
   }
 
