@@ -21,6 +21,13 @@ const detailPage = computed(() => {
 })
 
 const isOwner = computed(() => userStore.user.id === props.campaign.user?.id)
+const displayParticipantsOrAmount = (campaign: Campaign) => {
+  if (route.name === 'campaigns') {
+    return `avec <span style="font-weight: bold">${campaign.participants?.length}</span> participants`
+  }
+
+  return `récoltés sur <span style="font-weight: bold">${campaign.target_amount / 100}€</span>`
+}
 
 onMounted(() => {
   if (detailPage.value) {
@@ -65,7 +72,7 @@ watch(() => props.campaign, (newCampaign) => {
       <template #content>
         <div class="card-campaign-content">
           <p class="card-campaign-content-price">{{ campaign.collected_amount / 100 }} €</p>
-          <p class="card-campaign-content-participant">récoltés sur <span>{{ campaign.target_amount / 100 }}€</span></p>
+          <p class="card-campaign-content-participant" v-html="displayParticipantsOrAmount(campaign)"></p>
           <RouterLink :to="{name: 'payment'}" class="card-campaign-content-btn"
                       v-if="route.name !== 'campaigns' && campaign.closing_date === null">
             Participez
@@ -177,9 +184,5 @@ watch(() => props.campaign, (newCampaign) => {
 
 .card-campaign-content-price {
   font-size: 1.75rem;
-}
-
-.card-campaign-content-participant span {
-  font-weight: 600;
 }
 </style>

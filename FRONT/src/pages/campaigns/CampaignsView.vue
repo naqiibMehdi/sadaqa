@@ -31,24 +31,21 @@ onMounted(async () => {
 })
 
 
-const onPageChange = (e: PageState) => {
-  campaignStore.setPage(Number(e.page + 1))
+const onPageChange = async (e: PageState) => {
+  await campaignStore.setPage(Number(e.page + 1))
   let query: { page: number, search?: string } = {page: campaignStore.currentPage}
   if (campaignStore.currentSearch) {
     query = {...query, search: campaignStore.currentSearch}
   }
-  router.push({query})
+  await router.push({query})
 }
 
 watch(() => route.query, (newParams) => {
-
   if (campaignStore.currentPage.toString() !== (newParams.page as string || "1") ||
       campaignStore.currentSearch !== (newParams.search as string || "")) {
     loadCampaigns();
   }
-
-
-}, {deep: true})
+})
 
 watch(() => route.params.category, (newParams) => {
   // Réinitialiser la page à 1 lors d'un changement de catégorie
@@ -62,8 +59,7 @@ watch(() => route.params.category, (newParams) => {
     }
     router.push({query});
   }
-
-}, {deep: true})
+})
 
 </script>
 

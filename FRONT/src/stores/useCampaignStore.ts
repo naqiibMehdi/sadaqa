@@ -161,10 +161,6 @@ export const useCampaignStore = defineStore("campaign", {
       this.currentPage = page
       await this.getCampaigns(page, this.currentSearch || undefined, this.category || undefined)
     },
-
-    setSearch(search: string) {
-      this.currentSearch = search
-    }
   },
   getters: {
     campaignsHome(): { title: string, target_amount: number, collected_amount: number, url_image: string }[] {
