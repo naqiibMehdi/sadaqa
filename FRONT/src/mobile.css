@@ -212,7 +212,7 @@
 
         & .cardCampaignHome {
             flex: 0 0 auto;
-            max-width: 220px;
+            min-width: 250px;
         }
     }
 
