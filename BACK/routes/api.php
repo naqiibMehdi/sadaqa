@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\CampaignRecoveryController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ContactRequestController;
 use App\Http\Controllers\Api\IbanController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\PasswordResetController;
@@ -22,6 +23,9 @@ Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']
 
 Route::post("/upload-image", [ImageController::class, "upload"])->name("upload.image");
 Route::post("/delete-image", [ImageController::class, "delete"])->name("delete.image");
+
+//routes for a Contact form
+Route::post("/contact", [ContactRequestController::class, "store"]);
 
 
 //routes for authentication
