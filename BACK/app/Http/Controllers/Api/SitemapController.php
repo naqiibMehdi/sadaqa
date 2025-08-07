@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Campaign;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\File;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
@@ -22,6 +23,11 @@ class SitemapController extends Controller
 
     // Sitemap des campagnes
     $this->addCampaigns($sitemap);
+
+
+    if (File::exists(public_path("sitemap.xml"))) {
+      File::delete(public_path("sitemap.xml"));
+    }
 
     $sitemap->writeToFile(public_path("sitemap.xml"));
 
@@ -83,7 +89,7 @@ class SitemapController extends Controller
   private function addCampaigns(Sitemap $sitemap): void
   {
     // Récupérez toutes les campagnes publiées
-    $campaigns = Campaign::all();
+    $campaigns = Campaign::query()->whereNull("closing_date")->where("is_anonymous", 0)->get();
 
     foreach ($campaigns as $campaign) {
       $sitemap->add(Url::create($this->url . "/campaigns/{$campaign->slug}-{$campaign->id}")
