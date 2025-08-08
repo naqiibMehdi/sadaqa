@@ -14,4 +14,4 @@ use \Illuminate\Support\Facades\Log;
 Schedule::call(function () {
   (new SitemapController())->handle();
   Log::info("Sitemap generated");
-})->timezone('Europe/Paris')->daily();
+})->timezone('Europe/Paris')->everySixHours();
