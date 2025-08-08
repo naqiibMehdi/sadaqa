@@ -13,7 +13,7 @@ class Category extends Model
 
   protected $table = "categories";
 
-  protected $fillable = ["name"];
+  protected $fillable = ["name", "translate_name"];
 
   public $timestamps = false;
 

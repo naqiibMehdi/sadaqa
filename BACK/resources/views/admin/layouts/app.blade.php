@@ -94,6 +94,13 @@
             Factures Téléchargées
           </a>
         </li>
+        <li>
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/categories") }}"
+             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+            <i class="fas fa-light fa-list mr-3"></i>
+            Catégories
+          </a>
+        </li>
       </ul>
     </div>
   </aside>
