@@ -8,6 +8,10 @@ use App\Models\Address;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Addresses
+ * @authenticated
+ */
 class AddressController extends Controller
 {
   /**

@@ -12,6 +12,10 @@ use Illuminate\Support\Str;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
+/**
+ * @group Stripe
+ *
+ */
 class StripeController extends Controller
 {
   public function createCheckoutSession(string $slug, string $id, Request $request): JsonResponse

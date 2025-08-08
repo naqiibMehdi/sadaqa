@@ -15,6 +15,9 @@ use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
 use Stripe\Webhook;
 
+/**
+ * @group Stripe Webhook
+ */
 class StripeWebHookController extends Controller
 {
   /**

@@ -8,10 +8,14 @@ use App\Models\Iban;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Crypt;
 
+/**
+ * @group Iban
+ * @authenticated
+ */
 class IbanController extends Controller
 {
   /**
-   * Permet d'enregistre l'Iban de l'utilisateur
+   * Permet d'enregistrer l'Iban de l'utilisateur
    *
    * @param StoreIbanFormRequest $request
    * @return JsonResponse
@@ -30,6 +34,10 @@ class IbanController extends Controller
     return response()->json(["message" => "IBAN enregistré avec succès", "data" => $iban]);
   }
 
+  /**
+   * @param StoreIbanFormRequest $request
+   * @return JsonResponse
+   */
   public function edit(StoreIbanFormRequest $request): JsonResponse
   {
     $iban = $request->get("iban");

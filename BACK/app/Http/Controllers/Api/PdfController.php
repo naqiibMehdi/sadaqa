@@ -22,7 +22,7 @@ class PdfController extends Controller
    */
   public function generatePdf(string $id, Request $request): ResponseFactory|Application|JsonResponse|Response
   {
-    $campaignRecovery = CampaignRecovery::with('campaign', 'user')
+    $campaignRecovery = CampaignRecovery::with(['campaign', 'user'])
       ->where('id', $id)
       ->first();
 

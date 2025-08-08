@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+/**
+ * @group Utilisateurs
+ * @authenticated
+ */
 class UserController extends Controller
 {
   /**

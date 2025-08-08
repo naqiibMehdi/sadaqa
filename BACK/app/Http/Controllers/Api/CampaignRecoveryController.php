@@ -10,6 +10,10 @@ use App\Models\CampaignRecovery;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Crypt;
 
+/**
+ * @group Virements
+ * @authenticated
+ */
 class CampaignRecoveryController extends Controller
 {
   /**
