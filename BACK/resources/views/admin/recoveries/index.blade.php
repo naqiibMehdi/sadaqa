@@ -51,9 +51,9 @@
               <x-recovery-status :status="$recovery->status"/>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <a href="{{ route('admin.recoveries.show', $recovery) }}"
+              <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}") }}"
                  class="text-blue-600 hover:text-blue-900 mr-3">Voir</a>
-              <a href="{{ route('admin.recoveries.edit', $recovery) }}"
+              <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}/edit") }}"
                  class="text-indigo-600 hover:text-indigo-900 mr-3">Modifier</a>
               <form method="POST" action="{{ \App\Helpers\UrlHelper::assetUrl("admin/recoveries/{$recovery->id}") }}"
                     class="inline">
