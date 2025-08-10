@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     nano \
-    default-mysql-client
+    default-mysql-client \
+    cron
 
 # Installer Node.js et npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
@@ -62,6 +63,10 @@ RUN mv /var/www/html/.env.production /var/www/html/.env
 # Donner les permissions nécessaires aux fichiers de stockage
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Ajouter la tâche cron pour Laravel scheduler
+RUN echo "* * * * * www-data cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" >> /etc/crontab
+
 
 # Exposer le port 80
 EXPOSE 80
