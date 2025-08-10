@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmailJob;
 use App\Mail\StripeEmail;
-use App\Models\Campaign;
 use App\Models\Participant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Stripe\Event;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
@@ -57,8 +55,8 @@ class StripeWebHookController extends Controller
     return response()->json(['message' => 'WebHook received']);
   }
 
-  /***env
-   * Cette permet de mettre à jour le montant ed la cagnotte et de créer le participant qui sera lié
+  /**
+   * Cette fonction permet de mettre à jour le montant ed la cagnotte et de créer le participant qui sera lié
    *
    * @param Event $event
    * @return void
