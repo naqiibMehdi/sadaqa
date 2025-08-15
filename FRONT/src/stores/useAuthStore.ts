@@ -49,7 +49,14 @@ export const useAuthStore = defineStore("auth", {
         await this.setToken(response.token)
       } catch (err) {
         if (err instanceof AxiosError) {
-          this.errors = err.response?.data?.errors;
+
+          if (err.response?.status === 422) {
+            this.errors = err.response?.data?.errors;
+          }
+
+          if (err.response?.status === 404) {
+            this.error = err.response?.data?.message;
+          }
         }
       } finally {
         this.loading = false
