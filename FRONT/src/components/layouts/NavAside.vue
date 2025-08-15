@@ -3,6 +3,7 @@
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 import {useRouter} from "vue-router";
 import {useToast} from "primevue/usetoast";
+import Loader from "@/components/Loader.vue";
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -16,22 +17,32 @@ const logout = async () => {
 </script>
 
 <template>
+  <Loader v-if="authStore.loading"/>
   <nav class="nav-aside">
     <ul class="nav-aside-list">
       <li class="nav-aside-link">
-        <RouterLink :to="{name: 'profil'}" active-class="active-link">Mon profil</RouterLink>
+        <RouterLink :to="{name: 'profil'}" active-class="active-link" aria-label="accéder à votre profile">Mon profil
+        </RouterLink>
       </li>
       <li class="nav-aside-link">
-        <RouterLink :to="{name: 'address'}" active-class="active-link">Mon adresse</RouterLink>
+        <RouterLink :to="{name: 'address'}" active-class="active-link" aria-label="accéder à votre adresse postale">Mon
+          adresse
+        </RouterLink>
       </li>
       <li class="nav-aside-link">
-        <RouterLink :to="{name: 'iban'}" active-class="active-link">Coordonnée bancaire</RouterLink>
+        <RouterLink :to="{name: 'iban'}" active-class="active-link" aria-label="accéder à votre IBAN">Coordonnée
+          bancaire
+        </RouterLink>
       </li>
       <li class="nav-aside-link">
-        <RouterLink :to="{name: 'recovery'}" active-class="active-link">Mes virements</RouterLink>
+        <RouterLink :to="{name: 'recovery'}" active-class="active-link" aria-label="accéder à vos virements">Mes
+          virements
+        </RouterLink>
       </li>
       <li class="nav-aside-link">
-        <RouterLink to="" role="button" @click="logout" label="test">Se déconnecter</RouterLink>
+        <RouterLink to="" role="button" @click="logout" label="test" aria-label="se déconnecter de votre compte">Se
+          déconnecter
+        </RouterLink>
       </li>
     </ul>
   </nav>

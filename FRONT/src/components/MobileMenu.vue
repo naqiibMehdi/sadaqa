@@ -21,49 +21,59 @@ const logout = async () => {
 
 <template>
   <div :class="['mobile-menu', { 'menu-open': isMenuOpen }]">
-    <nav>
+    <nav aria-label="menu navigation mobile">
       <ul class="header-list" v-if="isToken">
         <li class="header-item">
-          <RouterLink :to="{name: 'home'}">Accueil</RouterLink>
+          <RouterLink :to="{name: 'home'}" aria-label="page d'accueil">Accueil</RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
+          <RouterLink :to="{name: 'campaigns'}" aria-label="afficher les cagnottes">Rechercher une cagnotte</RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'dashboard'}">Dashboard</RouterLink>
+          <RouterLink :to="{name: 'dashboard'}" aria-label="accéder au dashboard">Dashboard</RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'createcampaign'}">Créer une cagnotte</RouterLink>
+          <RouterLink :to="{name: 'createcampaign'}" aria-label="accéder à la page de création d'une cagnotte">Créer une
+            cagnotte
+          </RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'profil'}">Mon compte</RouterLink>
+          <RouterLink :to="{name: 'profil'}" aria-label="accéder au compte utilisateur">Mon compte</RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'address'}" active-class="active-link">Mon adresse</RouterLink>
+          <RouterLink :to="{name: 'address'}" active-class="active-link" aria-label="accéder à l'adresse postale">Mon
+            adresse
+          </RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'iban'}" active-class="active-link">Coordonnée bancaire</RouterLink>
+          <RouterLink :to="{name: 'iban'}" active-class="active-link" aria-label="accéder à l'IBAN">Coordonnée
+            bancaire
+          </RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'recovery'}" active-class="active-link">Mes virements</RouterLink>
+          <RouterLink :to="{name: 'recovery'}" active-class="active-link" aria-label="accéder aux virements">Mes
+            virements
+          </RouterLink>
         </li>
         <li class="nav-aside-link">
-          <RouterLink to="" role="button" @click="logout" label="test">Se déconnecter</RouterLink>
+          <RouterLink to="" role="button" @click="logout" label="test" aria-label="se déconnecter du compte">Se
+            déconnecter
+          </RouterLink>
         </li>
       </ul>
 
       <ul class="header-list" v-else>
         <li class="header-item">
-          <RouterLink :to="{name: 'home'}">Accueil</RouterLink>
+          <RouterLink :to="{name: 'home'}" aria-label="page d'accueil">Accueil</RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'login'}">Connexion</RouterLink>
+          <RouterLink :to="{name: 'login'}" aria-label="page de connexion">Connexion</RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'register'}">S'inscrire</RouterLink>
+          <RouterLink :to="{name: 'register'}" aria-label="page d'inscription">S'inscrire</RouterLink>
         </li>
         <li class="header-item">
-          <RouterLink :to="{name: 'campaigns'}">Rechercher une cagnotte</RouterLink>
+          <RouterLink :to="{name: 'campaigns'}" aria-label="afficher les cagnottes">Rechercher une cagnotte</RouterLink>
         </li>
       </ul>
     </nav>

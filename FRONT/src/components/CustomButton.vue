@@ -3,6 +3,7 @@ import Button from "primevue/button"
 
 type Props = {
   label?: string,
+  ariaLabel?: string,
   outline?: boolean,
   customComponent?: object,
   type?: "button" | "submit" | "reset",
@@ -23,6 +24,7 @@ withDefaults(defineProps<Props>(), {outline: false, type: "button"})
       :loading="loading"
       :disabled="disabled"
       :size="size"
+      :aria-label="ariaLabel"
   >
     <template #icon>
       <component :is="customComponent"/>

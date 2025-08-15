@@ -11,11 +11,13 @@ import {ref, onMounted} from "vue";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
 import {storeToRefs} from "pinia";
 import {useRouter} from "vue-router";
+import {useToast} from "primevue/usetoast";
 
 const day = ref<string | number>(0)
 const month = ref<string | number>(0)
 const year = ref<string | number>(0)
 const router = useRouter()
+const toast = useToast()
 
 const daysOptions = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
 const monthsOptions = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
@@ -69,6 +71,7 @@ const submitForm = async () => {
 
   if (authStore.errors === null) {
     resetForm()
+    toast.add({severity: 'success', summary: "Succès", detail: "Votre compte a été crée avec succès", life: 5000});
     await router.push({name: "login"})
   }
 }

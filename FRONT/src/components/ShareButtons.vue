@@ -72,11 +72,13 @@ const shareByEmail = (e: MouseEvent) => {
           :value="currentUrl"
           readonly
           disabled
+          aria-label="lien de partage"
       />
       <button
           class="copy-button"
           @click="copyToClipboard"
           :class="{ 'copied': copied }"
+          aria-label="copier le lien"
       >
         <MdiContentCopy/>
         <span v-if="!copied">Copier</span>
@@ -90,6 +92,7 @@ const shareByEmail = (e: MouseEvent) => {
          @click="shareOnFacebook"
          class="share-button facebook"
          rel="noopener noreferrer"
+         aria-label="partager sur facebook"
       >
         <MdiFacebook/>
         Facebook
@@ -99,6 +102,7 @@ const shareByEmail = (e: MouseEvent) => {
          @click="shareOnWhatsApp"
          class="share-button whatsapp"
          rel="noopener noreferrer"
+         aria-label="partager sur whatsapp"
       >
         <MdiWhatsapp/>
         What's App
@@ -108,6 +112,7 @@ const shareByEmail = (e: MouseEvent) => {
          @click="shareOnTwitter"
          class="share-button twitter"
          rel="noopener noreferrer"
+         aria-label="partager sur twitter"
       >
         <MdiTwitter/>
         Twitter
@@ -115,6 +120,7 @@ const shareByEmail = (e: MouseEvent) => {
       <a :href="`mailto:?subject=${encodeURIComponent(props.title)}&body=${encodeURIComponent(props.description + '\n\n' + currentUrl)}`"
          @click="shareByEmail"
          class="share-button email"
+         aria-label="partager par email"
       >
         <MdiEmail/>
         Email

@@ -124,10 +124,11 @@ const updatePassword = async () => {
       <p>
         Date de naissance: <strong>{{ (new Date(user.birth_date).toLocaleDateString()) }}</strong>
       </p>
-      <CustomButton :loading="userStore.loading" :label="disabled ? 'Modifier mon profil' : 'Enregistrer ma saisie'"
+      <CustomButton :loading="userStore.loadingProfileUser"
+                    :label="disabled ? 'Modifier mon profil' : 'Enregistrer ma saisie'"
                     @click="updateUserInfo"/>
       <CustomButton label="Annuler" :outline="true" v-if="!disabled"
-                    @click="cancelFormData" :disabled="userStore.loading"/>
+                    @click="cancelFormData" :disabled="userStore.loadingProfileUser"/>
     </form>
 
     <Divider/>
@@ -170,7 +171,7 @@ const updatePassword = async () => {
     <div class="profil-delete-account">
       <h2 class="profil-delete-account-title">Mon compte</h2>
       <p>Si vous supprimez votre compte, cela mènera à la perte de toutes vos informations (données personnelles,
-        cagnottes et don des participants)</p>
+        cagnottes) sauf les dons liés à vos cagnottes et vos demandes de virements</p>
       <ModalConfirm ref="modalConfirmDelete" group="delete" :acceptFn="deleteAccount">
         <CustomButton label="Supprimer mon compte" @click="confirmDeleteAccount" class="profil-delete-account-button"/>
       </ModalConfirm>

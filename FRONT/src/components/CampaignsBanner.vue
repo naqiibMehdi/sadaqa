@@ -26,8 +26,10 @@ const searchCampaigns = async () => {
     <h1 class="campaigns-banner-title">Vous êtes à la recherche d'une cagnotte</h1>
     <form class="campaigns-form" @submit.prevent="searchCampaigns">
       <div class="campaigns-search">
-        <MdiSearch width="32" height="47" class="search-icon"/>
-        <InputField placeholder="Ex: construction d'un puit" size="large" class="campaigns-input" v-model="searchTerm"/>
+        <MdiSearch width="32" height="47" class="search-icon" aria-hidden="true" aria-label="rechercher une cagnotte"
+                   role="img"/>
+        <InputField placeholder="Ex: construction d'un puit" size="large" class="campaigns-input"
+                    aria-label="rechercher une cagnotte" v-model="searchTerm"/>
       </div>
     </form>
     <Nav :links="categoryStore.categoriesNames" prefixClass="campaigns"/>

@@ -24,6 +24,7 @@ const submitLogin = async () => {
   await authStore.loginUser(userData.value)
   if (authStore.error) {
     toast.add({severity: 'error', summary: "Message d'erreur", detail: authStore.error, life: 5000});
+    return
   }
 
   if (authStore.token || localStorage.getItem('token')) {

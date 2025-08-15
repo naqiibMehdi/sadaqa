@@ -153,12 +153,14 @@ const onCancelFormCampaign = async () => {
             type="submit"
             :loading="campaignStore.loading"
             :disabled="campaignStore.loading"
+            aria-label="Créer une cagnotte"
         />
         <CustomButton
             label="Annuler"
             :outline="true"
             :disabled="campaignStore.loading"
             @click="onCancelFormCampaign"
+            aria-label="annuler la création de cagnotte"
         />
       </div>
     </form>

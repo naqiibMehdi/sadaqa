@@ -21,8 +21,9 @@ defineProps<Props>()
     <ul :class="`nav-list ${prefixClass}-list`">
       <li class="nav-title" v-if="title"><p>{{ title }}</p></li>
       <li v-for="link in links" :key="link.to?.name" :class="`nav-link ${prefixClass}-link`">
-        <a :href="link.a" target="_blank" rel="noreferrer" v-if="link.a && link.a !== ''">{{ link.label }}</a>
-        <RouterLink :to="link.to" v-else>{{ link.label }}</RouterLink>
+        <a :href="link.a" :aria-label="link.label" target="_blank" rel="noreferrer"
+           v-if="link.a && link.a !== ''">{{ link.label }}</a>
+        <RouterLink :to="link.to" :aria-label="link.label" v-else>{{ link.label }}</RouterLink>
       </li>
     </ul>
   </nav>

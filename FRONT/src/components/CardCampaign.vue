@@ -74,12 +74,14 @@ watch(() => props.campaign, (newCampaign) => {
           <p class="card-campaign-content-price">{{ campaign.collected_amount / 100 }} €</p>
           <p class="card-campaign-content-participant" v-html="displayParticipantsOrAmount(campaign)"></p>
           <RouterLink :to="{name: 'payment'}" class="card-campaign-content-btn"
-                      v-if="route.name !== 'campaigns' && campaign.closing_date === null">
+                      v-if="route.name !== 'campaigns' && campaign.closing_date === null"
+                      aria-label="accède au formulaire de payement">
             Participez
           </RouterLink>
           <RouterLink
               :to="{name: 'campaign.update', params: {slug: campaign.slug, id: campaign.id}}"
               class="card-campaign-content-btn"
+              aria-label="modifier une cagnotte"
               v-if="route.name !== 'campaigns' && authStore.token !== '' && isOwner && campaign.closing_date === null"
           >
             Modifier

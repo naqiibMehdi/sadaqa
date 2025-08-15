@@ -14,6 +14,7 @@ interface propState {
   successMessage: string,
   loading: boolean,
   loadingPassword: boolean,
+  loadingProfileUser: boolean,
 }
 
 export const useUserStore = defineStore("user", {
@@ -28,6 +29,7 @@ export const useUserStore = defineStore("user", {
     successMessage: "",
     loading: false,
     loadingPassword: false,
+    loadingProfileUser: false
   }),
   actions: {
     async getCampaignsOfUSer() {
@@ -75,7 +77,7 @@ export const useUserStore = defineStore("user", {
       image: File | string
     }) {
       this.error = ""
-      this.loading = true
+      this.loadingProfileUser = true
 
       try {
         const response = await postMultiPartData("user/profile/edit?_method=PUT", dataUser)
@@ -87,7 +89,7 @@ export const useUserStore = defineStore("user", {
           this.errorUpdateUserInfos = err.response?.data.errors
         }
       } finally {
-        this.loading = false
+        this.loadingProfileUser = false
       }
     },
     async updatePasswordUser(dataUser: {

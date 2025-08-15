@@ -56,7 +56,7 @@ const deleteUrlBase64 = () => {
 
 <template>
   <div class="fileUploader-banner-upload" @click="triggerFileInput">
-    <input type="file" hidden="" ref="fileInput" @change="handleFileChange">
+    <input type="file" hidden="" ref="fileInput" @change="handleFileChange" aria-label="joindre une image principale">
     <div v-if="!urlBase64" class="emptyPicture">
       <IcBaselinePhotoCamera width="32" height="32"/>
       <p>Joindre une image principale</p>

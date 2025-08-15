@@ -17,7 +17,7 @@ import EntypoSocialInstagramWithCircle from '~icons/entypo-social/instagram-with
         <Nav title="Saddaqa" :links="[{label: 'Accueil', to: {name: 'home'}}]"/>
         <Nav
             title="Nos partenaires"
-            :links="[{label: 'Hello Asso', a: 'https://www.helloasso.com/associations/saddaqa', to: {name: 'home'}}]"
+            :links="[{label: 'Hello Asso', a: 'https://www.helloasso.com/associations/saddaqa'}]"
         />
         <Nav title="A Propos"
              :links="[
@@ -40,14 +40,15 @@ import EntypoSocialInstagramWithCircle from '~icons/entypo-social/instagram-with
                  ]"
         />
         <div class="footer-icons">
-          <a href="https://www.facebook.com/profile.php?id=61578027825786" target="_blank" rel="noreferrer">
-            <EntypoSocialFacebookWithCircle class="footer-icons-fb"/>
+          <a href="https://www.facebook.com/profile.php?id=61578027825786" target="_blank" rel="noreferrer"
+             aria-label="Facebook">
+            <EntypoSocialFacebookWithCircle class="footer-icons-fb" aria-label="Facebook"/>
           </a>
-          <a href="https://x.com/Saddaqa_assoc" target="_blank" rel="noreferrer">
-            <EntypoSocialTwitterWithCircle class="footer-icons-tw"/>
+          <a href="https://x.com/Saddaqa_assoc" target="_blank" rel="noreferrer" aria-label="Twitter">
+            <EntypoSocialTwitterWithCircle class="footer-icons-tw" aria-label="Twitter"/>
           </a>
-          <a href="https://www.instagram.com/assoc_sadaqa/" target="_blank" rel="noreferrer">
-            <EntypoSocialInstagramWithCircle class="footer-icons-inst"/>
+          <a href="https://www.instagram.com/assoc_sadaqa/" target="_blank" rel="noreferrer" aria-label="Instagram">
+            <EntypoSocialInstagramWithCircle class="footer-icons-inst" aria-label="Instagram"/>
           </a>
         </div>
       </div>

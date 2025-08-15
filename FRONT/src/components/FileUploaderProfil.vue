@@ -44,12 +44,14 @@ const deleteUrlBase64 = () => {
 
 <template>
   <div class="fileUploaderProfil">
-    <input type="file" hidden="" ref="fileInput" @change="handleFileChange">
+    <input type="file" hidden="" ref="fileInput" @change="handleFileChange" aria-label="joindre une image de profile">
     <img :src="imageFile ? urlBase64 as string : imageProfile" alt="image de profile"
          class="fileUploaderProfil-banner-upload"/>
     <div class="fileUploaderProfil-button-list">
-      <IcBaselineEdit width="40" height="40" class="icon-edit" @click="triggerFileInput" v-if="!disabled"/>
-      <IcBaselineDelete width="40" height="40" class="icon-delete" @click="deleteUrlBase64" v-if="imageFile"/>
+      <IcBaselineEdit width="40" height="40" class="icon-edit" @click="triggerFileInput" v-if="!disabled"
+                      aria-label="modifier l'image de profile"/>
+      <IcBaselineDelete width="40" height="40" class="icon-delete" @click="deleteUrlBase64" v-if="imageFile"
+                        aria-label="supprimer l'image de profile"/>
     </div>
   </div>
 </template>

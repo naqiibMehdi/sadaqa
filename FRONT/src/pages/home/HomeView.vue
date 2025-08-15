@@ -49,7 +49,9 @@ onBeforeUnmount(() => {
               class="home-sub_span">don</span> pour un <span
               class="home-sub_span">projet</span> ou une
             <span class="home-sub_span">association</span></h1>
-          <RouterLink :to="{name: 'campaigns'}" class="primary-button home-sub_btn">Je finance une cagnotte</RouterLink>
+          <RouterLink :to="{name: 'campaigns'}" aria-label="afficher les cagnottes" class="primary-button home-sub_btn">
+            Je finance une cagnotte
+          </RouterLink>
         </div>
       </section>
       <section class="home home-second-section">
