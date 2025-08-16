@@ -18,11 +18,10 @@ return new class extends Migration {
       $table->unsignedInteger("target_amount");
       $table->unsignedInteger("collected_amount")->default(0);
       $table->timestamp("created_at")->useCurrent();
-      $table->dateTime("limit_date")->nullable();
-      $table->unsignedBigInteger("category_id");
+      $table->unsignedBigInteger("category_id")->nullable();
       $table->unsignedBigInteger("user_id");
       $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
-      $table->foreign("category_id")->references("id")->on("categories");
+      $table->foreign("category_id")->references("id")->on("categories")->onDelete("set null");
     });
   }
 

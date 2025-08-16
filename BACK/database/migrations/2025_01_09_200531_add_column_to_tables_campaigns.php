@@ -12,7 +12,7 @@ return new class extends Migration {
   {
     Schema::table('campaigns', function (Blueprint $table) {
       $table->string("slug")->after("image");
-      $table->dateTime("closing_date")->nullable()->after("limit_date");
+      $table->dateTime("closing_date")->nullable();
     });
   }
 

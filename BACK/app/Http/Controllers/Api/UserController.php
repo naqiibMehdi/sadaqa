@@ -13,7 +13,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -38,28 +37,6 @@ class UserController extends Controller
     }
 
     return CampaignRessource::collection($getCampaignsFromUser);
-  }
-
-  /**
-   * retourne la liste de tous les participants récents liés aux cagnottes de l'utilisateur
-   *
-   * @return JsonResponse
-   */
-  public function getAllParticipants(): JsonResponse
-  {
-    $participants = DB::table('participants')
-      ->join('campaigns', 'participants.campaign_id', '=', 'campaigns.id')
-      ->join('users', 'campaigns.user_id', '=', 'users.id')
-      ->where('users.id', Auth::id())
-      ->select('participants.*', 'campaigns.title')
-      ->orderBy('participants.participation_date', 'desc')
-      ->get();
-
-    if ($participants->isEmpty()) {
-      return response()->json(["message" => "Il n'y a aucun participants pour les cagnottes actuelles"], 400);
-    }
-
-    return response()->json($participants);
   }
 
   /**
@@ -116,7 +93,7 @@ class UserController extends Controller
   }
 
   /**
-   * Permet à l'utilisateru de suppriemr définitivement son compte
+   * Permet à l'utilisateur de supprimer définitivement son compte
    *
    * @param Request $request
    * @return JsonResponse

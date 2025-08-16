@@ -35,6 +35,11 @@ class CampaignRecoveryController extends Controller
       return response()->json(["message" => "Vous ne pouvez pas demander un virement pour une cagnotte non clôturée"], 403);
     }
 
+
+    if ($campaign->collected_amount <= 0) {
+      return response()->json(["message" => "Vous ne pouvez pas demander un virement car votre cagnotte n'a récoltée aucun don"], 403);
+    }
+
     if ($recovery) {
       return response()->json(["message" => "Une demande de virement a déjà été effectuée"], 403);
     }
@@ -44,6 +49,8 @@ class CampaignRecoveryController extends Controller
       "campaign_id" => $campaign->id,
       "user_id" => auth()->id(),
       "amount" => $campaign->collected_amount,
+      "amount_assoc" => $campaign->collected_amount * 0.025,
+      "total_amount" => $campaign->collected_amount * 0.975,
       "iban" => Crypt::encrypt($validated["iban"]),
     ]);
 

@@ -14,9 +14,11 @@ return new class extends Migration {
   {
     Schema::create('campaign_recoveries', function (Blueprint $table) {
       $table->id();
-      $table->foreignIdFor(Campaign::class)->constrained();
-      $table->foreignIdFor(User::class)->constrained();
+      $table->foreignIdFor(Campaign::class)->nullable()->constrained()->nullOnDelete();
+      $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
       $table->unsignedInteger('amount');
+      $table->unsignedInteger('amount_assoc');
+      $table->unsignedInteger('total_amount');
       $table->enum('status', ['pending', 'processed', 'failed'])->default('pending');
       $table->text("iban");
       $table->timestamps();

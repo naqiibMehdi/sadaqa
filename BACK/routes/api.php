@@ -21,8 +21,6 @@ Route::post("webhook", [StripeWebHookController::class, "webhook"]);
 Route::post("/forgot-password", [PasswordResetController::class, "sendResetLinkEmail"])->name("password.email");
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name("password.reset");
 
-Route::post("/upload-image", [ImageController::class, "upload"])->name("upload.image");
-Route::post("/delete-image", [ImageController::class, "delete"])->name("delete.image");
 
 //routes for a Contact form
 Route::post("/contact", [ContactRequestController::class, "store"]);
@@ -50,6 +48,10 @@ Route::prefix("campaigns")->group(function () {
 
 
 Route::middleware("auth:sanctum")->group(function () {
+
+  Route::post("/upload-image", [ImageController::class, "upload"])->name("upload.image");
+  Route::post("/delete-image", [ImageController::class, "delete"])->name("delete.image");
+
   /**
    * Auth route
    */

@@ -67,9 +67,9 @@
     </thead>
     <tbody>
     <tr>
-      <td>{{ $campaignRecovery->amount / 100 }} €</td>
-      <td>{{ round(($campaignRecovery->amount * 0.025) / 100, 2) }} €</td>
-      <td>{{ round(($campaignRecovery->amount * 0.975) / 100, 2) }} €</td>
+      <td>{{ $campaignRecovery->amount  }} €</td>
+      <td>{{ round(($campaignRecovery->amount_assoc)) }} €</td>
+      <td>{{ round(($campaignRecovery->total_amount)) }} €</td>
     </tr>
     </tbody>
   </table>
