@@ -1,7 +1,7 @@
 #!/bin/sh
 service cron start
 
-php artisan migrate:refresh --seed --force
+php artisan migrate:refresh --force
 php artisan config:clear
 php artisan cache:clear
 php artisan storage:link

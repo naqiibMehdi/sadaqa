@@ -10,4 +10,3 @@ composer.lock
 .scribe
 public/docs
 public/storage
-config/scribe.php

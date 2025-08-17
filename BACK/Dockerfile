@@ -18,7 +18,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     nano \
     default-mysql-client \
-    cron
+    cron \
+    libicu-dev \
+     && rm -rf /var/lib/apt/lists/*
 
 # Installer Node.js et npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
@@ -65,11 +67,10 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Ajouter la tâche cron pour Laravel scheduler
-RUN echo "* * * * * www-data cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" >> /etc/crontab
-
+RUN echo "* * * * * cd /var/www/html && /usr/local/bin/php artisan schedule:run >> /var/www/html/cron.log 2>&1" >> /etc/cron.d/phpschedule
+RUN chmod 0644 /etc/cron.d/phpschedule
 
 # Exposer le port 80
 EXPOSE 80
-
 
 CMD ["apache2-foreground"]
