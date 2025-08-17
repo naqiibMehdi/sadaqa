@@ -7,6 +7,8 @@ use App\Http\Requests\StoreUpdateUserProfileFormRequest;
 use App\Http\Requests\UpdateUserPasswordFormRequest;
 use App\Http\Resources\CampaignRessource;
 use App\Http\Resources\UserRessource;
+use App\Jobs\SendEmailJob;
+use App\Mail\DeleteAccountEmail;
 use App\Models\Campaign;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -134,6 +136,8 @@ class UserController extends Controller
     $request->user()->tokens()->each(function ($token) {
       $token->delete();
     });
+
+    SendEmailJob::dispatch($user->email, new DeleteAccountEmail())->delay(now()->addSeconds(10));
 
     User::destroy(auth()->id());
 
