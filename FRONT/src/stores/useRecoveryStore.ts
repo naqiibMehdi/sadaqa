@@ -8,7 +8,7 @@ import {useUserStore} from "@/stores/useUserStore.ts";
 const userStore = useUserStore()
 
 interface propState {
-  recoveries: { id: number, title: string, created_at: string, amount: number, status: string }[] | null,
+  recoveries: { id: number, title: string, created_at: string, total_amount: number, status: string }[] | null,
   loading: boolean,
   errors: [] | null,
   errorMessage: string | null,
@@ -51,8 +51,8 @@ export const useRecoveryStore = defineStore("recovery", {
       try {
         const response = await fetchData("recoveries");
         response.data.forEach((recovery: CampaignRecovery) => {
-          const {id, campaign, created_at, amount, status} = recovery
-          this.recoveries?.push({id, title: campaign?.title as string, created_at, amount, status})
+          const {id, campaign, created_at, total_amount, status} = recovery
+          this.recoveries?.push({id, title: campaign?.title as string, created_at, total_amount, status})
         })
       } catch (err) {
         if (err instanceof AxiosError) {

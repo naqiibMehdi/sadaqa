@@ -49,7 +49,8 @@
 </div>
 
 <div class="campaign-info">
-  <p><strong>Créé(e) par :</strong> {{ $campaignRecovery->user->name }}</p>
+  <p><strong>Créé(e) par
+      :</strong> {{ $campaignRecovery->user->name }} {{ str($campaignRecovery->user->first_name)->ucfirst() }}</p>
   <p><strong>Date de création de la cagnotte:</strong> {{ $campaignRecovery->campaign->created_at->format('d/m/Y') }}
   <p><strong>Date de la demande de virement:</strong> {{ $campaignRecovery->created_at->format('d/m/Y') }}
   </p>
@@ -67,9 +68,9 @@
     </thead>
     <tbody>
     <tr>
-      <td>{{ $campaignRecovery->amount  }} €</td>
-      <td>{{ round(($campaignRecovery->amount_assoc)) }} €</td>
-      <td>{{ round(($campaignRecovery->total_amount)) }} €</td>
+      <td>{{ $campaignRecovery->amount / 100 }} €</td>
+      <td>{{ $campaignRecovery->amount_assoc / 100 }} €</td>
+      <td>{{ $campaignRecovery->total_amount / 100 }} €</td>
     </tr>
     </tbody>
   </table>

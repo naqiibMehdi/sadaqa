@@ -142,7 +142,7 @@ export const useUserStore = defineStore("user", {
 
       if (campaignIndex !== -1) {
         this.campaignsUser[campaignIndex].recovery = {
-          amount: 0,
+          total_amount: 0,
           campaign_id: 0,
           created_at: "",
           id: 0,

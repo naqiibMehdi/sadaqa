@@ -49,8 +49,8 @@ class CampaignRecoveryController extends Controller
       "campaign_id" => $campaign->id,
       "user_id" => auth()->id(),
       "amount" => $campaign->collected_amount,
-      "amount_assoc" => $campaign->collected_amount * 0.025,
-      "total_amount" => $campaign->collected_amount * 0.975,
+      "amount_assoc" => ($campaign->collected_amount * 0.025),
+      "total_amount" => ($campaign->collected_amount * 0.975),
       "iban" => Crypt::encrypt($validated["iban"]),
     ]);
 
@@ -64,7 +64,7 @@ class CampaignRecoveryController extends Controller
   {
     $recoveries = CampaignRecovery::with('campaign')->where("user_id", auth()->id())->get();
     if ($recoveries->isEmpty()) {
-      return response()->json(["success" => false, "message" => "Vous n'avez aucune demande de virement en cours"], 401);
+      return response()->json(["success" => false, "message" => "Vous n'avez aucune demande de virement en cours"], 404);
     }
     return response()->json(["data" => CampaignRecoveryRessource::collection($recoveries)]);
   }

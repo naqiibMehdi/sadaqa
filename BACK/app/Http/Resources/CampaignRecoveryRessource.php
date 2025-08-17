@@ -19,6 +19,8 @@ class CampaignRecoveryRessource extends JsonResource
       "campaign_id" => $this->campaign_id,
       "user_id" => $this->user_id,
       "amount" => $this->amount,
+      "amount_assoc" => $this->amount_assoc,
+      "total_amount" => $this->total_amount,
       "status" => $this->status,
       "created_at" => $this->created_at,
       "campaign" => new CampaignRessource($this->whenLoaded('campaign')),

@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import Quill, {Range} from "quill"
 import "quill/dist/quill.snow.css"
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {postData, postMultiPartData} from "@/utils/axios.ts";
 import {AxiosError} from "axios";
 import {useToast} from "primevue/usetoast";
+import {useCampaignStore} from "@/stores/useCampaignStore.ts";
 
 const props = defineProps<{ modelValue: HTMLElement | string | undefined }>()
 const emit = defineEmits(["update:modelValue"]);
 
 const toast = useToast();
+const campaignStore = useCampaignStore()
 
 let selectedImage = ref<HTMLImageElement | null>(null)
 let errorsUploadImage = ref<string[]>([])
@@ -41,6 +43,14 @@ onMounted(() => {
 
   if (props.modelValue) {
     quill.clipboard.dangerouslyPasteHTML(props.modelValue as string)
+    const editorLength = quill.getLength()
+    quill.setSelection(editorLength, 0)
+  }
+})
+
+watch(() => campaignStore.campaign?.description, (newDescription) => {
+  if (quill) {
+    quill.clipboard.dangerouslyPasteHTML(newDescription as string)
     const editorLength = quill.getLength()
     quill.setSelection(editorLength, 0)
   }

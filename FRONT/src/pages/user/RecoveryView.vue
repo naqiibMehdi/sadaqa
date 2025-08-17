@@ -97,7 +97,7 @@ const getStatusSeverity = (recovery: {
         </Column>
         <Column header="Montant">
           <template #body="slotProps">
-            {{ formatCurrency(slotProps.data.amount / 100) }}
+            {{ formatCurrency(slotProps.data.total_amount / 100) }}
           </template>
         </Column>
         <Column header="Status">

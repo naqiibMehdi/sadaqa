@@ -310,7 +310,7 @@ class CampaignController extends Controller
     if ($request->hasFile("image") && $request->file("image")->isValid()) {
       $imagePath = $request->file("image")->store("campaigns", "public");
 
-      if ($campaign->image === "campaigns/default_cover_campaign.png") {
+      if ($campaign->image === "campaigns/default_cover_campaign.webp") {
         $validated["image"] = $imagePath;
       } else {
         Storage::disk("public")->delete($campaign->image);

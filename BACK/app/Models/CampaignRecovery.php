@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CampaignRecovery extends Model
 {
-  protected $fillable = ["campaign_id", "user_id", "amount", "status", "iban"];
+  protected $fillable = ["campaign_id", "user_id", "amount", "amount_assoc", "total_amount", "status", "iban"];
 
   public function user(): BelongsTo
   {

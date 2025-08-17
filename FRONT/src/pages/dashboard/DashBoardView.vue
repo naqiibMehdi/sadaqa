@@ -76,7 +76,11 @@ onMounted(() => {
   <Main>
     <section class="container dashboard">
       <h1 class="dashboard-title">Votre Dashboard</h1>
-      <div class="dashboard-list-campaigns">
+      <p v-if="userStore.campaignsUser.length === 0" style="text-align: center; font-size: 1.2rem">Vous ne possédez
+        aucune
+        cagnotte pour le
+        moment</p>
+      <div class="dashboard-list-campaigns" v-else>
         <article class="dashboard-campaign" v-for="campaign in userStore.campaignsUser" :key="campaign.id">
           <div class="dashboard-campaign-img">
             <img :src="campaign?.url_image" alt="image principale de la cagnotte"/>
@@ -111,7 +115,7 @@ onMounted(() => {
               <CustomButton
                   :customComponent="MdiEdit"
                   label="Faire un virement"
-                  :disabled="campaign.recovery !== null"
+                  :disabled="campaign.recovery !== null || campaign.collected_amount === 0"
                   @click="() => {
                     userStore.getDialogCampaign(campaign.id as number)
                     showDialog()

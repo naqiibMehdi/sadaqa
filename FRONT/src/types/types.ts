@@ -30,7 +30,7 @@ export interface CampaignRecovery {
   id: number;
   campaign_id: number;
   user_id: number;
-  amount: number;
+  total_amount: number;
   status: 'pending' | 'processed' | 'failed';
   created_at: string;
   campaign?: Campaign;

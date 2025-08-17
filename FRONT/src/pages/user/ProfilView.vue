@@ -67,6 +67,9 @@ const cancelFormData = () => {
 const deleteAccount = async () => {
   await userStore.deleteAccountUser()
   authStore.token = ""
+  localStorage.removeItem("token")
+  localStorage.removeItem("tokenExpiry")
+  
   await router.push({name: "login"})
   toast.add({severity: 'success', summary: "Message de succès", detail: userStore.successMessage, life: 5000});
 }
@@ -171,7 +174,11 @@ const updatePassword = async () => {
     <div class="profil-delete-account">
       <h2 class="profil-delete-account-title">Mon compte</h2>
       <p>Si vous supprimez votre compte, cela mènera à la perte de toutes vos informations (données personnelles,
-        cagnottes) sauf les dons liés à vos cagnottes et vos demandes de virements</p>
+        cagnottes) sauf les dons liés à vos cagnottes et vos demandes de virements.</p>
+      <Message severity="warn">
+        Sadaqa se réserve le droit de garder la somme des dons récoltés si vous ne clôturez pas vos cagnottes et si vous
+        n'effectuez pas la demande de virement avant la suppression de votre compte
+      </Message>
       <ModalConfirm ref="modalConfirmDelete" group="delete" :acceptFn="deleteAccount">
         <CustomButton label="Supprimer mon compte" @click="confirmDeleteAccount" class="profil-delete-account-button"/>
       </ModalConfirm>
