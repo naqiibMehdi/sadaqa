@@ -37,13 +37,13 @@
               <label class="block text-sm font-medium text-gray-700 mb-2"> Nom - Prénom</label>
               <div class="p-3 bg-gray-50 rounded-lg">
                 <p
-                  class="text-gray-800 font-medium">{{ Str::ucfirst($recovery->user->name) }} {{ Str::ucfirst($recovery->user->first_name) }}</p>
+                  class="text-gray-800 font-medium">{{ $recovery->user ? Str::ucfirst($recovery->user->name) . ' ' . Str::ucfirst($recovery->user->first_name) : "" }}</p>
               </div>
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Cagnotte</label>
               <div class="p-3 bg-gray-50 rounded-lg">
-                <p class="text-gray-800 font-medium">{{ $recovery->campaign->title }}</p>
+                <p class="text-gray-800 font-medium">{{ $recovery->campaign ? $recovery->campaign->title : "" }}</p>
               </div>
             </div>
             <div>

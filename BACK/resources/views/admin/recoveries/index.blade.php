@@ -44,8 +44,9 @@
         @forelse($recoveries ?? [] as $recovery)
           <tr>
             <td
-              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $recovery->user->name }} {{ $recovery->user->first_name }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $recovery->campaign->title }}</td>
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $recovery->user ? $recovery->user->name : "" }} {{$recovery->user ?  $recovery->user->first_name : ""}}</td>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $recovery->campaign ? $recovery->campaign->title  : ""}}</td>
             <td
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               <x-recovery-status :status="$recovery->status"/>

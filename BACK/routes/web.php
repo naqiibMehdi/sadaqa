@@ -26,7 +26,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
   });
 
   // Routes protégées (nécessitent une authentification admin)
-  Route::middleware(['auth:admin'])->group(function () {
+  Route::middleware("auth.admin")->group(function () {
     // Déconnexion
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
