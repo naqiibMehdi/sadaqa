@@ -6,6 +6,7 @@ import InputField from "@/components/InputField.vue";
 import CustomButton from "@/components/CustomButton.vue"
 import Footer from "@/components/layouts/Footer.vue";
 import Select from "primevue/select"
+import Password from "primevue/password"
 import Message from 'primevue/message'
 import {ref, onMounted} from "vue";
 import {useAuthStore} from "@/stores/useAuthStore.ts";
@@ -116,30 +117,41 @@ onMounted(() => yearsOptions.value = generateYears())
           errors?.email?.[0]
         }}
       </Message>
-      <InputField
-          placeholder="Mot de passe"
-          id="password"
-          title="mot de passe"
-          v-model="userData.password"
-          type="password"
-          :invalid="errors?.password && errors?.password?.[0] !== '' "
-      />
+
+      <div class="form-inputLabel form-inputLabel_inline">
+        <label for="password">Mot de passe</label>
+        <Password
+            placeholder="Mot de passe"
+            input-id="password"
+            :input-style="{width: '100%'}"
+            :feedback="false"
+            toggleMask
+            :invalid="errors?.password && errors?.password?.[0] !== '' "
+            v-model="userData.password"
+        />
+      </div>
       <Message severity="error" variant="simple" size="small" v-if="errors?.password?.[0]">{{
           errors?.password?.[0]
         }}
       </Message>
-      <InputField
-          placeholder="Mot de passe"
-          id="confirmation_password"
-          title="Confirmez votre mot de passe"
-          type="password"
-          v-model="userData.password_confirmation"
-          :invalid="errors?.password && errors?.password?.[0] !== '' "
-      />
+
+      <div class="form-inputLabel form-inputLabel_inline">
+        <label for="confirmation_password">Confirmez votre de passe</label>
+        <Password
+            placeholder="Mot de passe"
+            input-id="confirmation_password"
+            :input-style="{width: '100%'}"
+            :feedback="false"
+            toggleMask
+            v-model="userData.password_confirmation"
+            :invalid="errors?.password && errors?.password?.[0] !== '' "
+        />
+      </div>
       <Message severity="error" variant="simple" size="small" v-if="errors?.password?.[0]">{{
           errors?.password?.[0]
         }}
       </Message>
+
       <div class="formRegister-date">
         <p class="formRegister-title">Vous devez être majeur</p>
         <div class="formRegister-select">

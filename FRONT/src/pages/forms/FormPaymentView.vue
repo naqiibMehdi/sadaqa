@@ -38,27 +38,31 @@ const sendPayment = async () => {
       <div class="form-inputLabel form-inputLabel_inline">
         <label for="currency-fr" class="font-bold block mb-2">Montant de votre donation</label>
         <InputNumber v-model="formPayment.amount" inputId="currency-fr" mode="currency" currency="EUR" locale="fr-FR"
-                     :minFractionDigits="0" :maxFractionDigits="0" size="large"/>
+                     :minFractionDigits="0" :maxFractionDigits="0" size="large"
+                     :invalid="paymentStore.errors?.amount !== ''"/>
         <Message severity="error" variant="simple" size="small" v-if="paymentStore.errors?.amount">
           {{ paymentStore.errors?.amount }}
         </Message>
       </div>
-      <InputField placeholder="Votre nom et prénom" title="Vos coordonnées" id="name" v-model="formPayment.name"/>
+      <InputField placeholder="Votre nom et prénom" title="Vos coordonnées" id="name" v-model="formPayment.name"
+                  :invalid="paymentStore.errors?.name !== ''"/>
       <Message severity="error" variant="simple" size="small" v-if="paymentStore.errors?.name">
         {{ paymentStore.errors?.name }}
       </Message>
-      <InputField placeholder="Email" id="email" v-model="formPayment.email"/>
+      <InputField placeholder="Email" id="email" v-model="formPayment.email"
+                  :invalid="paymentStore.errors?.email !== ''"/>
       <Message severity="error" variant="simple" size="small" v-if="paymentStore.errors?.email">
         {{ paymentStore.errors?.email }}
       </Message>
 
       <CustomButton label="Payer" type="submit" :loading="paymentStore.loading"/>
-      <Message severity="info">
+      <Message severity="info" style="line-height: 1.25rem">
         <template #icon>
           <MdiInformationVariantCircle width="2rem" height="2rem"/>
         </template>
-        Une commission solidaire de 2,5 % est prélevée sur chaque don pour couvrir les frais techniques et de
-        fonctionnement de l’association.<br> Pour un don de 100 €, 2,50 € seront reversés à l'association.
+        Une commission solidaire de 2,5 % sera prélevée sur le montant total récolté par le créateur de la cagnotte pour
+        couvrir les frais techniques et de
+        fonctionnement de l’association.<br> Pour une récolte totale de 100 €, 2,50 € seront reversés à l'association.
       </Message>
     </form>
   </Main>

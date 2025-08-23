@@ -4,7 +4,7 @@ import {AxiosError} from "axios";
 import {loadStripe} from "@stripe/stripe-js";
 
 interface typeState {
-  errors: { name: string, email: string, amount: number }
+  errors: { name: string, email: string, amount: string }
   loading: boolean
 }
 
@@ -12,7 +12,7 @@ const stripePromise = loadStripe("pk_test_51Qh6JuHlYuDYyetWvKUWgjvatxrw7G0g1QqDm
 
 export const usePaymentStore = defineStore("payment", {
   state: (): typeState => ({
-    errors: {name: "", email: "", amount: 0},
+    errors: {name: "", email: "", amount: ""},
     loading: false
   }),
   actions: {
@@ -22,7 +22,7 @@ export const usePaymentStore = defineStore("payment", {
         paymentData: { name: string, email: string, amount: number }
     ) {
       this.loading = true
-      this.errors = {name: "", email: "", amount: 0}
+      this.errors = {name: "", email: "", amount: ""}
       try {
         const response = await postData(`/campaigns/${slug}-${id}/payment`, paymentData)
         const idStripe = response.session_checkout_id
