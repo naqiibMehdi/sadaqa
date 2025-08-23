@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CampaignController;
 use App\Http\Controllers\Admin\CampaignRecoveryController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ParticipantController;
 use App\Http\Controllers\Admin\PdfController;
@@ -43,6 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('participants', ParticipantController::class);
     Route::resource('recoveries', CampaignRecoveryController::class);
     Route::resource('categories', CategoriesController::class);
+    Route::resource('contacts', ContactRequestController::class);
 
     Route::name('pdf.')->group(function () {
       Route::get('pdf/', [PdfController::class, "index"])->name("index");

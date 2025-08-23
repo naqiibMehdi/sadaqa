@@ -101,6 +101,13 @@
             Catégories
           </a>
         </li>
+        <li>
+          <a href="{{ \App\Helpers\UrlHelper::assetUrl("admin/contacts") }}"
+             class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+            <i class="fas fa-light fa-envelope mr-3"></i>
+            Support
+          </a>
+        </li>
       </ul>
     </div>
   </aside>
