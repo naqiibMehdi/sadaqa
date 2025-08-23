@@ -81,7 +81,8 @@
                 </div>
                 <div class="text-right">
                   <p class="font-bold text-green-600">{{ number_format($donation->amount / 100, 2) }} €</p>
-                  <p class="text-xs text-gray-500">{{ $donation->participation_date->diffForHumans() }}</p>
+                  <p
+                    class="text-xs text-gray-500">{{ $donation->payment_status === "completed" ? $donation->participation_date->diffForHumans() : "En attente" }}</p>
                 </div>
               </div>
             @endforeach

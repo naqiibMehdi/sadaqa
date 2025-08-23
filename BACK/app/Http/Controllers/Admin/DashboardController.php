@@ -35,7 +35,7 @@ class DashboardController extends Controller
   {
     // Ajustez selon votre structure de base de données
     try {
-      return Participant::sum("amount") ?? 0;
+      return Participant::where("payment_status", "completed")->sum("amount") ?? 0;
     } catch (\Exception $e) {
       return 0;
     }
@@ -56,6 +56,7 @@ class DashboardController extends Controller
       return Participant::query()
         ->whereMonth('participation_date', now()->month)
         ->whereYear('participation_date', now()->year)
+        ->where("payment_status", "completed")
         ->sum('amount') ?? 0;
     } catch (\Exception $e) {
       return 0;
