@@ -10,8 +10,10 @@ class SetAdminGuard
 {
   public function handle(Request $request, Closure $next)
   {
-    // Force Laravel à utiliser le guard 'admin' pour cette requête
-    Auth::shouldUse('admin');
+    if ($request->is("admin/*")) {
+      // Force Laravel à utiliser le guard 'admin' pour cette requête
+      Auth::shouldUse('admin');
+    }
 
     return $next($request);
 
