@@ -207,7 +207,7 @@ const cancelCampaign = async () => {
       <div class="input-error">
         <QuillEditor v-model="campaignData.description" :key="campaignStore?.campaign?.id"/>
         <Message severity="error" variant="simple" size="small"
-                 v-if="campaignStore.errorsFormCampaign?.target_amount?.[0]">
+                 v-if="campaignStore.errorsFormCampaign?.description?.[0]">
           {{ campaignStore.errorsFormCampaign?.description?.[0] }}
         </Message>
       </div>

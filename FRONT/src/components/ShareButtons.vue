@@ -21,7 +21,7 @@ const copied = ref(false);
 
 onMounted(() => {
   // Récupérer l'URL actuelle
-  currentUrl.value = window.location.href;
+  currentUrl.value = window.location.href.split("?")?.[0] || window.location.href;
 });
 
 const copyToClipboard = () => {

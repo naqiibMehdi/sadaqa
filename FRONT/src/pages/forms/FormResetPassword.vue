@@ -2,7 +2,6 @@
 
 import Header from "@/components/layouts/Header.vue";
 import Main from "@/components/layouts/Main.vue";
-import InputField from "@/components/InputField.vue";
 import CustomButton from "@/components/CustomButton.vue"
 import Footer from "@/components/layouts/Footer.vue";
 import {usePasswordStore} from "@/stores/usePasswordStore.ts";
@@ -10,6 +9,7 @@ import {ref} from "vue";
 import Message from "primevue/message";
 import {useRoute, useRouter} from "vue-router";
 import {useToast} from "primevue/usetoast";
+import Password from "primevue/password";
 
 const passwordStore = usePasswordStore()
 const dataBodyPassword = ref({
@@ -37,22 +37,32 @@ const sendResetPassword = async () => {
   <Main>
     <h1 class="formResetPassword-title">Réinitialiser votre mot de passe</h1>
     <form class="form-container" @submit.prevent="sendResetPassword">
-      <InputField
-          placeholder="Mot de passe"
-          id="password"
-          title="Mot de passe"
-          v-model="dataBodyPassword.password"
-          :invalid="passwordStore.errorsReset !== null"
-          type="password"
-      />
-      <InputField
-          placeholder="Confirmer votre mot de passe"
-          id="password_confirmation"
-          title="Confirmez votre mot de passe"
-          v-model="dataBodyPassword.password_confirmation"
-          :invalid="passwordStore.errorsReset !== null"
-          type="password"
-      />
+      <div class="form-inputLabel form-inputLabel_inline">
+        <label for="password">Mot de passe</label>
+        <Password
+            placeholder="Mot de passe"
+            input-id="password"
+            :input-style="{width: '100%'}"
+            :feedback="false"
+            toggleMask
+            v-model="dataBodyPassword.password"
+            :invalid="passwordStore.errorsReset !== null"
+        />
+      </div>
+
+      <div class="form-inputLabel form-inputLabel_inline">
+        <label for="confirmation_password">Confirmez votre de passe</label>
+        <Password
+            placeholder="Mot de passe"
+            input-id="confirmation_password"
+            :input-style="{width: '100%'}"
+            :feedback="false"
+            toggleMask
+            v-model="dataBodyPassword.password_confirmation"
+            :invalid="passwordStore.errorsReset !== null"
+        />
+      </div>
+
       <RouterLink :to="{name: 'password.forget'}" class="formResetPassword-text">Envoyer un nouveau lien</RouterLink>
       <Message severity="error" variant="simple" size="small" v-if="passwordStore.errorsReset">
         {{ passwordStore.errorsReset }}
