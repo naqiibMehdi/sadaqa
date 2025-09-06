@@ -17,7 +17,7 @@ const title = computed(() => props.campaign.title)
 const description = computed(() => props.campaign.description)
 
 const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(amount);
+  return new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR', minimumFractionDigits: 0}).format(amount);
 };
 
 const detailPage = computed(() => {
