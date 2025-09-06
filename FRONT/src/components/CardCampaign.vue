@@ -16,6 +16,10 @@ const userStore = useUserStore()
 const title = computed(() => props.campaign.title)
 const description = computed(() => props.campaign.description)
 
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(amount);
+};
+
 const detailPage = computed(() => {
   return route.name === 'campaign' && route.params.slug && route.params.id
 })
@@ -26,7 +30,7 @@ const displayParticipantsOrAmount = (campaign: Campaign) => {
     return `avec <span style="font-weight: bold">${campaign.participants?.length}</span> participants`
   }
 
-  return `récoltés sur <span style="font-weight: bold">${campaign.target_amount / 100}€</span>`
+  return `récoltés sur <span style="font-weight: bold">${formatCurrency(campaign.target_amount / 100)}</span>`
 }
 
 onMounted(() => {
@@ -71,7 +75,7 @@ watch(() => props.campaign, (newCampaign) => {
       <template #title><h2 class="card-campaign-title">{{ campaign.title }}</h2></template>
       <template #content>
         <div class="card-campaign-content">
-          <p class="card-campaign-content-price">{{ campaign.collected_amount / 100 }} €</p>
+          <p class="card-campaign-content-price">{{ formatCurrency(campaign.collected_amount / 100) }}</p>
           <p class="card-campaign-content-participant" v-html="displayParticipantsOrAmount(campaign)"></p>
           <RouterLink :to="{name: 'payment'}" class="card-campaign-content-btn"
                       v-if="route.name !== 'campaigns' && campaign.closing_date === null"
