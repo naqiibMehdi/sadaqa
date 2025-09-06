@@ -25,6 +25,8 @@ watch(() => ibanStore.iban, (newIban) => {
 })
 const registerIban = async () => {
   await ibanStore.registerIban({iban: iban.value!})
+  if (ibanStore.errorsIban && ibanStore.errorsIban.length > 0) return
+
   toast.add({severity: 'success', summary: "Message de succès", detail: ibanStore.message, life: 5000});
 }
 
@@ -40,7 +42,6 @@ const editIban = async () => {
 
   disable.value = !disable.value
 }
-
 const cancelFormData = () => {
   ibanStore.errorsIban = []
   iban.value = ibanStore.iban

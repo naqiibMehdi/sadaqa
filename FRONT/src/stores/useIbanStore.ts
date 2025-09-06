@@ -30,6 +30,7 @@ export const useIbanStore = defineStore("iban", {
 
     async registerIban(dataIban: { iban: string }) {
       this.loading = true
+      this.errorsIban = []
       try {
         const response = await postData("user/iban", dataIban);
         this.iban = response.data
@@ -37,7 +38,6 @@ export const useIbanStore = defineStore("iban", {
         this.errorsIban = []
       } catch (err) {
         if (err instanceof AxiosError) {
-          console.log(err.response?.data.errors)
           this.errorsIban = err.response?.data.errors.iban
         }
       } finally {
