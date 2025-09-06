@@ -12,9 +12,9 @@ return new class extends Migration {
   {
     Schema::create('ibans', function (Blueprint $table) {
       $table->id();
-      $table->text('iban')->unique();
+      $table->text('iban');
       $table->timestamps();
-      $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+      $table->foreignIdFor(\App\Models\User::class)->unique()->constrained()->cascadeOnDelete();
     });
   }
 
